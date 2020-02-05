@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace Web.DispenserClient
 {
+    /// <summary>
+    /// gRPC client for communication with dispenser/printer
+    /// </summary>
     public class RpcDispenserClient : IDispenserClient
     {
         private readonly Dispenser.DispenserClient _client;
@@ -16,7 +19,7 @@ namespace Web.DispenserClient
         }
 
 
-        public async Task<PrintMedicationResponse> PrintMedication(PrintMedicationRequest request)
+        public async Task<PrintMedicationResponse> PrintMedicationAsync(PrintMedicationRequest request)
         {
              var response = await _client.PrintMedicationAsync(request);
              return response;

@@ -7,9 +7,11 @@ using Grpc.Net.Client.Web;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Web.DispenserClient;
+using Web.EntityData;
 
 namespace Web.SchedulerService
 {
@@ -19,17 +21,24 @@ namespace Web.SchedulerService
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<ServiceDbContext>(op => op.UseInMemoryDatabase("SchedulerServiceDB"));
+
             AppContext.SetSwitch(
              "System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
 
             services.AddGrpcClient<Dispenser.DispenserClient>(o =>
             {
-                var handler = new GrpcWebHandler(GrpcWebMode.GrpcWebText, new HttpClientHandler());
-                o.Address = new Uri("https://localhost:5001");
-                o.ChannelOptionsActions.Add((options) => options.HttpClient = new HttpClient(handler));         
+                o.Address = new Uri("http://www.iot3dprint.com:50051");        
             });
 
             services.AddSingleton<IDispenserClient, RpcDispenserClient>();
+
+            services.AddMvc().AddMvcOptions(options => options.EnableEndpointRouting = false);
+
+            services.Configure<IISServerOptions>(options =>
+            {
+                options.AutomaticAuthentication = false;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,15 +49,8 @@ namespace Web.SchedulerService
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseRouting();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Hello World!");
-                });
-            });
+            app.UseMvc();
         }
     }
 }
