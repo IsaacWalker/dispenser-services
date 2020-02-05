@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web.SchedulerService", "DispenserService\Web.SchedulerService.csproj", "{087A573E-D276-415B-A7DF-F771A51F65C0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web.SchedulerService", "DispenserService\Web.SchedulerService.csproj", "{087A573E-D276-415B-A7DF-F771A51F65C0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web.DispenserClient", "DispenserClient\Web.DispenserClient.csproj", "{A3381738-F8B2-448B-BD46-245F641B9F12}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web.DispenserClient", "DispenserClient\Web.DispenserClient.csproj", "{A3381738-F8B2-448B-BD46-245F641B9F12}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web.EntityData", "EntityData\Web.EntityData.csproj", "{A202AC22-AE93-44C3-8C39-4467B7F21B81}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{A3381738-F8B2-448B-BD46-245F641B9F12}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A3381738-F8B2-448B-BD46-245F641B9F12}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A3381738-F8B2-448B-BD46-245F641B9F12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A202AC22-AE93-44C3-8C39-4467B7F21B81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A202AC22-AE93-44C3-8C39-4467B7F21B81}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A202AC22-AE93-44C3-8C39-4467B7F21B81}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A202AC22-AE93-44C3-8C39-4467B7F21B81}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

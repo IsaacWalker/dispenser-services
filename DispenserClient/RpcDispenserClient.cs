@@ -7,17 +7,20 @@ namespace Web.DispenserClient
 {
     public class RpcDispenserClient : IDispenserClient
     {
-        private static readonly string _address = "";
+        private readonly Dispenser.DispenserClient _client;
+
+
+        public RpcDispenserClient(Dispenser.DispenserClient client)
+        {
+            _client = client;
+        }
 
 
         public async Task<PrintMedicationResponse> PrintMedication(PrintMedicationRequest request)
         {
-            using (var channel = GrpcChannel.ForAddress(_address))
-            {
-                var client = new Dispenser.DispenserClient(channel);
-                var response = await client.PrintMedicationAsync(request);
-                return response;
-            }
+             var response = await _client.PrintMedicationAsync(request);
+             return response;
+            
         }
     }
 }
