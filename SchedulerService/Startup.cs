@@ -8,30 +8,44 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Web.DispenserClient;
 using Web.EntityData;
+using Web.PrinterClient;
+using Web.SchedulerService.Scheduler;
 
 namespace Web.SchedulerService
 {
     public class Startup
     {
+        private readonly IConfiguration m_configuration;
+
+
+        public Startup(IConfiguration configuration)
+        {
+            m_configuration = configuration;
+        }
+
+
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ServiceDbContext>(op => op.UseInMemoryDatabase("SchedulerServiceDB"));
+            services.AddDbContext<ServiceDbContext>(op => op.UseInMemoryDatabase(m_configuration["SchedulerService:DatabaseName"]));
+            services.AddLogging();
 
             AppContext.SetSwitch(
              "System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
 
-            services.AddGrpcClient<Dispenser.DispenserClient>(o =>
+            services.AddGrpcClient<Printer.PrinterClient>(o =>
             {
-                o.Address = new Uri("http://www.iot3dprint.com:50051");        
+                o.Address = new Uri(m_configuration["SchedulerService:PrinterUrl"]);        
             });
 
-            services.AddSingleton<IDispenserClient, RpcDispenserClient>();
+            services.AddSingleton<IPrinterClient, RpcPrinterClient>();
+
+            services.AddHostedService<SchedulerWorker>();
 
             services.AddMvc().AddMvcOptions(options => options.EnableEndpointRouting = false);
 
@@ -39,6 +53,8 @@ namespace Web.SchedulerService
             {
                 options.AutomaticAuthentication = false;
             });
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

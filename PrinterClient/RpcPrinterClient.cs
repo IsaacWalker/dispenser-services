@@ -3,17 +3,17 @@
 using Grpc.Net.Client;
 using System.Threading.Tasks;
 
-namespace Web.DispenserClient
+namespace Web.PrinterClient
 {
     /// <summary>
     /// gRPC client for communication with dispenser/printer
     /// </summary>
-    public class RpcDispenserClient : IDispenserClient
+    public class RpcPrinterClient : IPrinterClient
     {
-        private readonly Dispenser.DispenserClient _client;
+        private readonly Printer.PrinterClient _client;
 
 
-        public RpcDispenserClient(Dispenser.DispenserClient client)
+        public RpcPrinterClient(Printer.PrinterClient client)
         {
             _client = client;
         }

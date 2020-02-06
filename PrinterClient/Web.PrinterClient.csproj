@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <AssemblyName>Web.DispenserClient</AssemblyName>
-    <RootNamespace>Web.DispenserClient</RootNamespace>
+    <AssemblyName>Web.PrinterClient</AssemblyName>
+    <RootNamespace>Web.PrinterClient</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,10 +14,6 @@
 
   <ItemGroup>
     <Protobuf Include="**/*.proto" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <Folder Include="Protos\" />
   </ItemGroup>
 
 </Project>

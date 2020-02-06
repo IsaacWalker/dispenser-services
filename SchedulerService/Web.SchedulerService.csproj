@@ -16,8 +16,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DispenserClient\Web.DispenserClient.csproj" />
     <ProjectReference Include="..\EntityData\Web.EntityData.csproj" />
+    <ProjectReference Include="..\PrinterClient\Web.PrinterClient.csproj" />
   </ItemGroup>
 
 </Project>

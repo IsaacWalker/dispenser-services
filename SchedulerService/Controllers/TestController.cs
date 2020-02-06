@@ -7,7 +7,7 @@ using Grpc.Net.Client;
 using Grpc.Net.Client.Web;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Web.DispenserClient;
+using Web.PrinterClient;
 
 namespace Web.SchedulerService.Controllers
 {
@@ -18,10 +18,10 @@ namespace Web.SchedulerService.Controllers
     public class TestController : ControllerBase
     {
 
-        private readonly IDispenserClient m_client;
+        private readonly IPrinterClient m_client;
 
 
-        public TestController(IDispenserClient client)
+        public TestController(IPrinterClient client)
         {
              m_client = client;
         }
@@ -39,6 +39,7 @@ namespace Web.SchedulerService.Controllers
             };
 
             var response = await m_client.PrintMedicationAsync(request);
+
             return "Duration: " + response.ExpectedDuration;
         }
     }
