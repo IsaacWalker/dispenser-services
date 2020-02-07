@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Grpc.Net.Client.Web;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Web.EntityData;
 using Web.PrinterClient;
+using Web.SchedulerService.HealthChecks;
 using Web.SchedulerService.Scheduler;
 
 namespace Web.SchedulerService
@@ -32,7 +34,8 @@ namespace Web.SchedulerService
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ServiceDbContext>(op => op.UseInMemoryDatabase(m_configuration["SchedulerService:DatabaseName"]));
+            //  services.AddDbContext<ServiceDbContext>(op => op.UseInMemoryDatabase(m_configuration["SchedulerService:DatabaseName"]));
+
             services.AddLogging();
 
             AppContext.SetSwitch(
@@ -46,6 +49,9 @@ namespace Web.SchedulerService
             services.AddSingleton<IPrinterClient, RpcPrinterClient>();
 
             services.AddHostedService<SchedulerWorker>();
+            //adding health check services to container
+            services.AddHealthChecks()
+            .AddCheck<PrinterHealthCheck>(nameof(PrinterHealthCheck));
 
             services.AddMvc().AddMvcOptions(options => options.EnableEndpointRouting = false);
 
@@ -65,7 +71,9 @@ namespace Web.SchedulerService
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseHealthChecks("/health");
 
+            app.UseStaticFiles();
             app.UseMvc();
         }
     }
