@@ -22,6 +22,24 @@ namespace Web.EntityData
 
 
         /// <summary>
+        /// Times in the day where the medication is to be taken
+        /// </summary>
+        public virtual IList<DateTime> Times { get; set; } = new List<DateTime>();
+
+
+        /// <summary>
+        /// First date drug is taken on
+        /// </summary>
+        public DateTime StartDate { get; set; }
+
+
+        /// <summary>
+        /// Last date drug is taken on
+        /// </summary>
+        public DateTime EndDate { get; set; }
+
+
+        /// <summary>
         /// Id of the patient of which the drug is administered
         /// </summary>
         public int PatientId { get; set; }
