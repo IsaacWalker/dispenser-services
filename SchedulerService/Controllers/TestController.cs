@@ -32,8 +32,8 @@ namespace Web.SchedulerService.Controllers
         {
             PrintMedicationRequest request = new PrintMedicationRequest()
             {
-                FirstName = "Mark",
-                LastName = "Oh hi",
+                FirstName = "Chad",
+                LastName = "Chadson",
                 Dosage = 12f,
                 DrugName = "Eatitol"
             };

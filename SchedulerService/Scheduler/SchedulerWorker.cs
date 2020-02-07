@@ -45,7 +45,7 @@ namespace Web.SchedulerService.Scheduler
             while(!stoppingToken.IsCancellationRequested)
             {
                 // TODO - Add logic for scheduling the priting...
-
+                
                 await Task.Delay(1000);
             }
 
