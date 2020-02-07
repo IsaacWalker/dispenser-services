@@ -48,10 +48,13 @@ namespace Web.SchedulerService
 
             services.AddSingleton<IPrinterClient, RpcPrinterClient>();
 
-            services.AddHostedService<SchedulerWorker>();
+            services.AddSingleton<SchedulerWorker>();
+            services.AddHostedService((sp) => sp.GetService<SchedulerWorker>());
+
             //adding health check services to container
             services.AddHealthChecks()
-            .AddCheck<PrinterHealthCheck>(nameof(PrinterHealthCheck));
+            .AddCheck<PrinterHealthCheck>(nameof(PrinterHealthCheck))
+            .AddCheck<SchedulerHealthCheck>(nameof(SchedulerHealthCheck));
 
             services.AddMvc().AddMvcOptions(options => options.EnableEndpointRouting = false);
 

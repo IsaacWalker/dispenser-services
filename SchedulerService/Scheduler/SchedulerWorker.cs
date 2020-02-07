@@ -28,7 +28,6 @@ namespace Web.SchedulerService.Scheduler
         /// <summary>
         /// Service provider
         /// </summary>
-        /// 
         private readonly IServiceProvider m_serviceProvider;
 
 
@@ -42,14 +41,24 @@ namespace Web.SchedulerService.Scheduler
 
         protected async override Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            while(!stoppingToken.IsCancellationRequested)
+            _isRunning = true;
+
+            while (!stoppingToken.IsCancellationRequested && _isRunning)
             {
                 // TODO - Add logic for scheduling the priting...
                 
                 await Task.Delay(1000);
             }
 
+            _isRunning = false;
+
             return;
         }
+
+
+        private volatile bool _isRunning;
+
+
+        public bool IsHealthy => _isRunning;
     }
 }
