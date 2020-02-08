@@ -39,8 +39,16 @@ namespace Web.PrinterClient
 
         public async Task<PrintMedicationResponse> PrintMedicationAsync(PrintMedicationRequest request)
         {
-             var response = await _client.PrintMedicationAsync(request);
-             return response;
+            try
+            {
+                var response = await _client.PrintMedicationAsync(request);
+                
+                return response;
+            }
+            catch(Exception _)
+            {
+                return null;
+            }
             
         }
     }

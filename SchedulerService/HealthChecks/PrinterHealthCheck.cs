@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,10 @@ namespace Web.SchedulerService.HealthChecks
         private readonly IPrinterClient m_printerClient;
 
 
-        public PrinterHealthCheck(IPrinterClient printerClient)
+        private readonly ILogger<PrinterHealthCheck> m_logger;
+
+
+        public PrinterHealthCheck(IPrinterClient printerClient, ILogger<PrinterHealthCheck> logger)
         {
             m_printerClient = printerClient;
         }
@@ -21,6 +25,9 @@ namespace Web.SchedulerService.HealthChecks
         
         public async Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = default)
         {
+            m_logger.LogInformation(LogIds.Information.StartPrinterHealthCheck, "Starting printer health check");
+
+
             var response = await m_printerClient.CheckPrinterHealthAsync(new CheckPrinterHealthRequest());
 
             HealthStatus status;
@@ -33,6 +40,8 @@ namespace Web.SchedulerService.HealthChecks
             {
                 status = HealthStatus.Unhealthy;
             }
+
+            m_logger.LogInformation(LogIds.Information.EndtPrinterHealthCheck, "Finished printer health check: {0}", status);
 
             return new HealthCheckResult(status,"string");
         }
