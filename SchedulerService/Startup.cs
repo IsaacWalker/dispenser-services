@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Grpc.Net.Client.Web;
+using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
@@ -34,27 +35,32 @@ namespace Web.SchedulerService
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            //  services.AddDbContext<ServiceDbContext>(op => op.UseInMemoryDatabase(m_configuration["SchedulerService:DatabaseName"]));
+              services.AddDbContext<ServiceDbContext>(op => op.UseInMemoryDatabase(m_configuration["SchedulerService:DatabaseName"]));
 
-            services.AddLogging();
+               services.AddLogging();
 
-            AppContext.SetSwitch(
-             "System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
+                AppContext.SetSwitch(
+                 "System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
 
-            services.AddGrpcClient<Printer.PrinterClient>(o =>
-            {
-                o.Address = new Uri(m_configuration["SchedulerService:PrinterUrl"]);        
-            });
+                services.AddGrpcClient<Printer.PrinterClient>(o =>
+                {
+                    o.Address = new Uri(m_configuration["SchedulerService:PrinterUrl"]);        
+                });
 
-            services.AddSingleton<IPrinterClient, RpcPrinterClient>();
+                services.AddSingleton<IPrinterClient, RpcPrinterClient>();
 
-            services.AddSingleton<SchedulerWorker>();
-            services.AddHostedService((sp) => sp.GetService<SchedulerWorker>());
+                services.AddSingleton<SchedulerWorker>();
+                services.AddHostedService((sp) => sp.GetService<SchedulerWorker>());
 
             //adding health check services to container
-            services.AddHealthChecks()
-            .AddCheck<PrinterHealthCheck>(nameof(PrinterHealthCheck))
-            .AddCheck<SchedulerHealthCheck>(nameof(SchedulerHealthCheck));
+            services
+                .AddHealthChecksUI()
+                .AddHealthChecks()
+                .AddCheck<PrinterHealthCheck>(nameof(PrinterHealthCheck))
+                .AddCheck<SchedulerHealthCheck>(nameof(SchedulerHealthCheck))
+                .Services
+                .AddControllers();
+
 
             services.AddMvc().AddMvcOptions(options => options.EnableEndpointRouting = false);
 
@@ -62,8 +68,6 @@ namespace Web.SchedulerService
             {
                 options.AutomaticAuthentication = false;
             });
-
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -73,11 +77,20 @@ namespace Web.SchedulerService
             {
                 app.UseDeveloperExceptionPage();
             }
+          
+            app
+            .UseRouting()
+            .UseEndpoints(config =>
+                {
+            config.MapHealthChecks("healthz", new HealthCheckOptions()
+            {
+                Predicate = _ => true,
+                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+            });
+                config.MapHealthChecksUI();
 
-            app.UseHealthChecks("/health");
-
-            app.UseStaticFiles();
-            app.UseMvc();
+                 config.MapDefaultControllerRoute();
+            });
         }
     }
 }

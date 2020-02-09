@@ -20,6 +20,7 @@ namespace Web.SchedulerService.HealthChecks
         public PrinterHealthCheck(IPrinterClient printerClient, ILogger<PrinterHealthCheck> logger)
         {
             m_printerClient = printerClient;
+            m_logger = logger;
         }
 
         
@@ -43,7 +44,7 @@ namespace Web.SchedulerService.HealthChecks
 
             m_logger.LogInformation(LogIds.Information.EndtPrinterHealthCheck, "Finished printer health check: {0}", status);
 
-            return new HealthCheckResult(status,"string");
+            return new HealthCheckResult(status, string.Format("Printer: {0} ", response.Status));
         }
     }
 }

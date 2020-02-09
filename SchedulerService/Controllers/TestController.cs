@@ -23,11 +23,11 @@ namespace Web.SchedulerService.Controllers
 
         public TestController(IPrinterClient client)
         {
-             m_client = client;
+            m_client = client;
         }
 
 
-        [HttpGet()]
+       [HttpGet()]
         public async Task<string> Get()
         {
             PrintMedicationRequest request = new PrintMedicationRequest()
