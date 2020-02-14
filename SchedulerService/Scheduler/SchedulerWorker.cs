@@ -52,7 +52,7 @@ namespace Web.SchedulerService.Scheduler
                 {
                     var context = scope.ServiceProvider.GetService<ServiceDbContext>();
 
-                  //  context.Prescriptions.Where()
+                    //context.Prescriptions.Where(P => P.)
                 }
 
                 await Task.Delay(1000);

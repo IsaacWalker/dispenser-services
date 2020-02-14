@@ -28,19 +28,20 @@ namespace Web.SchedulerService.Controllers
 
 
        [HttpGet()]
-        public async Task<string> Get()
+        public Task<string> Get()
         {
-            PrintMedicationRequest request = new PrintMedicationRequest()
-            {
-                FirstName = "Chad",
-                LastName = "Chadson",
-                Dosage = 12f,
-                DrugName = "Eatitol"
-            };
+            /*  PrintMedicationRequest request = new PrintMedicationRequest()
+              {
+                  FirstName = "Chad",
+                  LastName = "Chadson",
+                  Dosage = 12f,
+                  DrugName = "Eatitol"
+              };
 
-            var response = await m_client.PrintMedicationAsync(request);
+              var response = await m_client.PrintMedicationAsync(request);
 
-            return "Duration: " + response.ExpectedDuration;
+              return "Duration: " + response.ExpectedDuration;*/
+            return Task.FromResult("Result");
         }
     }
 }

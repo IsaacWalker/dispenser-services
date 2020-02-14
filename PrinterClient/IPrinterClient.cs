@@ -8,9 +8,28 @@ namespace Web.PrinterClient
     /// </summary>
     public interface IPrinterClient
     {
+        /// <summary>
+        /// Creates a print job
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         Task<CreatePrintjobResponse> CreatePrintJobRequest(CreatePrintJobRequest request);
+        
 
+        /// <summary>
+        /// Runs a print job
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         Task<RunPrintJobResponse> RunPrintJob(RunPrintJobRequest request);
+
+
+        /// <summary>
+        /// Gets the status of the job
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        Task<GetJobStatusResponse> GetJobStatus(GetJobStatusRequest request);
 
 
         /// <summary>

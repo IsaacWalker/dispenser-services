@@ -37,10 +37,18 @@ namespace Web.PrinterClient
             
         }
 
+
         public async Task<CreatePrintjobResponse> CreatePrintJobRequest(CreatePrintJobRequest request)
         {
             return await _client.CreatePrintJobAsync(request);
         }
+
+
+        public async Task<GetJobStatusResponse> GetJobStatus(GetJobStatusRequest request)
+        {
+            return await _client.GetJobStatusAsync(request);
+        }
+
 
         public async Task<RunPrintJobResponse> RunPrintJob(RunPrintJobRequest request)
         {
