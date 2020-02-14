@@ -37,19 +37,14 @@ namespace Web.PrinterClient
             
         }
 
-        public async Task<PrintMedicationResponse> PrintMedicationAsync(PrintMedicationRequest request)
+        public async Task<CreatePrintjobResponse> CreatePrintJobRequest(CreatePrintJobRequest request)
         {
-            try
-            {
-                var response = await _client.PrintMedicationAsync(request);
-                
-                return response;
-            }
-            catch(Exception _)
-            {
-                return null;
-            }
-            
+            return await _client.CreatePrintJobAsync(request);
+        }
+
+        public async Task<RunPrintJobResponse> RunPrintJob(RunPrintJobRequest request)
+        {
+            return await _client.RunPrintJobAsync(request);
         }
     }
 }

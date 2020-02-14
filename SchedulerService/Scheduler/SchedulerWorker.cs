@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Hosting;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -46,7 +47,14 @@ namespace Web.SchedulerService.Scheduler
             while (!stoppingToken.IsCancellationRequested && _isRunning)
             {
                 // TODO - Add logic for scheduling the priting...
-                
+
+                using (var scope = m_serviceProvider.CreateScope())
+                {
+                    var context = scope.ServiceProvider.GetService<ServiceDbContext>();
+
+                  //  context.Prescriptions.Where()
+                }
+
                 await Task.Delay(1000);
             }
 

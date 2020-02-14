@@ -8,12 +8,9 @@ namespace Web.PrinterClient
     /// </summary>
     public interface IPrinterClient
     {
-        /// <summary>
-        /// Starts printing the medication
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        Task<PrintMedicationResponse> PrintMedicationAsync(PrintMedicationRequest request);
+        Task<CreatePrintjobResponse> CreatePrintJobRequest(CreatePrintJobRequest request);
+
+        Task<RunPrintJobResponse> RunPrintJob(RunPrintJobRequest request);
 
 
         /// <summary>
