@@ -16,6 +16,7 @@ using Microsoft.Extensions.Hosting;
 using Web.EntityData;
 using Web.PrinterClient;
 using Web.SchedulerService.HealthChecks;
+using Web.SchedulerService.Medication;
 using Web.SchedulerService.Scheduler;
 
 namespace Web.SchedulerService
@@ -36,7 +37,6 @@ namespace Web.SchedulerService
         public void ConfigureServices(IServiceCollection services)
         {
               services.AddDbContext<ServiceDbContext>(op => op.UseInMemoryDatabase(m_configuration["SchedulerService:DatabaseName"]));
-
                services.AddLogging();
 
                 AppContext.SetSwitch(
@@ -47,6 +47,7 @@ namespace Web.SchedulerService
                     o.Address = new Uri(m_configuration["SchedulerService:PrinterUrl"]);        
                 });
 
+                services.AddSingleton<IODFGenerator, ODFGenerator>();
                 services.AddSingleton<IPrinterClient, RpcPrinterClient>();
 
                 services.AddSingleton<SchedulerWorker>();

@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Web.EntityData;
 using Web.PrinterClient;
+using Web.SchedulerService.Medication;
 
 namespace Web.SchedulerService.Scheduler
 {
@@ -32,11 +33,18 @@ namespace Web.SchedulerService.Scheduler
         private readonly IServiceProvider m_serviceProvider;
 
 
-        public SchedulerWorker(IServiceProvider serviceProvider, IPrinterClient printerClient, ILogger<SchedulerWorker> logger)
+        /// <summary>
+        /// Generates ODFs for a prescription
+        /// </summary>
+        private readonly IODFGenerator m_odfGenerator;
+
+
+        public SchedulerWorker(IServiceProvider serviceProvider, IPrinterClient printerClient, IODFGenerator odfGenerator, ILogger<SchedulerWorker> logger)
         {
             m_printerClient = printerClient;
             m_logger = logger;
             m_serviceProvider = serviceProvider;
+            m_odfGenerator = odfGenerator;
         }
 
 

@@ -22,6 +22,12 @@ namespace Web.EntityData
 
 
         /// <summary>
+        /// Dosage in Mg
+        /// </summary>
+        public float Dosage { get; set; }
+
+
+        /// <summary>
         /// Times in the day where the medication is to be taken
         /// </summary>
         public virtual IList<DateTime> Times { get; set; } = new List<DateTime>();

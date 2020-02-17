@@ -28,6 +28,18 @@ namespace Web.EntityData
 
 
         /// <summary>
+        /// Weight in Kgs's
+        /// </summary>
+        public float Weight { get; set; }
+
+
+        /// <summary>
+        /// Height in cm's
+        /// </summary>
+        public float Height { get; set; }
+
+
+        /// <summary>
         /// The prescriptions associated with the patient
         /// </summary>
         public virtual IList<Prescription> Prescriptions { get; set; } = new List<Prescription>();
