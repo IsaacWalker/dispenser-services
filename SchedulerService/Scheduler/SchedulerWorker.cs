@@ -58,9 +58,28 @@ namespace Web.SchedulerService.Scheduler
 
                 using (var scope = m_serviceProvider.CreateScope())
                 {
+                    if(m_dailySchedule == default || m_dailySchedule.Date.Date != Now.Date)
+                    {
+                        m_dailySchedule = new DailyPrintSchedule(Now.Date);
+                    }
+
                     var context = scope.ServiceProvider.GetService<ServiceDbContext>();
 
-                    //context.Prescriptions.Where(P => P.)
+                    // Get prescriptions that are in use today
+                    var prescriptions = context
+                        .Prescriptions
+                        .Where(P => Now >= P.StartDate && Now <= P.EndDate);
+
+                    // Go through each prescription
+                    foreach(Prescription prescription in prescriptions)
+                    {
+                        // States: Removed, Printed, Printing, Ready(Job Created), NotCreated
+
+                        // Does it need to be removed?
+                        // Does it need to start printing?
+                        // Does it need to need to be created?
+                    }
+
                 }
 
                 await Task.Delay(1000);
@@ -72,9 +91,24 @@ namespace Web.SchedulerService.Scheduler
         }
 
 
+        /// <summary>
+        /// Used when schedule cannot be met
+        /// </summary>
+        private void Panic()
+        {
+            m_logger.LogError("Panic");
+        }
+
+
         private volatile bool _isRunning;
 
 
         public bool IsHealthy => _isRunning;
+
+
+        private DateTime Now => DateTime.Now;
+
+
+        private IDailyPrintSchedule m_dailySchedule { get; set; }
     }
 }

@@ -48,7 +48,7 @@ namespace Web.SchedulerService.Controllers
             Prescription prescription = new Prescription()
             {
                 Id = 2,
-                Dosage = 1.5f,
+                Dosage = 0.89f,
                 Drug = "Adderall",
                 StartDate = DateTime.Now,
                 EndDate = DateTime.Now + TimeSpan.FromDays(7),
@@ -66,23 +66,23 @@ namespace Web.SchedulerService.Controllers
 
             var createjob_response = await m_client.CreatePrintJobRequest(createjob_request);
 
-            string Id = createjob_response.JobId;
+            /* string Id = createjob_response.JobId;
 
-            RunPrintJobRequest request = new RunPrintJobRequest()
-            {
-                JobId = Id
-            };
+             RunPrintJobRequest request = new RunPrintJobRequest()
+             {
+                 JobId = Id
+             };
 
-            var runjob_response = await m_client.RunPrintJob(request);
+             var runjob_response = await m_client.RunPrintJob(request);
 
-            GetJobStatusRequest getjobStatus_request = new GetJobStatusRequest()
-            { 
-                JobId = Id
-            };
+             GetJobStatusRequest getjobStatus_request = new GetJobStatusRequest()
+             { 
+                 JobId = Id
+             };
 
-            var getjobstatus_response = await m_client.GetJobStatus(getjobStatus_request);
+             var getjobstatus_response = await m_client.GetJobStatus(getjobStatus_request);*/
 
-            return Ok(createjob_response.JobId + " " + getjobstatus_response.Status);
+            return Ok(createjob_response.JobId);// + " " + getjobstatus_response.Status);
         }
     }
 }
