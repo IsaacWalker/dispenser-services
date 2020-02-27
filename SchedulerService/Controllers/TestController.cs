@@ -20,15 +20,15 @@ namespace Web.SchedulerService.Controllers
     public class TestController : ControllerBase
     {
 
-        private readonly IPrinterClient m_client;
+        private readonly IPrintingContext m_context;
 
 
         private readonly IODFGenerator m_generator;
 
 
-        public TestController(IPrinterClient client, IODFGenerator generator)
+        public TestController(IPrintingContext context, IODFGenerator generator)
         {
-            m_client = client;
+            m_context = context;
             m_generator = generator;
         }
 
@@ -58,13 +58,7 @@ namespace Web.SchedulerService.Controllers
             };
 
             ODF odf = m_generator.Run(prescription);
-
-            CreatePrintJobRequest createjob_request = new CreatePrintJobRequest()
-            {
-                Odf = odf
-            };
-
-            var createjob_response = await m_client.CreatePrintJobRequest(createjob_request);
+            var createjob_response = await m_context.CreatePrintJob(odf);
 
             /* string Id = createjob_response.JobId;
 
@@ -82,7 +76,7 @@ namespace Web.SchedulerService.Controllers
 
              var getjobstatus_response = await m_client.GetJobStatus(getjobStatus_request);*/
 
-            return Ok(createjob_response.JobId);// + " " + getjobstatus_response.Status);
+            return Ok(createjob_response.Id);// + " " + getjobstatus_response.Status);
         }
     }
 }

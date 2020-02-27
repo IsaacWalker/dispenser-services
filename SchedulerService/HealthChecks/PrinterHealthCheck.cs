@@ -11,15 +11,15 @@ namespace Web.SchedulerService.HealthChecks
 {
     public sealed class PrinterHealthCheck : IHealthCheck
     {
-        private readonly IPrinterClient m_printerClient;
+        private readonly IPrintingContext m_printingContext;
 
 
         private readonly ILogger<PrinterHealthCheck> m_logger;
 
 
-        public PrinterHealthCheck(IPrinterClient printerClient, ILogger<PrinterHealthCheck> logger)
+        public PrinterHealthCheck(IPrintingContext printingContext, ILogger<PrinterHealthCheck> logger)
         {
-            m_printerClient = printerClient;
+            m_printingContext = printingContext;
             m_logger = logger;
         }
 
@@ -29,11 +29,11 @@ namespace Web.SchedulerService.HealthChecks
             m_logger.LogInformation(LogIds.Information.StartPrinterHealthCheck, "Starting printer health check");
 
 
-            var response = await m_printerClient.CheckPrinterHealthAsync(new CheckPrinterHealthRequest());
+            var response = await m_printingContext.GetPrinterStatus();
 
             HealthStatus status;
 
-            if(response.Status == CheckPrinterHealthResponse.Types.HealthCheckStatus.Healthy)
+            if(response != GetPrinterStatusResponse.Types.PrinterStatus.NoConnection)
             {
                 status = HealthStatus.Healthy;
             }
@@ -44,7 +44,7 @@ namespace Web.SchedulerService.HealthChecks
 
             m_logger.LogInformation(LogIds.Information.EndtPrinterHealthCheck, "Finished printer health check: {0}", status);
 
-            return new HealthCheckResult(status, string.Format("Printer: {0} ", response.Status));
+            return new HealthCheckResult(status, string.Format("Printer: {0} ", response));
         }
     }
 }

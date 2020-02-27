@@ -40,6 +40,13 @@ namespace Web.EntityData
 
 
         /// <summary>
+        /// DateOfBirth
+        /// </summary>
+        public DateTime DateOfBirth { get; set; }
+
+
+
+        /// <summary>
         /// The prescriptions associated with the patient
         /// </summary>
         public virtual IList<Prescription> Prescriptions { get; set; } = new List<Prescription>();

@@ -48,7 +48,7 @@ namespace Web.SchedulerService
                 });
 
                 services.AddSingleton<IODFGenerator, ODFGenerator>();
-                services.AddSingleton<IPrinterClient, RpcPrinterClient>();
+                services.AddSingleton<IPrintingContext, PrintingContext>();
 
                 services.AddSingleton<SchedulerWorker>();
                 services.AddHostedService((sp) => sp.GetService<SchedulerWorker>());

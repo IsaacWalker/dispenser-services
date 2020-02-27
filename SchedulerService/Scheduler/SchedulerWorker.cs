@@ -18,7 +18,7 @@ namespace Web.SchedulerService.Scheduler
         /// <summary>
         /// Client for communication with the printer
         /// </summary>
-        private readonly IPrinterClient m_printerClient;
+        private readonly IPrintingContext m_printingContext;
 
 
         /// <summary>
@@ -39,9 +39,9 @@ namespace Web.SchedulerService.Scheduler
         private readonly IODFGenerator m_odfGenerator;
 
 
-        public SchedulerWorker(IServiceProvider serviceProvider, IPrinterClient printerClient, IODFGenerator odfGenerator, ILogger<SchedulerWorker> logger)
+        public SchedulerWorker(IServiceProvider serviceProvider, IPrintingContext printingContext, IODFGenerator odfGenerator, ILogger<SchedulerWorker> logger)
         {
-            m_printerClient = printerClient;
+            m_printingContext = printingContext;
             m_logger = logger;
             m_serviceProvider = serviceProvider;
             m_odfGenerator = odfGenerator;
