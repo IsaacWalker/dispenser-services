@@ -45,7 +45,7 @@ message ODF
 
 message CreatePrintJobRequest
 {
-    ODF odf = 1;
+    repeated ODF odfs = 1;
 }
 
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Google.Protobuf.Collections;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
@@ -74,12 +75,10 @@ namespace Web.PrinterClient
         /// </summary>
         /// <param name="odf"></param>
         /// <returns></returns>
-        public async Task<PrintJob> CreatePrintJob(ODF odf)
+        public async Task<PrintJob> CreatePrintJob(IList<ODF> odfs)
         {
-            var request = new CreatePrintJobRequest()
-            {
-                Odf = odf
-            };
+            var request = new CreatePrintJobRequest();
+            request.Odfs.AddRange(odfs);
 
             var response = await m_client.CreatePrintJobAsync(request);
             DateTime ETA = DateTime.Now + TimeSpan.FromSeconds(response.ExpectedDuration);

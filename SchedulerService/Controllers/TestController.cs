@@ -34,7 +34,7 @@ namespace Web.SchedulerService.Controllers
 
 
        [HttpGet()]
-        public async Task<IActionResult> Get()
+        public IActionResult Get()
         {
             Patient patient = new Patient
             {
@@ -58,7 +58,7 @@ namespace Web.SchedulerService.Controllers
             };
 
             ODF odf = m_generator.Run(prescription);
-            var createjob_response = await m_context.CreatePrintJob(odf);
+            //  var createjob_response = await m_context.CreatePrintJob(odf);
 
             /* string Id = createjob_response.JobId;
 
@@ -76,7 +76,7 @@ namespace Web.SchedulerService.Controllers
 
              var getjobstatus_response = await m_client.GetJobStatus(getjobStatus_request);*/
 
-            return Ok(createjob_response.Id);// + " " + getjobstatus_response.Status);
+            return Ok();// createjob_response.Id);// + " " + getjobstatus_response.Status);
         }
     }
 }

@@ -32,7 +32,7 @@ namespace Web.PrinterClient
         /// </summary>
         /// <param name="odf"></param>
         /// <returns></returns>
-        public Task<PrintJob> CreatePrintJob(ODF odf);
+        public Task<PrintJob> CreatePrintJob(IList<ODF> odfs);
 
 
         /// <summary>
