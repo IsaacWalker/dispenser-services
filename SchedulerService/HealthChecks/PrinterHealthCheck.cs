@@ -5,21 +5,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Web.PrinterClient;
+using Web.DispenserClient;
 
 namespace Web.SchedulerService.HealthChecks
 {
     public sealed class PrinterHealthCheck : IHealthCheck
     {
-        private readonly IPrintingContext m_printingContext;
+        private readonly IDispenserClient m_dispenserClient;
 
 
         private readonly ILogger<PrinterHealthCheck> m_logger;
 
 
-        public PrinterHealthCheck(IPrintingContext printingContext, ILogger<PrinterHealthCheck> logger)
+        public PrinterHealthCheck(IDispenserClient dispenserClient, ILogger<PrinterHealthCheck> logger)
         {
-            m_printingContext = printingContext;
+            m_dispenserClient = dispenserClient;
             m_logger = logger;
         }
 
@@ -29,11 +29,11 @@ namespace Web.SchedulerService.HealthChecks
             m_logger.LogInformation(LogIds.Information.StartPrinterHealthCheck, "Starting printer health check");
 
 
-            var response = await m_printingContext.GetPrinterStatus();
+            var response = await m_dispenserClient.GetPrinterStatusAsync();
 
             HealthStatus status;
 
-            if(response != GetPrinterStatusResponse.Types.PrinterStatus.NoConnection)
+            if(response.Status != PrinterStatus.NO_CONNECTION)
             {
                 status = HealthStatus.Healthy;
             }

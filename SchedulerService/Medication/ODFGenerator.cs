@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Web.EntityData;
-using Web.PrinterClient;
 
 namespace Web.SchedulerService.Medication
 {
@@ -28,16 +27,18 @@ namespace Web.SchedulerService.Medication
             Patient patient = prescription.Patient;
             string label = CreateLabel(patient.FirstName, patient.LastName);
             float density = CalculateDensity(prescription.Dosage);
+            Guid id = Guid.NewGuid();
 
-            ODF odf = new ODF()
-            {
+            ODF odf = new ODF();
+          /*  {
                 Length = length,
                 Width = width,
                 Height = height,
                 Label = label,
                 DrugName = prescription.Drug,
-                Density = density
-            };
+                Density = density,
+                Id = id.ToString()
+            };*/
 
             return odf;
         }
@@ -46,6 +47,7 @@ namespace Web.SchedulerService.Medication
         {
             return first_name[0] + ". " + last_name;
         }
+
 
         private float CalculateDensity(float dosage)
         {

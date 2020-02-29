@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Grpc.Net.Client.Web;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -13,8 +12,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Web.DispenserClient;
 using Web.EntityData;
-using Web.PrinterClient;
 using Web.SchedulerService.HealthChecks;
 using Web.SchedulerService.Medication;
 using Web.SchedulerService.Scheduler;
@@ -36,22 +35,14 @@ namespace Web.SchedulerService
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-              services.AddDbContext<ServiceDbContext>(op => op.UseInMemoryDatabase(m_configuration["SchedulerService:DatabaseName"]));
-               services.AddLogging();
+            services.AddDbContext<ServiceDbContext>(op => op.UseInMemoryDatabase(m_configuration["SchedulerService:DatabaseName"]));
+            services.AddLogging();
 
-                AppContext.SetSwitch(
-                 "System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
+            services.AddHttpClient();
+            services.AddSingleton<IDispenserClient, DispenserClient.DispenserClient>();
 
-                services.AddGrpcClient<Printer.PrinterClient>(o =>
-                {
-                    o.Address = new Uri(m_configuration["SchedulerService:PrinterUrl"]);        
-                });
-
-                services.AddSingleton<IODFGenerator, ODFGenerator>();
-                services.AddSingleton<IPrintingContext, PrintingContext>();
-
-                services.AddSingleton<SchedulerWorker>();
-                services.AddHostedService((sp) => sp.GetService<SchedulerWorker>());
+            services.AddSingleton<SchedulerWorker>();
+            services.AddHostedService((sp) => sp.GetService<SchedulerWorker>());
 
             //adding health check services to container
             services

@@ -12,7 +12,7 @@ namespace Web.EntityData
         /// <summary>
         /// Prescription Id
         /// </summary>
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace Web.EntityData
         /// <summary>
         /// Id of the patient of which the drug is administered
         /// </summary>
-        public int PatientId { get; set; }
+        public Guid PatientId { get; set; }
 
 
         /// <summary>

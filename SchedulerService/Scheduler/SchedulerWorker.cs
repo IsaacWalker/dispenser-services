@@ -6,8 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Web.DispenserClient;
 using Web.EntityData;
-using Web.PrinterClient;
 using Web.SchedulerService.Medication;
 
 namespace Web.SchedulerService.Scheduler
@@ -18,7 +18,7 @@ namespace Web.SchedulerService.Scheduler
         /// <summary>
         /// Client for communication with the printer
         /// </summary>
-        private readonly IPrintingContext m_printingContext;
+        private readonly IDispenserClient m_dispenserClient;
 
 
         /// <summary>
@@ -39,9 +39,9 @@ namespace Web.SchedulerService.Scheduler
         private readonly IODFGenerator m_odfGenerator;
 
 
-        public SchedulerWorker(IServiceProvider serviceProvider, IPrintingContext printingContext, IODFGenerator odfGenerator, ILogger<SchedulerWorker> logger)
+        public SchedulerWorker(IServiceProvider serviceProvider, IDispenserClient dispenserClient, IODFGenerator odfGenerator, ILogger<SchedulerWorker> logger)
         {
-            m_printingContext = printingContext;
+            m_dispenserClient = dispenserClient;
             m_logger = logger;
             m_serviceProvider = serviceProvider;
             m_odfGenerator = odfGenerator;
@@ -58,27 +58,7 @@ namespace Web.SchedulerService.Scheduler
 
                 using (var scope = m_serviceProvider.CreateScope())
                 {
-                    if(m_dailySchedule == default || m_dailySchedule.Date.Date != Now.Date)
-                    {
-                        m_dailySchedule = new DailyPrintSchedule(Now.Date);
-                    }
 
-                    var context = scope.ServiceProvider.GetService<ServiceDbContext>();
-
-                    // Get prescriptions that are in use today
-                    var prescriptions = context
-                        .Prescriptions
-                        .Where(P => Now >= P.StartDate && Now <= P.EndDate);
-
-                    // Go through each prescription
-                    foreach(Prescription prescription in prescriptions)
-                    {
-                        // States: Removed, Printed, Printing, Ready(Job Created), NotCreated
-
-                        // Does it need to be removed?
-                        // Does it need to start printing?
-                        // Does it need to need to be created?
-                    }
 
                 }
 
@@ -107,8 +87,5 @@ namespace Web.SchedulerService.Scheduler
 
 
         private DateTime Now => DateTime.Now;
-
-
-        private IDailyPrintSchedule m_dailySchedule { get; set; }
     }
 }
