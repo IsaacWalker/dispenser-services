@@ -7,14 +7,8 @@ namespace Web.EntityData
     /// <summary>
     /// Patient Entity
     /// </summary>
-    public class Patient
+    public class Patient : AEntityBase
     {
-        /// <summary>
-        /// Patient Id
-        /// </summary>
-        public Guid Id { get; set; }
-
-
         /// <summary>
         /// Patient first name
         /// </summary>

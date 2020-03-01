@@ -40,6 +40,7 @@ namespace Web.SchedulerService
 
             services.AddHttpClient();
             services.AddSingleton<IDispenserClient, DispenserClient.DispenserClient>();
+            services.AddSingleton<IODFGenerator, ODFGenerator>();
 
             services.AddSingleton<SchedulerWorker>();
             services.AddHostedService((sp) => sp.GetService<SchedulerWorker>());
@@ -60,6 +61,7 @@ namespace Web.SchedulerService
             {
                 options.AutomaticAuthentication = false;
             });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -67,22 +69,22 @@ namespace Web.SchedulerService
         {
             if (env.IsDevelopment())
             {
+                MockData.AddMockData(app.ApplicationServices);
                 app.UseDeveloperExceptionPage();
             }
-          
-            app
-            .UseRouting()
-            .UseEndpoints(config =>
-                {
-            config.MapHealthChecks("healthz", new HealthCheckOptions()
+
+            app.UseHealthChecks("/healthz", new HealthCheckOptions()
             {
                 Predicate = _ => true,
                 ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
             });
-                config.MapHealthChecksUI();
-
-                 config.MapDefaultControllerRoute();
+            app.UseHealthChecksUI(S =>
+            {
+                
             });
+
+
+            app.UseMvc();
         }
     }
 }

@@ -7,14 +7,8 @@ namespace Web.EntityData
     /// <summary>
     /// Orodispersable Film is a printed instantiation of a PrescriptionTime
     /// </summary>
-    public class ODF
+    public class ODF : AEntityBase
     {
-        /// <summary>
-        /// Id of the ODF
-        /// </summary>
-        public Guid Id { get; set; }
-
-
         /// <summary>
         /// Id of the prescription time that this ODF was associated with
         /// </summary>

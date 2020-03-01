@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,12 +16,19 @@ namespace Web.SchedulerService.Controllers
 
 
         /// <summary>
+        /// Logger
+        /// </summary>
+        protected readonly ILogger m_logger;
+
+
+        /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="serviceProvider"></param>
-        public AMobileControllerBase(IServiceProvider serviceProvider)
+        public AMobileControllerBase(IServiceProvider serviceProvider, ILogger logger)
         {
             m_serviceProvider = serviceProvider;
+            m_logger = logger;
         }
     }
 }

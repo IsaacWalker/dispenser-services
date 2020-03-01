@@ -7,14 +7,8 @@ namespace Web.EntityData
     /// <summary>
     /// A time when a particualr prescription should be taken
     /// </summary>
-    public class PrescriptionTime
+    public class PrescriptionTime : AEntityBase
     {
-        /// <summary>
-        /// Id
-        /// </summary>
-        public Guid Id { get; set; }
-
-
         /// <summary>
         /// Time of the day when prescription should be taken
         /// </summary>
@@ -31,5 +25,11 @@ namespace Web.EntityData
         /// Prescription Navigation property
         /// </summary>
         public virtual Prescription Prescription { get; set; }
+
+
+        /// <summary>
+        /// The ODFs that are printed for this time
+        /// </summary>
+        public virtual IList<ODF> ODFs { get; set; } = new List<ODF>();
     }
 }

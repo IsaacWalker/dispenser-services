@@ -10,6 +10,17 @@ namespace Web.EntityData
     /// </summary>
     public sealed class ServiceDbContext : DbContext
     {
+        /// <summary>
+        /// Nurses
+        /// </summary>
+        public DbSet<Nurse> Nurses { get; set; }
+
+
+        /// <summary>
+        /// The saved ODFs
+        /// </summary>
+        public DbSet<ODF> ODFs { get; set; }
+
      
         /// <summary>
         /// The patients in the database
@@ -21,6 +32,18 @@ namespace Web.EntityData
         /// The prescriptions 
         /// </summary>
         public DbSet<Prescription> Prescriptions { get; set; }
+
+
+        /// <summary>
+        /// Prescription Times
+        /// </summary>
+        public DbSet<PrescriptionTime> PrescriptionTimes { get; set; }
+
+
+        /// <summary>
+        /// Print Jobs
+        /// </summary>
+        public DbSet<PrintJob> PrintJobs { get; set; }
 
 
         public ServiceDbContext(DbContextOptions<ServiceDbContext> options) : base(options)
@@ -36,6 +59,24 @@ namespace Web.EntityData
                 .HasOne(P => P.Patient)
                 .WithMany(P => P.Prescriptions)
                 .HasForeignKey(P => P.PatientId);
+
+            // One Prescription can have many times
+            modelBuilder.Entity<PrescriptionTime>()
+                .HasOne(PT => PT.Prescription)
+                .WithMany(P => P.Times)
+                .HasForeignKey(PT => PT.PrescriptionId);
+
+            // One PrescriptionTime can be printed many times as an ODF
+            modelBuilder.Entity<ODF>()
+                .HasOne(ODF => ODF.PrescriptionTime)
+                .WithMany(PT => PT.ODFs)
+                .HasForeignKey(ODF => ODF.PrescriptionTimeId);
+
+            // One print job (batch) can have many ODF's
+            modelBuilder.Entity<ODF>()
+                .HasOne(ODF => ODF.PrintJob)
+                .WithMany(Job => Job.ODFs)
+                .HasForeignKey(ODF => ODF.PrintJobId);
         }
     }
 }

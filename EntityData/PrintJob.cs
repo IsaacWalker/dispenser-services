@@ -7,14 +7,8 @@ namespace Web.EntityData
     /// <summary>
     /// A print job, which consists of a batch of ODF's
     /// </summary>
-    public class PrintJob
+    public class PrintJob : AEntityBase
     {
-        /// <summary>
-        /// Id of the Job
-        /// </summary>
-        public Guid Id { get; set; }
-
-
         /// <summary>
         /// Status of the Print Job
         /// </summary>

@@ -7,14 +7,8 @@ namespace Web.EntityData
     /// <summary>
     /// Prescription
     /// </summary>
-    public class Prescription
+    public class Prescription : AEntityBase
     {
-        /// <summary>
-        /// Prescription Id
-        /// </summary>
-        public Guid Id { get; set; }
-
-
         /// <summary>
         /// Name of the drug
         /// </summary>
@@ -30,7 +24,7 @@ namespace Web.EntityData
         /// <summary>
         /// Times in the day where the medication is to be taken
         /// </summary>
-        public virtual IList<DateTime> Times { get; set; } = new List<DateTime>();
+        public virtual IList<PrescriptionTime> Times { get; set; } = new List<PrescriptionTime>();
 
 
         /// <summary>
