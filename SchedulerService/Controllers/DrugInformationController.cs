@@ -11,7 +11,6 @@ using Web.SchedulerService.Models.PageModels;
 
 namespace Web.SchedulerService.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
     public class DrugInformationController : AMobileControllerBase
     {
@@ -31,9 +30,11 @@ namespace Web.SchedulerService.Controllers
         /// <param name="prescriptionId"></param>
         /// <returns></returns>
         [HttpGet]
+        [Route("api/[controller]")]
         public IActionResult Get([FromQuery] Guid prescriptionId)
         {
             // TODO - finish query
+            m_logger.LogInformation("Getting Drug Information screen for {0}", prescriptionId);
 
             using(var scope = m_serviceProvider.CreateScope())
             {

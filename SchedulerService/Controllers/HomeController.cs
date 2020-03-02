@@ -32,7 +32,8 @@ namespace Web.SchedulerService.Controllers
         [Route("api/[controller]")]
         public IActionResult Get([FromQuery] Guid nurseId)
         {
-            // TODO - Finish query
+            m_logger.LogDebug("Getting Home view for Nurse {0}", nurseId);
+
             HomePageModel model = new HomePageModel();
 
             using(var scope = m_serviceProvider.CreateScope())
@@ -40,6 +41,14 @@ namespace Web.SchedulerService.Controllers
                 var context = scope.ServiceProvider.GetService<ServiceDbContext>();
 
                 Nurse nurse = context.Nurses.Find(nurseId);
+
+                if(nurse == default)
+                {
+                    m_logger.LogWarning("No nurse found for id {0}", nurseId);
+
+                    return NotFound();
+                }
+
                 model.NurseName = nurse.FirstName;
 
                 var currentJob = context.PrintJobs
@@ -52,13 +61,15 @@ namespace Web.SchedulerService.Controllers
                      .Select(O => new BatchODF()
                      {
                          PatientName = O.PrescriptionTime.Prescription.Patient.FirstName,
-                         MedicationName = O.PrescriptionTime.Prescription.Drug,
+                         MedicationName = O.PrescriptionTime.Prescription.DrugName,
                          ODFId = O.Id,
                          PatientId = O.PrescriptionTime.Prescription.Patient.Id
                      })
                     .ToList();
 
                     model.PrintJobId = currentJob.Id;
+
+                    m_logger.LogDebug("Returning Home Model for Nurse {0} with {1} ODF's", nurseId, model.ODFs.Count);
                 }
                 else;
                 {
