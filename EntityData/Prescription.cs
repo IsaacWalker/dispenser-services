@@ -12,13 +12,31 @@ namespace Web.EntityData
         /// <summary>
         /// Name of the drug
         /// </summary>
-        public string Drug { get; set; }
+        public string DrugName { get; set; }
 
 
         /// <summary>
         /// Dosage in Mg
         /// </summary>
         public float Dosage { get; set; }
+
+
+        /// <summary>
+        /// Route of administration
+        /// </summary>
+        public string Route { get; set; }
+
+
+        /// <summary>
+        /// The indication of the drug
+        /// </summary>
+        public string Indication { get; set; }
+
+
+        /// <summary>
+        /// Notes about the drug
+        /// </summary>
+        public string Notes { get; set; }
 
 
         /// <summary>
