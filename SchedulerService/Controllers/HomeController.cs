@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
@@ -55,23 +56,35 @@ namespace Web.SchedulerService.Controllers
                     .Where(Job => Job.Status == PrintJobStatus.PRINTING || Job.Status == PrintJobStatus.PRINTED)
                     .FirstOrDefault();
 
+                
                 if (currentJob != null)
                 {
-                    model.ODFs = currentJob.ODFs
-                     .Select(O => new BatchODF()
-                     {
-                         PatientName = O.PrescriptionTime.Prescription.Patient.FirstName,
-                         MedicationName = O.PrescriptionTime.Prescription.DrugName,
-                         ODFId = O.Id,
-                         PatientId = O.PrescriptionTime.Prescription.Patient.Id
-                     })
-                    .ToList();
+                    var result = context.ODFs.Where(O => O.PrintJobId == currentJob.Id)
+                        .Include(O => O.PrescriptionTime)
+                        .ThenInclude(P => P.Prescription)
+                        .ThenInclude(P => P.Patient)
+                        .Select(O => new 
+                        { 
+                            patientName = O.PrescriptionTime.Prescription.Patient.FirstName,
+                            drugName = O.PrescriptionTime.Prescription.DrugName,
+                            odfId = O.Id,
+                            patientId = O.PrescriptionTime.Prescription.Patient.Id
+                        });
+
+                    var batchModels = result.Select(R => new BatchODF()
+                    {
+                        PatientId = R.patientId,
+                        PatientName = R.patientName,
+                        MedicationName = R.drugName,
+                        ODFId = R.odfId
+                    });
 
                     model.PrintJobId = currentJob.Id;
+                    model.ODFs = batchModels.ToList();
 
                     m_logger.LogDebug("Returning Home Model for Nurse {0} with {1} ODF's", nurseId, model.ODFs.Count);
                 }
-                else;
+                else
                 {
                     model.ODFs = new List<BatchODF>();
                 }

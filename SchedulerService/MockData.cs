@@ -40,24 +40,76 @@ namespace Web.SchedulerService
                 context.Add(nurse);
 
                 var p1 = AddPatient(context, "John", "Doe", 1.78f, DateTime.Parse("04-06-1992"), 67.0f);
-               // var p2 = AddPatient(context, "Jane", "Doe", 1.65f, DateTime.Parse("06-02-1996"), 45.0f);
+                var p2 = AddPatient(context, "Jane", "Doe", 1.65f, DateTime.Parse("06-02-1996"), 45.0f);
+                var p3 = AddPatient(context, "Chad", "Chadwick", 1.81f, DateTime.Parse("23-06-1997"), 83.0f);
 
                 context.SaveChanges();
 
                 //TODO - Add prescriptions 
-                Prescription johnPrescriptionOne = new Prescription()
+                Prescription p1PrescriptionOne = new Prescription()
                 {
-                    Drug = "DrugName",
+                    DrugName = "Colace",
                     Dosage = 1.25f,
                     StartDate = DateTime.Now.Date,
-                    EndDate = DateTime.Now.Date + TimeSpan.FromDays(14.0)
+                    EndDate = DateTime.Now.Date + TimeSpan.FromDays(14.0),
+                    Route = "PO",
+                    Patient = p1
                 };
 
-                AddPrescription(context, johnPrescriptionOne, new List<DateTime> { DateTime.Parse("09:00"), DateTime.Parse("14:00") });
+                Prescription p2PrescriptionOne = new Prescription()
+                {
+                    DrugName = "Zofran",
+                    Dosage = 1.25f,
+                    StartDate = DateTime.Now.Date,
+                    EndDate = DateTime.Now.Date + TimeSpan.FromDays(14.0),
+                    Route = "PO",
+                    Patient = p2
+                };
+
+                Prescription p3PrescriptionOne = new Prescription()
+                {
+                    DrugName = "Desipramine",
+                    Dosage = 25.0f,
+                    StartDate = DateTime.Now.Date,
+                    EndDate = DateTime.Now.Date + TimeSpan.FromDays(14.0),
+                    Route = "PO",
+                    Patient = p3
+                };
+
+                AddPrescription(context, p1PrescriptionOne, new List<DateTime> { DateTime.Parse("09:00"), DateTime.Parse("14:00") });
+                AddPrescription(context, p2PrescriptionOne, new List<DateTime> { DateTime.Parse("09:00"), DateTime.Parse("14:00") });
+                AddPrescription(context, p3PrescriptionOne, new List<DateTime> { DateTime.Parse("09:00"), DateTime.Parse("14:00") });
                 context.SaveChanges();
 
-                //TODO - Assign prescriptions to Patients
-                p1.Prescriptions.Add(johnPrescriptionOne);
+                
+                PrintJob job = new PrintJob()
+                {
+                    Status = PrintJobStatus.PRINTING
+                };
+
+                context.PrintJobs.Add(job);
+
+                ODF odf1 = new ODF()
+                {
+                    PrescriptionTime = p1PrescriptionOne.Times[0],
+                    PrintJob = job
+                };
+
+                ODF odf2 = new ODF()
+                {
+                    PrescriptionTime = p2PrescriptionOne.Times[0],
+                    PrintJob = job
+                };
+
+                ODF odf3 = new ODF()
+                {
+                    PrescriptionTime = p3PrescriptionOne.Times[0],
+                    PrintJob = job
+                };
+
+                context.Add(odf1);
+                context.Add(odf2);
+                context.Add(odf3);
 
                 context.SaveChanges();
 

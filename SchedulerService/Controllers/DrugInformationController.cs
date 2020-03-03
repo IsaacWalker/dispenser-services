@@ -36,13 +36,26 @@ namespace Web.SchedulerService.Controllers
             // TODO - finish query
             m_logger.LogInformation("Getting Drug Information screen for {0}", prescriptionId);
 
-            using(var scope = m_serviceProvider.CreateScope())
+            DrugInformationPageModel drugInformationPageModel = new DrugInformationPageModel();
+
+            using (var scope = m_serviceProvider.CreateScope())
             {
                 var context = scope.ServiceProvider.GetService<ServiceDbContext>();
 
-                DrugInformationPageModel drugInformationPageModel = new DrugInformationPageModel();
-                return Ok(drugInformationPageModel);
+                Prescription prescription = context.Prescriptions.Find(prescriptionId);
+                
+                if(prescription == default)
+                {
+                    return NotFound();
+                }
+
+                drugInformationPageModel.DrugName = prescription.DrugName;
+                drugInformationPageModel.Notes = prescription.Notes;
+                drugInformationPageModel.Dosage = prescription.Dosage;
+                drugInformationPageModel.Route = prescription.Route;
             }
+
+            return Ok(drugInformationPageModel);
         }
     }
 }

@@ -32,5 +32,17 @@ namespace Web.EntityData
         /// Print Jobs associated
         /// </summary>
         public virtual PrintJob PrintJob { get; set; }
+
+
+        /// <summary>
+        /// The Id of the Administration of this ODF
+        /// </summary>
+        public Guid ODFAdministrationId { get; set; }
+
+
+        /// <summary>
+        /// The Administration of the is ODF
+        /// </summary>
+        public virtual ODFAdministration ODFAdministration { get; set; }
     }
 }

@@ -31,7 +31,7 @@ namespace Web.SchedulerService.Models.PageModels
         /// <summary>
         /// The dosage 
         /// </summary>
-        public string Dosage { get; set; }
+        public float Dosage { get; set; }
 
 
         /// <summary>
