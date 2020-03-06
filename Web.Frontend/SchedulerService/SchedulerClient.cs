@@ -55,6 +55,36 @@ namespace Web.Frontend.SchedulerService
 
 
         /// <summary>
+        /// Gets the drug info model
+        /// </summary>
+        /// <param name="prescriptionId"></param>
+        /// <returns></returns>
+        public async Task<DrugInformationPageModel> GetDrugInfoModel(Guid prescriptionId)
+        {
+            Uri pathUri = new Uri(m_baseUri.AbsoluteUri + m_configuration.GetValue<string>("Settings:SchedulerDrugPath"));
+            UriBuilder uriBuilder = new UriBuilder(pathUri)
+            {
+                Query = string.Format("{0}={1}", nameof(prescriptionId), prescriptionId)
+            };
+
+            using (var client = m_httpClientFactory.CreateClient())
+            {
+                var response = await client.GetAsync(uriBuilder.Uri);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    return null;
+                }
+
+                var responseString = await response.Content.ReadAsStringAsync();
+                var model = JsonConvert.DeserializeObject<DrugInformationPageModel>(responseString);
+
+                return model;
+            }
+        }
+
+
+        /// <summary>
         /// Gets the model for the Home Page
         /// </summary>
         /// <param name="nurseId"></param>

@@ -77,6 +77,8 @@ namespace Web.SchedulerService.Controllers
                         NurseName = O.ODFAdministration.Nurse.FirstName,
                         Time = O.ODFAdministration.DateTime
                     });
+
+                model.AdministeredMedications = administeredMedications.ToList();
             }
 
             return Ok(model);

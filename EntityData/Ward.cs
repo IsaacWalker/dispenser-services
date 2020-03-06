@@ -18,6 +18,6 @@ namespace Web.EntityData
         /// <summary>
         /// The rooms of this ward
         /// </summary>
-        public virtual IList<Room> Rooms { get; set; }
+        public virtual IList<Room> Rooms { get; set; } = new List<Room>();
     }
 }

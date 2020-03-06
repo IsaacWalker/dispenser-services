@@ -113,6 +113,30 @@ namespace Web.SchedulerService
 
                 context.SaveChanges();
 
+
+                // Add Wards
+                Bed b1 = new Bed { Label = "A1" };
+                Bed b2 = new Bed { Label = "A2" };
+                Bed b3 = new Bed { Label = "A3" };
+                context.Beds.Add(b1);
+                context.Beds.Add(b2);
+                context.Beds.Add(b3);
+
+                p1.Bed = b1;
+                p2.Bed = b2;
+                p3.Bed = b3;
+
+                Room room = new Room { Label = "123" };
+                room.Beds.Add(b1);
+                room.Beds.Add(b2);
+                room.Beds.Add(b3);
+                context.Rooms.Add(room);
+
+                Ward ward = new Ward { Name = "Pediatric ward" };
+                ward.Rooms.Add(room);
+                context.Wards.Add(ward);
+
+                context.SaveChanges();
             }
         }
 

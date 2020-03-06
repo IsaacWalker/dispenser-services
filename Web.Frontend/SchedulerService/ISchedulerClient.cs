@@ -25,5 +25,13 @@ namespace Web.Frontend.SchedulerService
         /// <param name="patientInfo"></param>
         /// <returns></returns>
         public Task<PatientInformationPageModel> GetPatientInfoModel(Guid patientInfo);
+
+
+        /// <summary>
+        /// Gets the Information model about a view
+        /// </summary>
+        /// <param name="prescriptionId"></param>
+        /// <returns></returns>
+        public Task<DrugInformationPageModel> GetDrugInfoModel(Guid prescriptionId);
     }
 }

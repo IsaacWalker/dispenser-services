@@ -27,6 +27,6 @@ namespace Web.EntityData
         /// <summary>
         /// Beds navigation property
         /// </summary>
-        public virtual IList<Bed> Beds { get; set; }
+        public virtual IList<Bed> Beds { get; set; } = new List<Bed>();
     }
 }
