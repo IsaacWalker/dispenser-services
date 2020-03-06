@@ -11,6 +11,12 @@ namespace Web.EntityData
     public sealed class ServiceDbContext : DbContext
     {
         /// <summary>
+        /// Beds 
+        /// </summary>
+        public DbSet<Bed> Beds { get; set; }
+
+
+        /// <summary>
         /// Nurses
         /// </summary>
         public DbSet<Nurse> Nurses { get; set; }
@@ -52,6 +58,22 @@ namespace Web.EntityData
         public DbSet<PrintJob> PrintJobs { get; set; }
 
 
+        /// <summary>
+        /// Rooms
+        /// </summary>
+        public DbSet<Room> Rooms { get; set; }
+
+
+        /// <summary>
+        /// Wards
+        /// </summary>
+        public DbSet<Ward> Wards { get; set; }
+
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="options"></param>
         public ServiceDbContext(DbContextOptions<ServiceDbContext> options) : base(options)
         {
 
@@ -95,6 +117,24 @@ namespace Web.EntityData
                 .HasOne(ODFA => ODFA.Nurse)
                 .WithMany(N => N.Administrations)
                 .HasForeignKey(ODFA => ODFA.NurseId);
+
+            // A Ward consist of rooms
+            modelBuilder.Entity<Room>()
+                .HasOne(R => R.Ward)
+                .WithMany(W => W.Rooms)
+                .HasForeignKey(R => R.WardId);
+
+            // A Room consists of beds
+            modelBuilder.Entity<Bed>()
+                .HasOne(B => B.Room)
+                .WithMany(R => R.Beds)
+                .HasForeignKey(B => B.RoomId);
+
+            // A patient can have a bed
+            modelBuilder.Entity<Bed>()
+                .HasOne(B => B.Patient)
+                .WithOne(P => P.Bed)
+                .HasForeignKey<Bed>(B => B.PatientId);
         }
     }
 }

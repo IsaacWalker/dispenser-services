@@ -19,13 +19,13 @@ namespace Web.Models.ViewModels
         /// <summary>
         /// The Surname of the Patient
         /// </summary>
-        public string Surname { get; set; }
+        public string LastName { get; set; }
 
 
         /// <summary>
         /// Bed
         /// </summary>
-        public int Bed { get; set; }
+        public string Bed { get; set; }
 
 
         /// <summary>

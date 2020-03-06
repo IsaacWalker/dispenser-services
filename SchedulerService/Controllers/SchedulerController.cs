@@ -10,9 +10,8 @@ using Web.EntityData;
 
 namespace Web.SchedulerService.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
-    public class SchedulerController : AMobileControllerBase
+    public class SchedulerController : APIControllerBase
     {
         /// <summary>
         /// constructor

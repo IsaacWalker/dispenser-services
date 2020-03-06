@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Web.SchedulerService.Controllers
 {
-    public abstract class AMobileControllerBase : ControllerBase
+    public abstract class APIControllerBase : ControllerBase
     {
         /// <summary>
         /// Service Provider
@@ -25,7 +25,7 @@ namespace Web.SchedulerService.Controllers
         /// Constructor
         /// </summary>
         /// <param name="serviceProvider"></param>
-        public AMobileControllerBase(IServiceProvider serviceProvider, ILogger logger)
+        public APIControllerBase(IServiceProvider serviceProvider, ILogger logger)
         {
             m_serviceProvider = serviceProvider;
             m_logger = logger;

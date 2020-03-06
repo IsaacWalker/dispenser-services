@@ -12,7 +12,7 @@ using Web.Models.ViewModels;
 namespace Web.SchedulerService.Controllers
 {
     [ApiController]
-    public class HomeController : AMobileControllerBase
+    public class HomeController : APIControllerBase
     {
         /// <summary>
         /// Constructor
@@ -30,7 +30,7 @@ namespace Web.SchedulerService.Controllers
         /// <param name="nurseId"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("api/[controller]")]
+        [Route("api/view/[controller]")]
         public IActionResult Get([FromQuery] Guid nurseId)
         {
             m_logger.LogDebug("Getting Home view for Nurse {0}", nurseId);
@@ -56,7 +56,6 @@ namespace Web.SchedulerService.Controllers
                     .Where(Job => Job.Status == PrintJobStatus.PRINTING || Job.Status == PrintJobStatus.PRINTED)
                     .FirstOrDefault();
 
-                
                 if (currentJob != null)
                 {
                     var result = context.ODFs.Where(O => O.PrintJobId == currentJob.Id)
@@ -81,7 +80,7 @@ namespace Web.SchedulerService.Controllers
 
                     model.PrintJobId = currentJob.Id;
                     model.ODFs = batchModels.ToList();
-
+                    
                     m_logger.LogDebug("Returning Home Model for Nurse {0} with {1} ODF's", nurseId, model.ODFs.Count);
                 }
                 else

@@ -39,10 +39,21 @@ namespace Web.EntityData
         public DateTime DateOfBirth { get; set; }
 
 
-
         /// <summary>
         /// The prescriptions associated with the patient
         /// </summary>
         public virtual IList<Prescription> Prescriptions { get; set; } = new List<Prescription>();
+
+
+        /// <summary>
+        /// The location of this patient
+        /// </summary>
+        public Guid BedId { get; set; }
+
+
+        /// <summary>
+        /// Location of the patient nav property
+        /// </summary>
+        public virtual Bed Bed { get; set; }
     }
 }

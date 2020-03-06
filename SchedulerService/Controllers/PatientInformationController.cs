@@ -13,7 +13,7 @@ using Web.Models.ViewModels;
 namespace Web.SchedulerService.Controllers
 {
     [ApiController]
-    public class PatientInformationController : AMobileControllerBase
+    public class PatientInformationController : APIControllerBase
     {
         /// <summary>
         /// Constructor
@@ -31,7 +31,7 @@ namespace Web.SchedulerService.Controllers
         /// <param name="patientId"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("api/[controller]")]
+        [Route("api/view/[controller]")]
         public IActionResult Get([FromQuery] Guid patientId)
         {
             PatientInformationPageModel model = new PatientInformationPageModel();
@@ -40,15 +40,32 @@ namespace Web.SchedulerService.Controllers
             {
                 var context = scope.ServiceProvider.GetService<ServiceDbContext>();
 
-                Patient patient = context.Patients.Find(patientId);
+                var patientInfo = context.Patients
+                    .Where(P => P.Id == patientId)
+                    .Include(P => P.Bed)
+                    .ThenInclude(B => B.Room)
+                    .ThenInclude(R => R.Ward)
+                    .Select(P => new
+                    {
+                        firstName = P.FirstName,
+                        lastName = P.LastName,
+                        bed = P.Bed.Label,
+                        room = P.Bed.Room.Label,
+                        ward = P.Bed.Room.Ward.Name
+                    })
+                    .FirstOrDefault();
+                
 
                 if(patientId == default)
                 {
                     return NotFound(patientId);
                 }
 
-                model.FirstName = patient.FirstName;
-                model.Surname = patient.LastName;
+                model.FirstName = patientInfo.firstName;
+                model.LastName = patientInfo.lastName;
+                model.Room = patientInfo.room;
+                model.Bed = patientInfo.bed;
+                model.Ward = patientInfo.ward;
 
                 var administeredMedications = context.ODFs
                     .Where(O => O.PrescriptionTime.Prescription.PatientId == patientId)

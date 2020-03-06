@@ -12,7 +12,7 @@ using Web.Models.ViewModels;
 namespace Web.SchedulerService.Controllers
 {
     [ApiController]
-    public class DrugInformationController : AMobileControllerBase
+    public class DrugInformationController : APIControllerBase
     {
         /// <summary>
         /// Constructor
@@ -30,7 +30,7 @@ namespace Web.SchedulerService.Controllers
         /// <param name="prescriptionId"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("api/[controller]")]
+        [Route("api/view/[controller]")]
         public IActionResult Get([FromQuery] Guid prescriptionId)
         {
             // TODO - finish query
