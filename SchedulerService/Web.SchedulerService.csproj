@@ -22,6 +22,7 @@
   <ItemGroup>
     <ProjectReference Include="..\EntityData\Web.EntityData.csproj" />
     <ProjectReference Include="..\Web.DispenserClient\Web.DispenserClient.csproj" />
+    <ProjectReference Include="..\Web.Models\Web.Models.csproj" />
   </ItemGroup>
 
   <ItemGroup>

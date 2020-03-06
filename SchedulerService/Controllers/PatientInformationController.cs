@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Web.EntityData;
-using Web.SchedulerService.Models.PageModels;
+using Web.Models.ViewModels;
 
 namespace Web.SchedulerService.Controllers
 {
@@ -50,13 +50,16 @@ namespace Web.SchedulerService.Controllers
                 model.FirstName = patient.FirstName;
                 model.Surname = patient.LastName;
 
-                /// Get all the ODF's for a patient for that day
-                var prescriptionTimes = context.Prescriptions
-                    .Where(P => P.PatientId == patientId)
-                    .Include(P => P.Times)
-                    .Select(P => P.Times);
-
-             //   prescriptionTimes.Where(T => T.)
+                var administeredMedications = context.ODFs
+                    .Where(O => O.PrescriptionTime.Prescription.PatientId == patientId)
+                    .Include(O => O.PrescriptionTime.Prescription)
+                    .Select(O => new AdministeredMedication()
+                    {
+                        Dosage = O.PrescriptionTime.Prescription.Dosage,
+                        DrugName = O.PrescriptionTime.Prescription.DrugName,
+                        NurseName = O.ODFAdministration.Nurse.FirstName,
+                        Time = O.ODFAdministration.DateTime
+                    });
             }
 
             return Ok(model);

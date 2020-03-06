@@ -21,6 +21,12 @@ namespace Web.EntityData
         /// </summary>
         public DbSet<ODF> ODFs { get; set; }
 
+
+        /// <summary>
+        /// Administrations of ODFs
+        /// </summary>
+        public DbSet<ODFAdministration> ODFAdministrations { get; set; }
+
      
         /// <summary>
         /// The patients in the database
@@ -77,6 +83,18 @@ namespace Web.EntityData
                 .HasOne(ODF => ODF.PrintJob)
                 .WithMany(Job => Job.ODFs)
                 .HasForeignKey(ODF => ODF.PrintJobId);
+
+            // ODFs can have an associate administration
+            modelBuilder.Entity<ODF>()
+                .HasOne(ODF => ODF.ODFAdministration)
+                .WithOne(A => A.ODF)
+                .HasForeignKey<ODF>(ODF => ODF.ODFAdministrationId);
+
+            // An ODFAdminstration is administered by a nurse
+            modelBuilder.Entity<ODFAdministration>()
+                .HasOne(ODFA => ODFA.Nurse)
+                .WithMany(N => N.Administrations)
+                .HasForeignKey(ODFA => ODFA.NurseId);
         }
     }
 }

@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Web.EntityData;
-using Web.SchedulerService.Models.PageModels;
+using Web.Models.ViewModels;
 
 namespace Web.SchedulerService.Controllers
 {

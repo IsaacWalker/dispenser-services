@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Web.SchedulerService.Models.PageModels
+namespace Web.Models.ViewModels
 {
     /// <summary>
     /// Model for the patient information page
@@ -52,27 +52,16 @@ namespace Web.SchedulerService.Models.PageModels
         public IList<AdministeredMedication> AdministeredMedications { get; set; }
     }
 
-    public class PendingMedication
+    public class PendingMedication : DailyMedicationModel
     {
-        /// <summary>
-        /// The Drug for that day
-        /// </summary>
-        public DailyMedicationModel Medication { get; set; }
-
-
         /// <summary>
         /// Current Status of the drug
         /// </summary>
         public string Status { get; set; }
     }
 
-    public class AdministeredMedication
+    public class AdministeredMedication : DailyMedicationModel
     {
-        /// <summary>
-        /// The Drug for that day
-        /// </summary>
-        public DailyMedicationModel Medication { get; set; }
-
 
         /// <summary>
         /// The name of the nurse who administered the drug
@@ -80,7 +69,7 @@ namespace Web.SchedulerService.Models.PageModels
         public string NurseName { get; set; }
     }
 
-    public class DailyMedicationModel
+    public abstract class DailyMedicationModel
     {
         /// <summary>
         /// The Name of the drug

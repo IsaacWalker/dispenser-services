@@ -10,6 +10,12 @@ namespace Web.EntityData
     public class ODF : AEntityBase
     {
         /// <summary>
+        /// The Date for this ODF
+        /// </summary>
+        public DateTime Date { get; set; }
+
+
+        /// <summary>
         /// Id of the prescription time that this ODF was associated with
         /// </summary>
 

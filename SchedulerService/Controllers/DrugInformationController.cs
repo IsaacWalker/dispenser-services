@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Web.EntityData;
-using Web.SchedulerService.Models.PageModels;
+using Web.Models.ViewModels;
 
 namespace Web.SchedulerService.Controllers
 {

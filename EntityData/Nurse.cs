@@ -16,5 +16,11 @@ namespace Web.EntityData
         /// Nurse Last Name
         /// </summary>
         public string LastName { get; set; }
+
+
+        /// <summary>
+        /// Administrations
+        /// </summary>
+        public IList<ODFAdministration> Administrations { get; set; }
     }
 }

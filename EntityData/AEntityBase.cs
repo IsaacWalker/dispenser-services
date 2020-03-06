@@ -10,5 +10,7 @@ namespace Web.EntityData
         /// Guid Id used by all entities
         /// </summary>
         public Guid Id { get; set; }
+
+
     }
 }
