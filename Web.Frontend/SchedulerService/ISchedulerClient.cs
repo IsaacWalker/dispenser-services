@@ -33,5 +33,14 @@ namespace Web.Frontend.SchedulerService
         /// <param name="prescriptionId"></param>
         /// <returns></returns>
         public Task<DrugInformationPageModel> GetDrugInfoModel(Guid prescriptionId);
+
+
+        /// <summary>
+        /// Confirms an administration
+        /// </summary>
+        /// <param name="patientId"></param>
+        /// <param name="odfId"></param>
+        /// <returns></returns>
+        public Task<bool> ConfirmAdministration(Guid nurseId, Guid odfId, DateTime administrationTime);
     }
 }

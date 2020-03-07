@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Web.Models;
 using Web.Models.ViewModels;
 
 namespace Web.Frontend.SchedulerService
@@ -51,6 +52,27 @@ namespace Web.Frontend.SchedulerService
             m_configuration = configuration;
             m_logger = logger;
             m_baseUri = new Uri(m_configuration.GetValue<string>("Settings:SchedulerServiceBaseUriProd"));
+        }
+
+
+        public async Task<bool> ConfirmAdministration(Guid nurseId, Guid odfId, DateTime administrationTime)
+        {
+            Uri pathUri = new Uri(m_baseUri.AbsoluteUri + m_configuration.GetValue<string>("Settings:SchedulerConfirmAdminPath"));
+            
+            using(var client = m_httpClientFactory.CreateClient())
+            {
+                var model = new ConfirmAdministrationModel()
+                {
+                    NurseId = nurseId,
+                    OdfId = odfId,
+                    AdministrationTime = administrationTime
+                };
+
+                HttpContent content = new StringContent(JsonConvert.SerializeObject(model));
+                var result = await client.PostAsync(pathUri,content);
+
+                return result.IsSuccessStatusCode;
+            }
         }
 
 
