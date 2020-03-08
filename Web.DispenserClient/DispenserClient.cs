@@ -26,6 +26,12 @@ namespace Web.DispenserClient
 
 
         /// <summary>
+        /// Base Uri
+        /// </summary>
+        private readonly Uri m_baseUri;
+
+
+        /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="httpClientFactory"></param>
@@ -34,6 +40,7 @@ namespace Web.DispenserClient
         {
             m_clientFactory = httpClientFactory;
             m_configuration = configuration;
+            m_baseUri = new Uri(configuration.GetValue<string>("DispenserClient:BaseUrl"));
         }
 
 
@@ -43,7 +50,7 @@ namespace Web.DispenserClient
         /// <returns></returns>
         public async Task<GetPrinterStatusResponse> GetPrinterStatusAsync()
         {
-            Uri uri = new Uri(m_configuration.GetValue<string>("getPrinterStatusUrl"));
+            Uri uri = new Uri(m_baseUri.AbsoluteUri + m_configuration.GetValue<string>("DispenserClient:GetPrinterStatusPath"));
 
             using(var client = m_clientFactory.CreateClient())
             {
@@ -68,7 +75,7 @@ namespace Web.DispenserClient
         /// <returns></returns>
         public async Task<InitializePrintJobResponse> InitializePrintJobAsync(Guid JobId, IList<ODFTablet> ODFs)
         {
-            UriBuilder uri = new UriBuilder(m_configuration.GetValue<string>("initializePrintJobUrl"))
+            UriBuilder uri = new UriBuilder(m_baseUri.AbsoluteUri + m_configuration.GetValue<string>("DispenserClient:InitializePrintJobPath"))
             {
                 Query = string.Format("{0}={1}", nameof(JobId), JobId)
             };
@@ -76,7 +83,7 @@ namespace Web.DispenserClient
             using (var client = m_clientFactory.CreateClient())
             {
                 HttpContent httpContent = new StringContent(JsonConvert.SerializeObject(ODFs));
-                var response = await client.PostAsync(uri.Uri, httpContent);
+                var response = await client.PutAsync(uri.Uri, httpContent);
 
                 if(response.IsSuccessStatusCode
                     && DateTime.TryParse(await response.Content.ReadAsStringAsync(), out DateTime eta))
@@ -95,11 +102,11 @@ namespace Web.DispenserClient
         /// </summary>
         /// <param name="JobId"></param>
         /// <returns></returns>
-        public async Task<StartPrintJobResponse> StartPrintJobAsync(Guid JobId)
+        public async Task<StartPrintJobResponse> StartPrintJobAsync(Guid jobId)
         {
-            UriBuilder uri = new UriBuilder(m_configuration.GetValue<string>("startPrintJobUrl"))
+            UriBuilder uri = new UriBuilder(m_baseUri.AbsoluteUri + m_configuration.GetValue<string>("DispenserClient:StartPrintJobPath"))
             {
-                Query = string.Format("{0}={1}", nameof(JobId), JobId)
+                Query = string.Format("{0}={1}", nameof(jobId), jobId)
             };
 
             using (HttpClient client = m_clientFactory.CreateClient())
@@ -114,10 +121,15 @@ namespace Web.DispenserClient
         /// Unlocks the dispenser
         /// </summary>
         /// <returns></returns>
-        public Task<UnlockDispenserResponse> UnlockDispenserAsync()
+        public async Task<UnlockDispenserResponse> UnlockDispenserAsync()
         {
-            // TODO
-            throw new NotImplementedException();
+            Uri uri = new Uri(m_baseUri.AbsoluteUri + m_configuration.GetValue<string>("DispenserClient:UnlockDispenserPath"));
+
+            using(var client = m_clientFactory.CreateClient())
+            {
+                var response = await client.GetAsync(uri);
+                return new UnlockDispenserResponse(response.IsSuccessStatusCode);
+            }
         }
     }
 }
