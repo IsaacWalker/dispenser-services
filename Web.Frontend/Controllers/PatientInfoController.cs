@@ -15,14 +15,15 @@ namespace Web.Frontend.Controllers
         /// <param name="schedulerClient"></param>
         public PatientInfoController(ISchedulerClient schedulerClient) : base(schedulerClient)
         {
+
         }
 
 
         [Route("patient")]
-        public async Task<ViewResult> Index([FromQuery] Guid patientId)
+        public async Task<ViewResult> PatientInfo([FromQuery] Guid patientId)
         {
             var model = await m_schedulerClient.GetPatientInfoModel(patientId);
-            return View(model);
+            return View("Views/Pages/PatientInfo.cshtml", model);
         }
     }
 }

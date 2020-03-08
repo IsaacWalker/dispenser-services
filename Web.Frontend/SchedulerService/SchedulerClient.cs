@@ -141,12 +141,12 @@ namespace Web.Frontend.SchedulerService
         /// </summary>
         /// <param name="patientInfo"></param>
         /// <returns></returns>
-        public async Task<PatientInformationPageModel> GetPatientInfoModel(Guid patientInfo)
+        public async Task<PatientInformationPageModel> GetPatientInfoModel(Guid patientId)
         {
             Uri pathUri = new Uri(m_baseUri.AbsoluteUri + m_configuration.GetValue<string>("Settings:SchedulerPatientPath"));
             UriBuilder uriBuilder = new UriBuilder(pathUri)
             {
-                Query = string.Format("{0}={1}", nameof(patientInfo), patientInfo)
+                Query = string.Format("{0}={1}", nameof(patientId), patientId)
             };
 
             using(var client = m_httpClientFactory.CreateClient())

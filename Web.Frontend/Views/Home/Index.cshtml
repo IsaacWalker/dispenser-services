@@ -4,9 +4,8 @@
     ViewData["Title"] = "Index";
 }
 <nav class="navbar sticky-top navbar-light bg-primary">
-    <img src="~/node_modules//bootstrap-icons/icons/arrow-left.svg" alt="" width="32" height="32" title="Bootstrap">
-    <img src="~/node_modules//bootstrap-icons/icons/house.svg" alt="" width="32" height="32" title="Bootstrap">
 </nav>
+
 
 <div class="container bg-light">
     <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-primary rounded shadow-sm">
@@ -17,10 +16,10 @@
         {
             <div class="row">
                 <div class="col-2">
-                    <a class="bg-white">@Model.ODFs[i].PatientName</a>
+                    <a href="/patient?patientId=@Model.ODFs[i].PatientId" class="btn btn-info" role="button">@Model.ODFs[i].PatientName</a>
                 </div>
                 <div class="col-2">
-                    <a class="bg-white">@Model.ODFs[i].MedicationName</a>
+                    <a href="/drug?prescriptionId=@Model.ODFs[i].PrescriptionId" class="btn btn-info" role="button">@Model.ODFs[i].MedicationName</a>
                 </div>
             </div>
         }

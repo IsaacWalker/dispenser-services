@@ -56,7 +56,7 @@ namespace Web.SchedulerService.Controllers
                     .FirstOrDefault();
                 
 
-                if(patientId == default)
+                if(patientInfo == default)
                 {
                     return NotFound(patientId);
                 }

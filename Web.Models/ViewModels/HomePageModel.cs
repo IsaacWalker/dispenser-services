@@ -49,6 +49,12 @@ namespace Web.Models.ViewModels
         public Guid PatientId { get; set; }
 
 
+        /// <summary>
+        /// Id of the prescription for this ODF
+        /// </summary>
+        public Guid PrescriptionId { get; set; }
+
+
 
         /// <summary>
         /// Name of the Medication

@@ -67,7 +67,8 @@ namespace Web.SchedulerService.Controllers
                             patientName = O.PrescriptionTime.Prescription.Patient.FirstName,
                             drugName = O.PrescriptionTime.Prescription.DrugName,
                             odfId = O.Id,
-                            patientId = O.PrescriptionTime.Prescription.Patient.Id
+                            patientId = O.PrescriptionTime.Prescription.Patient.Id,
+                            prescriptionId = O.PrescriptionTime.PrescriptionId
                         });
 
                     var batchModels = result.Select(R => new BatchODF()
@@ -75,7 +76,8 @@ namespace Web.SchedulerService.Controllers
                         PatientId = R.patientId,
                         PatientName = R.patientName,
                         MedicationName = R.drugName,
-                        ODFId = R.odfId
+                        ODFId = R.odfId,
+                        PrescriptionId = R.prescriptionId
                     });
 
                     model.PrintJobId = currentJob.Id;
