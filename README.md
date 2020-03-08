@@ -1,5 +1,5 @@
 # Dispenser Services
-Services for scheduling medication printing and acts as a gRPC client
+Services for scheduling medication printing
 
 ### Setup
 #### Windows 10
@@ -16,8 +16,12 @@ Services for scheduling medication printing and acts as a gRPC client
 
 3. Open the .sln in Visual Studio
 
-4. Select Web.SchedulerService for the Startup Project
+4. In Solution Explorer, Right click Solution 'DispenserService' and go to properties.
 
-5. Rebuild the project
+5. Select Multiple startup projects and enable Web.SchedulerService and Web.Frontend
 
-6. Press the f5 to run the project
+6. Exit the dialog, right click libman.json under Web.Frontend and restore client-side dependencies.
+
+7. Rebuild the project
+
+8. Press the f5 to run the project
