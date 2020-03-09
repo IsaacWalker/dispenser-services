@@ -4,19 +4,6 @@
     ViewData["Title"] = "PatientInfo";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-@*<nav class="navbar sticky-top navbar-light bg-primary">
-         <img src="~/node_modules//bootstrap-icons/icons/arrow-left.svg" alt="" width="32" height="32" title="Bootstrap">
-         <img src="~/node_modules//bootstrap-icons/icons/house.svg" alt="" width="32" height="32" title="Bootstrap">
-    </nav>
-
-    <a>
-        @Model.FirstName
-    </a>
-    <a>
-        @Model.LastName
-    </a>*@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,11 +14,10 @@
     <meta name="author" content="">
     <title>Patient Record</title>
     <link href="css/styles.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js" crossorigin="anonymous"></script>
 </head>
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-        <a class="navbar-brand" href="index.html">Nurse Name</a>
+        <a class="navbar-brand" href="index.html">Patient Screen</a>
         <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
         <!-- Navbar Search-->
         <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
@@ -65,14 +51,10 @@
                     <div class="card-header">@Model.FirstName @Model.LastName</div>
                         <div class="card-body">
                             <h2 class="mt-4"></h2>
-                            <p class="mb-0">
-                                Date of Birth: 20 April 1998
-                            </p>
-                            <p class="mb-0"
-                                Bed: @Model.Bed 
-                                Room: @Model.Room
-                                Ward: @Model.Ward
-                            </p>
+                            <p class="mb-0"> Date of Birth: 20 April 1998 </p>
+                            <p class="mb-0"> Bed: @Model.Bed   </p>
+                            <p class="mb-0"> Room: @Model.Room </p>
+                            <p class="mb-0">Ward: @Model.Ward></p>
                         </div>
                     </div>
                 <div style="height: 100vh;"></div>
@@ -93,9 +75,6 @@
                 </div>
             </div>
         </footer>
-
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="js/scripts.js"></script>
 </body>
 </html>

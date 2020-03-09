@@ -9,6 +9,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\js\datatables-demo.js" />
+    <None Include="wwwroot\js\scripts.js" />
     <None Include="wwwroot\node_modules\bootstrap-icons\icons\arrow-left.svg" />
     <None Include="wwwroot\node_modules\bootstrap-icons\icons\arrow-right.svg" />
     <None Include="wwwroot\node_modules\bootstrap-icons\icons\house.svg" />
