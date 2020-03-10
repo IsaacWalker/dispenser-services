@@ -34,7 +34,7 @@ namespace Web.SchedulerService.Controllers
         {
             m_logger.LogDebug("Setting Print Job {0} to PRINTED", jobId);
 
-
+            
             using(var scope = m_serviceProvider.CreateScope())
             {
                 var context = scope.ServiceProvider.GetService<ServiceDbContext>();

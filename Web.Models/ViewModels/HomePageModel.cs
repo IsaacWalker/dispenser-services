@@ -8,7 +8,7 @@ namespace Web.Models.ViewModels
     /// <summary>
     /// Model for the Home Page
     /// </summary>
-    public class HomePageModel
+    public class HomePageModel : ViewModelBase
     {
         /// <summary>
         /// The Name of the nurse

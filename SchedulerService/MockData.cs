@@ -53,7 +53,7 @@ namespace Web.SchedulerService
                 {
                     DrugName = "Colace",
                     Dosage = 1.25f,
-                    StartDate = DateTime.Now.Date,
+                    StartDate = DateTime.Now.Date - TimeSpan.FromDays(2.0),
                     EndDate = DateTime.Now.Date + TimeSpan.FromDays(14.0),
                     Route = "PO",
                     Patient = p1
@@ -63,7 +63,7 @@ namespace Web.SchedulerService
                 {
                     DrugName = "Zofran",
                     Dosage = 1.25f,
-                    StartDate = DateTime.Now.Date,
+                    StartDate = DateTime.Now.Date - TimeSpan.FromDays(2.0),
                     EndDate = DateTime.Now.Date + TimeSpan.FromDays(14.0),
                     Route = "PO",
                     Patient = p2
@@ -73,8 +73,8 @@ namespace Web.SchedulerService
                 {
                     DrugName = "Desipramine",
                     Dosage = 25.0f,
-                    StartDate = DateTime.Now.Date,
-                    EndDate = DateTime.Now.Date + TimeSpan.FromDays(14.0),
+                    StartDate = DateTime.Now.Date - TimeSpan.FromDays(2.0),
+                    EndDate = DateTime.Now.Date + TimeSpan.FromDays(12.0),
                     Route = "PO",
                     Patient = p3
                 };
@@ -86,6 +86,11 @@ namespace Web.SchedulerService
 
                 
                 PrintJob job = new PrintJob()
+                {
+                    Status = PrintJobStatus.REMOVED
+                };
+
+                PrintJob job2 = new PrintJob()
                 {
                     Status = PrintJobStatus.PRINTING
                 };
@@ -110,12 +115,24 @@ namespace Web.SchedulerService
                     PrintJob = job
                 };
 
+                ODF odf4 = new ODF()
+                {
+                    PrescriptionTime = p3PrescriptionOne.Times[1],
+                    PrintJob = job2
+                };
+
+
                 context.Add(odf1);
                 context.Add(odf2);
                 context.Add(odf3);
+                context.Add(odf4);
 
                 context.SaveChanges();
 
+                // Add administrations
+                ODFAdministration adminOne = new ODFAdministration 
+                { DateTime = odf3.PrescriptionTime.Time + TimeSpan.FromMinutes(25.0), NurseId = nurse.Id, ODF = odf3};
+                context.ODFAdministrations.Add(adminOne);
 
                 // Add Wards
                 Bed b1 = new Bed { Label = "A1" };

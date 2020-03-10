@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using Web.Models;
 using Web.Models.ViewModels;
@@ -68,7 +69,8 @@ namespace Web.Frontend.SchedulerService
                     AdministrationTime = administrationTime
                 };
 
-                HttpContent content = new StringContent(JsonConvert.SerializeObject(model));
+                HttpContent content = new StringContent(JsonConvert.SerializeObject(model),Encoding.Default, "application/json");
+                
                 var result = await client.PostAsync(pathUri,content);
 
                 return result.IsSuccessStatusCode;
@@ -77,16 +79,44 @@ namespace Web.Frontend.SchedulerService
 
 
         /// <summary>
+        /// Gets the administation model
+        /// </summary>
+        /// <param name="nurseId"></param>
+        /// <param name="odfId"></param>
+        /// <returns></returns>
+        public async Task<AdministrationVerificationModel> GetAdministrationModel(Guid nurseId, Guid odfId)
+        {
+            Uri pathUri = new Uri(m_baseUri.AbsoluteUri + m_configuration.GetValue<string>("Settings:AdministrationPath"));
+            UriBuilder builder = new UriBuilder(pathUri)
+            {
+                Query = string.Format("{0}={1}&{2}={3}", nameof(nurseId), nurseId, nameof(odfId), odfId)
+            };
+
+            using(var client = m_httpClientFactory.CreateClient())
+            {
+                var response = await client.GetAsync(builder.Uri);
+
+                if(response.IsSuccessStatusCode)
+                {
+                    return JsonConvert.DeserializeObject<AdministrationVerificationModel>(await response.Content.ReadAsStringAsync());
+                }
+            }
+
+            return default;
+        }
+
+
+        /// <summary>
         /// Gets the drug info model
         /// </summary>
         /// <param name="prescriptionId"></param>
         /// <returns></returns>
-        public async Task<DrugInformationPageModel> GetDrugInfoModel(Guid prescriptionId)
+        public async Task<DrugInformationPageModel> GetDrugInfoModel(Guid nurseId, Guid prescriptionId)
         {
             Uri pathUri = new Uri(m_baseUri.AbsoluteUri + m_configuration.GetValue<string>("Settings:SchedulerDrugPath"));
             UriBuilder uriBuilder = new UriBuilder(pathUri)
             {
-                Query = string.Format("{0}={1}", nameof(prescriptionId), prescriptionId)
+                Query = string.Format("{0}={1}&{2}={3}", nameof(prescriptionId), prescriptionId, nameof(nurseId), nurseId)
             };
 
             using (var client = m_httpClientFactory.CreateClient())
@@ -141,12 +171,12 @@ namespace Web.Frontend.SchedulerService
         /// </summary>
         /// <param name="patientInfo"></param>
         /// <returns></returns>
-        public async Task<PatientInformationPageModel> GetPatientInfoModel(Guid patientId)
+        public async Task<PatientInformationPageModel> GetPatientInfoModel(Guid nurseId, Guid patientId)
         {
             Uri pathUri = new Uri(m_baseUri.AbsoluteUri + m_configuration.GetValue<string>("Settings:SchedulerPatientPath"));
             UriBuilder uriBuilder = new UriBuilder(pathUri)
             {
-                Query = string.Format("{0}={1}", nameof(patientId), patientId)
+                Query = string.Format("{0}={1}&{2}={3}", nameof(patientId), patientId,nameof(nurseId), nurseId)
             };
 
             using(var client = m_httpClientFactory.CreateClient())

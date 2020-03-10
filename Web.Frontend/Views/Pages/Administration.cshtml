@@ -1,0 +1,11 @@
+﻿@model Web.Models.ViewModels.AdministrationVerificationModel
+@{
+    ViewData["Title"] = "Administration";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+This is confirmation that @Model.Dosage grams of @Model.MedicationName
+was administered to @Model.PatientFirstName @Model.PatientLastName, @Model.PatientDateOfBirth
+at @Model.CurrentTime by @Model.NurseFirstName @Model.NurseLastName
+<a href="/administration/confirm?nurseId=@Model.NurseId&patientId=@Model.PatientId&odfId=@Model.OdfId" class="btn btn-primary">Verify</a>
+

@@ -31,7 +31,7 @@ namespace Web.SchedulerService.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/view/[controller]")]
-        public IActionResult Get([FromQuery] Guid prescriptionId)
+        public IActionResult Get([FromQuery] Guid nurseId,[FromQuery] Guid prescriptionId)
         {
             // TODO - finish query
             m_logger.LogInformation("Getting Drug Information screen for {0}", prescriptionId);
@@ -53,6 +53,7 @@ namespace Web.SchedulerService.Controllers
                 drugInformationPageModel.Notes = prescription.Notes;
                 drugInformationPageModel.Dosage = prescription.Dosage;
                 drugInformationPageModel.Route = prescription.Route;
+                drugInformationPageModel.NurseId = nurseId;
             }
 
             return Ok(drugInformationPageModel);

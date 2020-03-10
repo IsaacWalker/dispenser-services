@@ -60,13 +60,15 @@
                                         {
                                             <tr>
                                                 <td>
-                                                    <a href="/patient?patientId=@Model.ODFs[i].PatientId" class="btn btn-light" role="button">@Model.ODFs[i].PatientName</a>
+                                                    <a href="/patient?nurseId=@Model.NurseId&patientId=@Model.ODFs[i].PatientId"
+                                                       class="btn btn-light" role="button">@Model.ODFs[i].PatientName</a>
                                                 </td>
                                                 <td>Pediatric Ward</td>
                                                 <td>A</td>
                                                 <td>1</td>
                                                 <td>
-                                                    <a href="/drug?prescriptionId=@Model.ODFs[i].PrescriptionId" class="btn btn-light" role="button">@Model.ODFs[i].MedicationName</a>
+                                                    <a href="/drug?nurseId=@Model.NurseId&prescriptionId=@Model.ODFs[i].PrescriptionId" 
+                                                       class="btn btn-light" role="button">@Model.ODFs[i].MedicationName</a>
                                                 </td>
                                                 <td>300mg</td>
                                                 <td>ANY</td>
