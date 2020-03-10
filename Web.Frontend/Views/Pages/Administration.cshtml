@@ -4,8 +4,70 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-This is confirmation that @Model.Dosage grams of @Model.MedicationName
-was administered to @Model.PatientFirstName @Model.PatientLastName, @Model.PatientDateOfBirth
-at @Model.CurrentTime by @Model.NurseFirstName @Model.NurseLastName
-<a href="/administration/confirm?nurseId=@Model.NurseId&patientId=@Model.PatientId&odfId=@Model.OdfId" class="btn btn-primary">Verify</a>
+<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+    <a class="navbar-brand" href="index.html">Nurse Name</a>
+    <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
+    <!-- Navbar Search-->
+    <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+        <div class="input-group">
+            <input class="form-control" type="text" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="button"><i class="fas fa-search"></i></button>
+            </div>
+        </div>
+    </form>
+    <!-- Navbar-->
+    <ul class="navbar-nav ml-auto ml-md-0">
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                <a class="dropdown-item" href="#">Settings</a><a class="dropdown-item" href="#">Activity Log</a>
+                <div class="dropdown-divider"></div><a class="dropdown-item" href="login.html">Logout</a>
+            </div>
+        </li>
+    </ul>
+</nav>
+
+<main>
+    
+    <div class="container-fluid">
+        <h1 class="mt-4">Administration Confirmation</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item">Dashboard</li>
+            <li class="breadcrumb-item">@Model.PatientFirstName @Model.PatientLastName</li>
+            <li class="breadcrumb-item active">Administring @Model.MedicationName</li>
+        </ol>
+    </div>
+
+    <div class="container-fluid">
+        <div class="card sm-4">
+            <div class="card-header bg-primary text-white">Confirmation</div>
+            <div class="card-body text-center">
+                This is confirmation that <br>
+                <h4>@Model.Dosage <small>mg of</small> @Model.MedicationName</h4>
+                was administered to <br>
+                <h4>@Model.PatientFirstName @Model.PatientLastName<small class="text-muted">, @Model.PatientDateOfBirth</small></h4>
+                <h5><small>at </small>@Model.CurrentTime <small>by </small>@Model.NurseFirstName @Model.NurseLastName</h5>
+
+                <a href="/patient?nurseId=@Model.NurseId&patientId=@Model.PatientId" class="btn btn-danger">Cancel</a>
+                <a href="/administration/confirm?nurseId=@Model.NurseId&patientId=@Model.PatientId&odfId=@Model.OdfId" class="btn btn-success">Verify</a>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="py-4 bg-light mt-auto">
+    <div class="container-fluid">
+        <div class="d-flex align-items-center justify-content-between small">
+            <div class="text-muted">Copyright &copy; Sample Website 2020</div>
+            <div>
+                <a href="#">Privacy Policy</a>
+                &middot;
+                <a href="#">Terms &amp; Conditions</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="~/js/scripts.js"></script>
 
