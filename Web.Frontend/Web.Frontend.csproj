@@ -5,10 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\lib\" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <None Include="wwwroot\lib\js\src\datatables-demo.js" />
+    <None Include="wwwroot\lib\js\src\scripts.js" />
     <None Include="wwwroot\node_modules\bootstrap-icons\icons\arrow-left.svg" />
     <None Include="wwwroot\node_modules\bootstrap-icons\icons\arrow-right.svg" />
     <None Include="wwwroot\node_modules\bootstrap-icons\icons\house.svg" />
@@ -20,6 +18,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Web.Models\Web.Models.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Views\Home\js\" />
   </ItemGroup>
 
 </Project>

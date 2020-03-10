@@ -41,7 +41,7 @@
 </head>
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-        <a class="navbar-brand" href="index.html">@Model.NurseName</a>
+        <a class="navbar-brand" href="index.html">@Model.NurseName Name</a>
         <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
         <!-- Navbar Search-->
         @*<form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
@@ -113,10 +113,10 @@
             <main>
                 <div class="container-fluid">
                     <h1 class="mt-4">Dashboard</h1>
-                    <div class="row"></div>
+                    <div class="border-top my-3"></div>
                     <div class="card mb-4">
-                        <div class="card-header">
-                            <h3>Batch </h3>
+                        <div class="card-header" style="background-color: dodgerblue; color: white;">
+                            <strong>Batch </strong>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -139,15 +139,15 @@
                                                 <td>
                                                     <a href="/patient?patientId=@Model.ODFs[i].PatientId" class="btn btn-light" role="button">@Model.ODFs[i].PatientName</a>
                                                 </td>
-                                                <td>@Model.ODFs[i].PatientId.</td>
-                                                <td>1</td>
-                                                <td>1</td>
-                                                <td> 
+                                                <td>Pediatric Ward</td>
+                                                <td>123</td>
+                                                <td>A3</td>
+                                                <td>
                                                     <a href="/drug?prescriptionId=@Model.ODFs[i].PrescriptionId" class="btn btn-light" role="button">@Model.ODFs[i].MedicationName</a>
                                                 </td>
                                                 <td>300mg</td>
                                                 <td>ANY</td>
-          
+
                                             </tr>
                                         }
                                     </tbody>

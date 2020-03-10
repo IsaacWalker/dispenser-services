@@ -45,6 +45,9 @@ namespace Web.SchedulerService
 
                 context.SaveChanges();
 
+                //TODO - Add pending medications
+                
+
                 //TODO - Add prescriptions 
                 Prescription p1PrescriptionOne = new Prescription()
                 {
