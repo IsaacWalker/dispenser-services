@@ -62,15 +62,15 @@
                                                     <a href="/patient?nurseId=@Model.NurseId&patientId=@Model.ODFs[i].PatientId"
                                                        class="btn btn-light" role="button">@Model.ODFs[i].PatientName</a>
                                                 </td>
-                                                <td>Pediatric Ward</td>
-                                                <td>A3</td>
-                                                <td>123</td>
+                                                <td>@Model.ODFs[i].PatientWard</td>
+                                                <td>@Model.ODFs[i].PatientRoom</td>
+                                                <td>@Model.ODFs[i].PatientBed</td>
                                                 <td>
                                                     <a href="/drug?nurseId=@Model.NurseId&patientId=@Model.ODFs[i].PatientId&prescriptionId=@Model.ODFs[i].PrescriptionId" 
                                                        class="btn btn-light" role="button">@Model.ODFs[i].MedicationName</a>
                                                 </td>
-                                                <td>300mg</td>
-                                                <td>ANY</td>
+                                                <td>@Model.ODFs[i].Dosage mg</td>
+                                                <td>@Model.ODFs[i].Time</td>
 
                                             </tr>
                                         }

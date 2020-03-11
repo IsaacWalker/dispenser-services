@@ -35,7 +35,7 @@
         <ol class="breadcrumb mb-4">
             <li class="breadcrumb-item">Dashboard</li>
             <li class="breadcrumb-item">@Model.PatientFirstName @Model.PatientLastName</li>
-            <li class="breadcrumb-item active">Administring @Model.MedicationName</li>
+            <li class="breadcrumb-item active">Administiring @Model.MedicationName</li>
         </ol>
     </div>
 
@@ -48,7 +48,7 @@
                 This is confirmation that <br>
                 <h4>@Model.Dosage <small>mg of</small> @Model.MedicationName</h4>
                 was administered to <br>
-                <h4>@Model.PatientFirstName @Model.PatientLastName<small class="text-muted">, @Model.PatientDateOfBirth</small></h4>
+                <h4>@Model.PatientFirstName @Model.PatientLastName<small class="text-muted">, @Model.PatientDateOfBirth.ToShortDateString()</small></h4>
                 <h5><small>at </small>@Model.CurrentTime <small>by </small>@Model.NurseFirstName @Model.NurseLastName</h5>
 
                 <a href="/patient?nurseId=@Model.NurseId&patientId=@Model.PatientId" class="btn btn-danger">Cancel</a>

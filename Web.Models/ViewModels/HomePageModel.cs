@@ -66,6 +66,36 @@ namespace Web.Models.ViewModels
         /// Id of the ODF of that patient
         /// </summary>
         public Guid ODFId { get; set; }
+
+
+        /// <summary>
+        /// The patients bed
+        /// </summary>
+        public string PatientBed { get; set; }
+
+
+        /// <summary>
+        /// Patient room
+        /// </summary>
+        public string PatientRoom { get; set; }
+
+
+        /// <summary>
+        /// The Patient Ward
+        /// </summary>
+        public string PatientWard { get; set; }
+
+
+        /// <summary>
+        /// Dosage
+        /// </summary>
+        public double Dosage { get; set; }
+
+
+        /// <summary>
+        /// Time
+        /// </summary>
+        public DateTime Time { get; set; }
     }
 
 }

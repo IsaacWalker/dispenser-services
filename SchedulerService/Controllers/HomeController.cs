@@ -63,13 +63,21 @@ namespace Web.SchedulerService.Controllers
                         .Include(O => O.PrescriptionTime)
                         .ThenInclude(P => P.Prescription)
                         .ThenInclude(P => P.Patient)
+                        .ThenInclude(P => P.Bed)
+                        .ThenInclude(B => B.Room)
+                        .ThenInclude(R => R.Ward)
                         .Select(O => new 
                         { 
                             patientName = O.PrescriptionTime.Prescription.Patient.FirstName,
                             drugName = O.PrescriptionTime.Prescription.DrugName,
                             odfId = O.Id,
                             patientId = O.PrescriptionTime.Prescription.Patient.Id,
-                            prescriptionId = O.PrescriptionTime.PrescriptionId
+                            prescriptionId = O.PrescriptionTime.PrescriptionId,
+                            bed = O.PrescriptionTime.Prescription.Patient.Bed.Label,
+                            room =  O.PrescriptionTime.Prescription.Patient.Bed.Room.Label,
+                            ward = O.PrescriptionTime.Prescription.Patient.Bed.Room.Ward.Name,
+                            dosage = O.PrescriptionTime.Prescription.Dosage,
+                            time = O.PrescriptionTime.Time
                         });
 
                     var batchModels = result.Select(R => new BatchODF()
@@ -78,7 +86,12 @@ namespace Web.SchedulerService.Controllers
                         PatientName = R.patientName,
                         MedicationName = R.drugName,
                         ODFId = R.odfId,
-                        PrescriptionId = R.prescriptionId
+                        PrescriptionId = R.prescriptionId,
+                        PatientBed = R.bed,
+                        PatientRoom = R.room,
+                        PatientWard = R.ward,
+                        Dosage = R.dosage,
+                        Time = R.time
                     });
 
                     model.PrintJobId = currentJob.Id;
