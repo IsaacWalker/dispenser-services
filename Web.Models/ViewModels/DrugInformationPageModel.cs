@@ -21,6 +21,11 @@ namespace Web.Models.ViewModels
         /// </summary>
         public string PatientName { get; set; }
 
+        /// <summary>
+        /// The Id of the Patient 
+        /// </summary>
+        public string PatientId { get; set; }
+
 
         /// <summary>
         /// The Status of the that drug

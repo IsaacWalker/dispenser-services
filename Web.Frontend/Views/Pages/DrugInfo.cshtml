@@ -37,8 +37,8 @@
         <h1 class="mt-4">Drug Information</h1>
         <ol class="breadcrumb mb-4">
             <li class="breadcrumb-item"><a href="index">Dashboard</a></li>
-            <li class="breadcrumb-item"><a href="">Patient Name @Model.PatientName</a></li>
-            <li class="breadcrumb-item active">DRUG INFORMATION</li>
+            <li class="breadcrumb-item"><a href="patient?nurseId=@Model.NurseId&patientId=@Model.PatientId">Patient Name @Model.PatientName</a></li>
+            <li class="breadcrumb-item active">Drug Information</li>
         </ol>
     </div>
 
@@ -47,7 +47,9 @@
         <h1 class="mt-4">@Model.DrugName <small>Status: @Model.Status</small></h1>
 
         <div class="card mb-4">
-            <div class="card-header bg-primary text-white">@Model.PatientName's Prescription</div>
+            <div class="card-header bg-primary text-white">
+                <strong>@Model.PatientName Chad Chadwicks's Prescription</strong>
+            </div>
 
             <div class="card-body">
                 <div class="row">
@@ -85,7 +87,9 @@
 
         <!--Perscription History Table-->
         <div class="card mb-4">
-            <div class="card-header bg-primary text-white">@Model.DrugName Administration History</div>
+            <div class="card-header bg-primary text-white">
+                <strong>@Model.DrugName Administration History</strong>
+            </div>
             <div class="table-responsive">
                 <table class="table table-striped table-sm text-center text-primary">
                     <thead>
