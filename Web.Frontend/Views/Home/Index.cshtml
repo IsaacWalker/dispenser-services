@@ -18,7 +18,7 @@
 
 
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-        <a class="navbar-brand" href="index.html">@Model.NurseName</a>
+        <a class="navbar-brand" href="index.html">@Model.NurseFirstName @Model.NurseLastName</a>
         <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
         <ul class="navbar-nav ml-auto ml-md-0">
             <li class="nav-item dropdown">
@@ -38,7 +38,7 @@
                     <div class="border-top my-3"></div>
                     <div class="card mb-4">
                         <div class="card-header" style="background-color: dodgerblue; color: white;">
-                            <strong>Batch</strong>
+                            <strong>Current Batch Status: @Model.Status</strong>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">

@@ -21,9 +21,5 @@ namespace Web.Models.ViewModels
         public DateTime PatientDateOfBirth { get; set; }
 
         public DateTime CurrentTime { get; set; }
-
-        public string NurseFirstName { get; set; }
-
-        public string NurseLastName { get; set; }
     }
 }

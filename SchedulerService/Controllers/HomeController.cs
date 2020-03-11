@@ -51,7 +51,8 @@ namespace Web.SchedulerService.Controllers
                     return NotFound();
                 }
 
-                model.NurseName = nurse.FirstName + " " + nurse.LastName;
+                model.NurseFirstName = nurse.FirstName;
+                model.NurseLastName = nurse.LastName;
 
                 var currentJob = context.PrintJobs
                     .Where(Job => Job.Status == PrintJobStatus.PRINTING || Job.Status == PrintJobStatus.PRINTED)
@@ -68,7 +69,7 @@ namespace Web.SchedulerService.Controllers
                         .ThenInclude(R => R.Ward)
                         .Select(O => new 
                         { 
-                            patientName = O.PrescriptionTime.Prescription.Patient.FirstName,
+                            patientName = O.PrescriptionTime.Prescription.Patient.FirstName + " " + O.PrescriptionTime.Prescription.Patient.LastName,
                             drugName = O.PrescriptionTime.Prescription.DrugName,
                             odfId = O.Id,
                             patientId = O.PrescriptionTime.Prescription.Patient.Id,
@@ -96,7 +97,8 @@ namespace Web.SchedulerService.Controllers
 
                     model.PrintJobId = currentJob.Id;
                     model.ODFs = batchModels.ToList();
-                    
+                    model.Status = currentJob.Status.ToString();
+
                     m_logger.LogDebug("Returning Home Model for Nurse {0} with {1} ODF's", nurseId, model.ODFs.Count);
                 }
                 else

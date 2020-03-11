@@ -10,5 +10,17 @@ namespace Web.Models.ViewModels
         /// The nurse Id
         /// </summary>
         public Guid NurseId { get; set; }
+
+
+        /// <summary>
+        /// First name of nurse
+        /// </summary>
+        public string NurseFirstName { get; set; }
+
+
+        /// <summary>
+        /// Last Name of Nurse
+        /// </summary>
+        public string NurseLastName { get; set; }
     }
 }

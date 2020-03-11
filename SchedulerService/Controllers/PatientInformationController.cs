@@ -40,6 +40,9 @@ namespace Web.SchedulerService.Controllers
             using(var scope = m_serviceProvider.CreateScope())
             {
                 var context = scope.ServiceProvider.GetService<ServiceDbContext>();
+                var nurse = context.Nurses.Find(nurseId);
+                model.NurseFirstName = nurse.FirstName;
+                model.NurseLastName = nurse.LastName;
 
                 var patientInfo = context.Patients
                     .Where(P => P.Id == patientId)

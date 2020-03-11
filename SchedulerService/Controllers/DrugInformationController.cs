@@ -44,7 +44,8 @@ namespace Web.SchedulerService.Controllers
                 var context = scope.ServiceProvider.GetService<ServiceDbContext>();
 
                 Prescription prescription = context.Prescriptions.Find(prescriptionId);
-                
+                Nurse nurse = context.Nurses.Find(nurseId);
+
                 if(prescription == default)
                 {
                     return NotFound();
@@ -55,6 +56,8 @@ namespace Web.SchedulerService.Controllers
                 drugInformationPageModel.Dosage = prescription.Dosage;
                 drugInformationPageModel.Route = prescription.Route;
                 drugInformationPageModel.NurseId = nurseId;
+                drugInformationPageModel.NurseFirstName = nurse.FirstName;
+                drugInformationPageModel.NurseLastName = nurse.LastName;
 
                 var pastAdministrations = context.ODFAdministrations
                     .Include(A => A.ODF)

@@ -11,12 +11,6 @@ namespace Web.Models.ViewModels
     public class HomePageModel : ViewModelBase
     {
         /// <summary>
-        /// The Name of the nurse
-        /// </summary>
-        public string NurseName { get; set; }
-
-
-        /// <summary>
         /// Batch Number
         /// </summary>
         public int BatchNumber { get; set; }
@@ -26,6 +20,12 @@ namespace Web.Models.ViewModels
         /// The Job (Batch) Id
         /// </summary>
         public Guid PrintJobId { get; set; }
+
+
+        /// <summary>
+        /// Status of the batch
+        /// </summary>
+        public string Status { get; set; }
 
 
         /// <summary>

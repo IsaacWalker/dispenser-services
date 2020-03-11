@@ -114,7 +114,7 @@ namespace Web.SchedulerService
 
                 PrintJob job2 = new PrintJob()
                 {
-                    Status = PrintJobStatus.PRINTING
+                    Status = PrintJobStatus.PRINTED
                 };
 
                 context.PrintJobs.Add(job);
