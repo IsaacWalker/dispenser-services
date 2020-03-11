@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Web.EntityData;
@@ -54,6 +55,23 @@ namespace Web.SchedulerService.Controllers
                 drugInformationPageModel.Dosage = prescription.Dosage;
                 drugInformationPageModel.Route = prescription.Route;
                 drugInformationPageModel.NurseId = nurseId;
+
+                var pastAdministrations = context.ODFAdministrations
+                    .Include(A => A.ODF)
+                    .ThenInclude(ODF => ODF.PrescriptionTime)
+                    .Where(A => A.ODF.PrescriptionTime.PrescriptionId == prescriptionId)
+                    .Include(A => A.Nurse)
+                    .Select(A => new PastAdministrationModel()
+                    {
+                        AdministeringNurse = A.Nurse.FirstName + " " + A.Nurse.LastName,
+                        DateTime = A.DateTime,
+                        Dosage = prescription.Dosage,
+                        ExpirationDate = prescription.EndDate
+                    })
+                    .ToList();
+
+                drugInformationPageModel.PastAdministrationModels = pastAdministrations;
+
             }
 
             return Ok(drugInformationPageModel);

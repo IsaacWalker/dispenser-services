@@ -29,6 +29,12 @@ namespace Web.Models.ViewModels
 
 
         /// <summary>
+        /// The expected time of completion
+        /// </summary>
+        public DateTime ETA { get; set; }
+
+
+        /// <summary>
         /// ODFs of that batch
         /// </summary>
         public IList<BatchODF> ODFs { get; set; }

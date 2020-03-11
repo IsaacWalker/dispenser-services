@@ -62,5 +62,43 @@ namespace Web.Models.ViewModels
         /// </summary>
         public string Notes { get; set; }
 
+
+        /// <summary>
+        /// Past Administration Models
+        /// </summary>
+        public IList<PastAdministrationModel> PastAdministrationModels { get; set; }
+
+    }
+
+    public class PastAdministrationModel
+    {
+        /// <summary>
+        /// Date Time
+        /// </summary>
+        public DateTime DateTime { get; set; }
+
+
+        /// <summary>
+        /// Dosage
+        /// </summary>
+        public double Dosage { get; set; }
+
+
+        /// <summary>
+        /// Nurse who administered the drug
+        /// </summary>
+        public string AdministeringNurse { get; set; }
+
+
+        /// <summary>
+        /// Batch Number
+        /// </summary>
+        public int BatchNumber { get; set; }
+
+
+        /// <summary>
+        /// Expiration date
+        /// </summary>
+        public DateTime ExpirationDate { get; set; }
     }
 }

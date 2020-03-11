@@ -51,12 +51,12 @@ namespace Web.SchedulerService.Controllers
                     return NotFound();
                 }
 
-                model.NurseName = nurse.FirstName;
+                model.NurseName = nurse.FirstName + " " + nurse.LastName;
 
                 var currentJob = context.PrintJobs
                     .Where(Job => Job.Status == PrintJobStatus.PRINTING || Job.Status == PrintJobStatus.PRINTED)
                     .FirstOrDefault();
-
+                
                 if (currentJob != null)
                 {
                     var result = context.ODFs.Where(O => O.PrintJobId == currentJob.Id)
