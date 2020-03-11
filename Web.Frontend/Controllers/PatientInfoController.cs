@@ -20,9 +20,9 @@ namespace Web.Frontend.Controllers
 
 
         [Route("patient")]
-        public async Task<ViewResult> PatientInfo([FromQuery] Guid patientId)
+        public async Task<ViewResult> PatientInfo([FromQuery] Guid nurseId, [FromQuery] Guid patientId)
         {
-            var model = await m_schedulerClient.GetPatientInfoModel(patientId);
+            var model = await m_schedulerClient.GetPatientInfoModel(nurseId, patientId);
             return View("Views/Pages/PatientInfo.cshtml", model);
         }
     }

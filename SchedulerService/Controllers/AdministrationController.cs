@@ -16,7 +16,7 @@ namespace Web.SchedulerService.Controllers
     [ApiController]
     public class AdministrationController : APIControllerBase
     {
-        public AdministrationController(IServiceProvider serviceProvider, ILogger logger) : base(serviceProvider, logger)
+        public AdministrationController(IServiceProvider serviceProvider, ILogger<AdministrationController> logger) : base(serviceProvider, logger)
         {
         }
 
@@ -47,6 +47,7 @@ namespace Web.SchedulerService.Controllers
                      {
                          patientFirstName = O.PrescriptionTime.Prescription.Patient.FirstName,
                          patientlastName = O.PrescriptionTime.Prescription.Patient.LastName,
+                         patientId = O.PrescriptionTime.Prescription.PatientId,
                          medicationName = O.PrescriptionTime.Prescription.DrugName,
                          dosage = O.PrescriptionTime.Prescription.Dosage,
                          dateOfBirth = O.PrescriptionTime.Prescription.Patient.DateOfBirth
@@ -62,7 +63,10 @@ namespace Web.SchedulerService.Controllers
                     Dosage = query.dosage,
                     MedicationName = query.medicationName,
                     PatientDateOfBirth = query.dateOfBirth,
-                    CurrentTime = DateTime.Now
+                    CurrentTime = DateTime.Now,
+                    NurseId = nurseId,
+                    PatientId = query.patientId,
+                    OdfId = odfId
                 };
 
                 return Ok(model);
@@ -83,12 +87,20 @@ namespace Web.SchedulerService.Controllers
             {
                 var context = scope.ServiceProvider.GetService<ServiceDbContext>();
 
+                var odf = context.ODFAdministrations.Find(confirmModel.OdfId);
+
+                if(odf != default)
+                {
+                    return NotFound();
+                }
+
                 ODFAdministration administration = new ODFAdministration
                 {
                     DateTime = confirmModel.AdministrationTime,
                     NurseId = confirmModel.NurseId,
                     ODFId = confirmModel.OdfId
                 };
+
 
                 // Add an ODF administration
                 context.ODFAdministrations.Add(administration);

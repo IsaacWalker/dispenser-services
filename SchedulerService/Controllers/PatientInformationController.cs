@@ -32,9 +32,10 @@ namespace Web.SchedulerService.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/view/[controller]")]
-        public IActionResult Get([FromQuery] Guid patientId)
+        public IActionResult Get([FromQuery] Guid nurseId, [FromQuery] Guid patientId)
         {
             PatientInformationPageModel model = new PatientInformationPageModel();
+            model.NurseId = nurseId;
 
             using(var scope = m_serviceProvider.CreateScope())
             {
@@ -66,19 +67,45 @@ namespace Web.SchedulerService.Controllers
                 model.Room = patientInfo.room;
                 model.Bed = patientInfo.bed;
                 model.Ward = patientInfo.ward;
+                model.PatientId = patientId;
 
-                var administeredMedications = context.ODFs
-                    .Where(O => O.PrescriptionTime.Prescription.PatientId == patientId)
-                    .Include(O => O.PrescriptionTime.Prescription)
-                    .Select(O => new AdministeredMedication()
+                /// Get the ODFs from ODFAdministrations for today
+                var administeredMedications = context.ODFAdministrations
+                    .Where(A => A.DateTime.Date == DateTime.Now.Date)
+                    .Include(A => A.ODF)
+                    .ThenInclude(O => O.PrescriptionTime)
+                    .ThenInclude(P => P.Prescription)
+                    .Where(A => A.ODF.PrescriptionTime.Prescription.PatientId == patientId)
+                    .Include(A => A.Nurse)
+                    .Select(A => new AdministeredMedication()
                     {
-                        Dosage = O.PrescriptionTime.Prescription.Dosage,
-                        DrugName = O.PrescriptionTime.Prescription.DrugName,
-                        NurseName = O.ODFAdministration.Nurse.FirstName,
-                        Time = O.ODFAdministration.DateTime
-                    });
+                        Dosage = A.ODF.PrescriptionTime.Prescription.Dosage,
+                        DrugName = A.ODF.PrescriptionTime.Prescription.DrugName,
+                        NurseName = A.Nurse.FirstName,
+                        Time = A.DateTime,
+                        OdfId = A.ODFId
+                    })
+                    .ToList();
 
-                model.AdministeredMedications = administeredMedications.ToList();
+                /// Get ODF's for today not associated with an administration
+                var pendingMedications = context.ODFs
+                    .Include(O => O.ODFAdministration)
+                    .Where(O => O.ODFAdministration == default)
+                    .Include(O => O.PrescriptionTime)
+                    .ThenInclude(PT => PT.Prescription)
+                    .Where(O => O.PrescriptionTime.Prescription.PatientId == patientId)
+                    .Include(O => O.PrintJob)
+                    .Select(O => new PendingMedication()
+                    {
+                        DrugName = O.PrescriptionTime.Prescription.DrugName,
+                        Dosage = O.PrescriptionTime.Prescription.Dosage,
+                        Time = O.PrescriptionTime.Time,
+                        Status = O.PrintJob.Status.ToString(),
+                        OdfId = O.Id
+                    }).ToList();
+
+                model.AdministeredMedications = administeredMedications;
+                model.PendingMedications = pendingMedications;
             }
 
             return Ok(model);

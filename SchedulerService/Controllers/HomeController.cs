@@ -36,6 +36,7 @@ namespace Web.SchedulerService.Controllers
             m_logger.LogDebug("Getting Home view for Nurse {0}", nurseId);
 
             HomePageModel model = new HomePageModel();
+            model.NurseId = nurseId;
 
             using(var scope = m_serviceProvider.CreateScope())
             {

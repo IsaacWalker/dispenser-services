@@ -8,8 +8,14 @@ namespace Web.Models.ViewModels
     /// <summary>
     /// Model for the patient information page
     /// </summary>
-    public class PatientInformationPageModel
+    public class PatientInformationPageModel : ViewModelBase
     {
+        /// <summary>
+        /// Patient Id
+        /// </summary>
+        public Guid PatientId { get; set; }
+
+
         /// <summary>
         /// The Patients First Name
         /// </summary>
@@ -62,7 +68,6 @@ namespace Web.Models.ViewModels
 
     public class AdministeredMedication : DailyMedicationModel
     {
-
         /// <summary>
         /// The name of the nurse who administered the drug
         /// </summary>
@@ -71,6 +76,12 @@ namespace Web.Models.ViewModels
 
     public abstract class DailyMedicationModel
     {
+        /// <summary>
+        /// Id of the ODF
+        /// </summary>
+        public Guid OdfId { get; set; }
+
+
         /// <summary>
         /// The Name of the drug
         /// </summary>

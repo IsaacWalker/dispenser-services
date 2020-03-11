@@ -8,7 +8,7 @@ namespace Web.Models.ViewModels
     /// <summary>
     /// Page model for the Drug Information View
     /// </summary>
-    public class DrugInformationPageModel
+    public class DrugInformationPageModel : ViewModelBase
     {
         /// <summary>
         /// The name of the drug

@@ -48,6 +48,7 @@
             <li class="breadcrumb-item ml-4"><a href="index">Dashboard</a></li>
             <li class="breadcrumb-item active">Patient Information</li>
         </ol>
+
         <div class="container-fluid">
             <h2 class="mt-4">@Model.FirstName @Model.LastName</h2>
             <div class="border-top my-3"></div>
@@ -86,26 +87,25 @@
                             </tr>
                         </thead>
                         <tbody>
-                          @*  @for (int i = 0; i < Model.PendingMedications.Count; i++)*@
-                  
-                            <tr>
-                                <td>
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck">
-                                        <label class="custom-control-label" for="customCheck"></label>
-                                </td>
-                                <td>IBUPROFEN</td>
-                                <td>400mg</td>
-                                <td>10:00</td>
-                                <td style= "color:darkred">
-                                    @*<script> 
-                                        if (@Model.PendingMedications[i] == "Ready") {
-                                            //TODO make colour dependant on status
-                                        }
-                                    </script>*@
-                                    <strong>Ready</strong>
-                                </td>
-                            </tr>
+                            @{
+                                for (int i = 0; i < Model.PendingMedications.Count; i++)
+                                {
+                                    <tr>
+                                        <td>
+                                                <div class="input-group-append">
+                                                    <a href="/administration?odfId=@Model.PendingMedications[i].OdfId&nurseId=@Model.NurseId&patientId=@Model.PatientId"
+                                                       class="btn btn-primary">Administer</a>
+                                                </div>
+                                        </td>
+                                        <td>@Model.PendingMedications[i].DrugName</td>
+                                        <td>@Model.PendingMedications[i].Dosage</td>
+                                        <td>@Model.PendingMedications[i].Time</td>
+                                        <td style="color:darkred">
+                                            <strong>Ready</strong>
+                                        </td>
+                                    </tr>
+                                }
+                            }
                         </tbody>
                     </table>
                 </div>
@@ -124,22 +124,24 @@
                             </tr>
                         </thead>
                         <tbody>
-                          @*  @for (int i = 0; i < @Model.AdministeredMedications.Count; i++)*@
-                            
-                                <tr>
-                                    <td>
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="customCheck2" checked>
-                                            <label class="custom-control-label" for="customCheck2"></label>
-                                    </td>
-                                    <td>PARACETAMOL</td>
-                                    <td>500mg</td>
-                                    <td>09:23</td>
-                                    <td>Nurse Name</td>
-
-                                </tr>
-                            
-                            </tbody>
+                            @{
+                                for (int i = 0; i < Model.AdministeredMedications.Count; i++)
+                                {
+                                    <tr>
+                                        <td>
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="customCheck2" checked>
+                                                <label class="custom-control-label" for="customCheck2"></label>
+                                            </div>
+                                        </td>
+                                        <td>@Model.AdministeredMedications[i].DrugName</td>
+                                        <td>@Model.AdministeredMedications[i].Dosage</td>
+                                        <td>@Model.AdministeredMedications[i].Time</td>
+                                        <td>@Model.AdministeredMedications[i].NurseName</td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
                     </table>
                 </div>
             </div>

@@ -4,11 +4,15 @@ using System.Text;
 
 namespace Web.Models.ViewModels
 {
-    public class AdministrationVerificationModel
+    public class AdministrationVerificationModel : ViewModelBase
     {
+        public Guid OdfId { get; set; }
+
         public string MedicationName { get; set; }
 
         public float Dosage { get; set; }
+
+        public Guid PatientId { get; set; }
 
         public string PatientFirstName { get; set; }
 

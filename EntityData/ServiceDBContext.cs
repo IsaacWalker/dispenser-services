@@ -112,6 +112,12 @@ namespace Web.EntityData
                 .WithOne(A => A.ODF)
                 .HasForeignKey<ODF>(ODF => ODF.ODFAdministrationId);
 
+            // ODFs can have an associate administration
+            modelBuilder.Entity<ODFAdministration>()
+                .HasOne(A => A.ODF)
+                .WithOne(ODF => ODF.ODFAdministration)
+                .HasForeignKey<ODFAdministration>(A=> A.ODFId);
+
             // An ODFAdminstration is administered by a nurse
             modelBuilder.Entity<ODFAdministration>()
                 .HasOne(ODFA => ODFA.Nurse)

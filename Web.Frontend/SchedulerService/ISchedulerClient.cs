@@ -24,7 +24,7 @@ namespace Web.Frontend.SchedulerService
         /// </summary>
         /// <param name="patientInfo"></param>
         /// <returns></returns>
-        public Task<PatientInformationPageModel> GetPatientInfoModel(Guid patientInfo);
+        public Task<PatientInformationPageModel> GetPatientInfoModel(Guid nurseId,Guid patientInfo);
 
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace Web.Frontend.SchedulerService
         /// </summary>
         /// <param name="prescriptionId"></param>
         /// <returns></returns>
-        public Task<DrugInformationPageModel> GetDrugInfoModel(Guid prescriptionId);
+        public Task<DrugInformationPageModel> GetDrugInfoModel(Guid nurseId,Guid prescriptionId);
 
 
         /// <summary>
@@ -42,5 +42,14 @@ namespace Web.Frontend.SchedulerService
         /// <param name="odfId"></param>
         /// <returns></returns>
         public Task<bool> ConfirmAdministration(Guid nurseId, Guid odfId, DateTime administrationTime);
+
+
+        /// <summary>
+        /// Gets the view for the administation screen
+        /// </summary>
+        /// <param name="nurseId"></param>
+        /// <param name="odfId"></param>
+        /// <returns></returns>
+        public Task<AdministrationVerificationModel> GetAdministrationModel(Guid nurseId, Guid odfId);
     }
 }

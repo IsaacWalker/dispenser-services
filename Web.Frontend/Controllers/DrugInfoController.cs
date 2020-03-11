@@ -15,9 +15,9 @@ namespace Web.Frontend.Controllers
 
 
         [Route("drug")]
-        public async Task<IActionResult> DrugInfo([FromQuery] Guid prescriptionId )
+        public async Task<IActionResult> DrugInfo([FromQuery] Guid nurseId, [FromQuery] Guid prescriptionId )
         {
-            var model = await m_schedulerClient.GetDrugInfoModel(prescriptionId);
+            var model = await m_schedulerClient.GetDrugInfoModel(nurseId,prescriptionId);
             return View("Views/Pages/DrugInfo.cshtml",model);
         }
     }
