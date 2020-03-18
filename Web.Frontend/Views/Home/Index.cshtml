@@ -4,8 +4,6 @@
     ViewData["Title"] = "Index";
 }
 
-
-
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
@@ -16,81 +14,152 @@
 <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js" crossorigin="anonymous"></script>
 
+<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+    <a class="navbar-brand" href="index">PharmaPrint</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
-    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-        <a class="navbar-brand" href="index.html">@Model.NurseFirstName @Model.NurseLastName</a>
-        <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
-        <ul class="navbar-nav ml-auto ml-md-0">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                    <a class="dropdown-item" href="#">Settings</a><a class="dropdown-item" href="#">Activity Log</a>
-                    <div class="dropdown-divider"></div><a class="dropdown-item" href="login.html">Logout</a>
+                <a class="nav-link dropdown-toggle" href="#" id="patientsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Patients
+                </a>
+                <div class="dropdown-menu" aria-labelledby="patientsDropdown">
+                    <a class="dropdown-item">Batch #@Model.BatchNumber</a>
+                    <div class="dropdown-divider"></div>
+                    @for (int i = 0; i < Model.ODFs.Count; i++)
+                    {
+                        <a class="dropdown-item" href="/patient?nurseId=@Model.NurseId&patientId=@Model.ODFs[i].PatientId">
+                            @Model.ODFs[i].PatientName
+                        </a>
+                    }
                 </div>
             </li>
         </ul>
-    </nav>
+    </div>
+</nav>
  
-        <div id="layoutSidenav_content">
-            <main>
-                <div class="container-fluid">
-                    <h1 class="mt-4">Dashboard</h1>
-                    <div class="border-top my-3"></div>
-                    <div class="card mb-4">
-                        <div class="card-header" style="background-color: dodgerblue; color: white;">
-                            <strong>Current Batch Status: @Model.Status</strong>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" data-sort-name="Admin Time">
-                                    <thead class="thead-dark">
-                                        <tr>
-                                            <th>Patient Name</th>
-                                            <th>Ward</th>
-                                            <th>Room</th>
-                                            <th>Bed</th>
-                                            <th>Drug Name</th>
-                                            <th>Drug Dose</th>
-                                            <th>Admin Time</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @for (int i = 0; i < Model.ODFs.Count; i++)
-                                        {
-                                            <tr>
-                                                <td>
-                                                    <a href="/patient?nurseId=@Model.NurseId&patientId=@Model.ODFs[i].PatientId"
-                                                       class="btn btn-light" role="button">@Model.ODFs[i].PatientName</a>
-                                                </td>
-                                                <td>@Model.ODFs[i].PatientWard</td>
-                                                <td>@Model.ODFs[i].PatientRoom</td>
-                                                <td>@Model.ODFs[i].PatientBed</td>
-                                                <td>
-                                                    <a href="/drug?nurseId=@Model.NurseId&patientId=@Model.ODFs[i].PatientId&prescriptionId=@Model.ODFs[i].PrescriptionId" 
-                                                       class="btn btn-light" role="button">@Model.ODFs[i].MedicationName</a>
-                                                </td>
-                                                <td>@Model.ODFs[i].Dosage mg</td>
+<main>
+    <div class="container-fluid">
+        <h1 class="mt-4">Dashboard</h1>
+        <div class="card text-center">
+            <div class="card-header">
+                <ul class="nav nav-tabs card-header-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index">Today</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index-24">Tomorrow</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index-week">Week</a>
+                    </li>
+                </ul>
+            </div>
 
-                                            </tr>
-                                        }
-                                    </tbody>
-                                </table>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="card">
+                            <div class="card-body bg-light">
+                                <h5 class="card-title">@Model.BatchNumber</h5>
+                                <p class="card-text">ETA: @Model.ETA</p>
+                                <a href="#" class="btn btn-primary">See Detail</a>
                             </div>
                         </div>
                     </div>
                 </div>
-            </main>
-            <footer class="py-4 bg-light mt-auto">
-                <div class="container-fluid">
-                    <div class="d-flex align-items-center justify-content-between small">
-                        <div class="text-muted">Copyright &copy; Sample Website 2020</div>
-                        <div>
-                            <a href="#">Privacy Policy</a>
-                            &middot;
-                            <a href="#">Terms &amp; Conditions</a>
-                        </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-header" style="background-color: dodgerblue; color: white;">
+                    <strong>Current Batch Status: @Model.Status</strong>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" data-sort-name="Admin Time">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Patient Name</th>
+                                    <th>Ward</th>
+                                    <th>Room</th>
+                                    <th>Bed</th>
+                                    <th>Drug Name</th>
+                                    <th>Drug Dose</th>
+                                    <th>Admin Time</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (int i = 0; i < Model.ODFs.Count; i++)
+                                {
+                                    <tr>
+                                        <td>
+                                            <a href="/patient?nurseId=@Model.NurseId&patientId=@Model.ODFs[i].PatientId"
+                                                class="btn btn-light" role="button">@Model.ODFs[i].PatientName</a>
+                                        </td>
+                                        <td>@Model.ODFs[i].PatientWard</td>
+                                        <td>@Model.ODFs[i].PatientRoom</td>
+                                        <td>@Model.ODFs[i].PatientBed</td>
+                                        <td>
+                                            <a href="/drug?nurseId=@Model.NurseId&patientId=@Model.ODFs[i].PatientId&prescriptionId=@Model.ODFs[i].PrescriptionId"
+                                                class="btn btn-light" role="button">@Model.ODFs[i].MedicationName</a>
+                                        </td>
+                                        <td>@Model.ODFs[i].Dosage mg</td>
+
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-            </footer>
+            </div>
+
+        <div class="card mb-4">
+            <div class="card-header" style="background-color: dodgerblue; color: white;">
+                <strong>Pending Batches</strong>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" data-sort-name="Admin Time">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Batch ID</th>
+                                <th>Status</th>
+                                <th>ETA</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    @Model.BatchNumber
+                                </td>
+                                <td>
+                                    @Model.Status
+                                </td>
+                                <td>
+                                    @Model.ETA
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
         </div>
     </div>
+ </main>
+
+<footer class="py-4 bg-light mt-auto">
+    <div class="container-fluid">
+        <div class="d-flex align-items-center justify-content-between small">
+            <div class="text-muted">Copyright &copy; Sample Website 2020</div>
+            <div>
+                <a href="#">Privacy Policy</a>
+                &middot;
+                <a href="#">Terms &amp; Conditions</a>
+            </div>
+        </div>
+    </div>
+</footer>
