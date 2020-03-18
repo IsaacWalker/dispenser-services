@@ -61,8 +61,8 @@ namespace Web.SchedulerService.Controllers
 
                 var pastAdministrations = context.ODFAdministrations
                     .Include(A => A.ODF)
-                    .ThenInclude(ODF => ODF.PrescriptionTime)
-                    .Where(A => A.ODF.PrescriptionTime.PrescriptionId == prescriptionId)
+                    .ThenInclude(ODF => ODF.Prescription)
+                    .Where(A => A.ODF.PrescriptionId == prescriptionId)
                     .Include(A => A.Nurse)
                     .Select(A => new PastAdministrationModel()
                     {

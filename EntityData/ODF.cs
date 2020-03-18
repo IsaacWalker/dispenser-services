@@ -10,22 +10,22 @@ namespace Web.EntityData
     public class ODF : AEntityBase
     {
         /// <summary>
-        /// The Date for this ODF
+        /// The Creation DateTime for this ODF
         /// </summary>
-        public DateTime Date { get; set; }
+        public DateTime DateTimeOfCreation { get; set; }
 
 
         /// <summary>
-        /// Id of the prescription time that this ODF was associated with
+        /// Id of the prescription that this ODF was associated with
         /// </summary>
 
-        public Guid PrescriptionTimeId { get; set; }
+        public Guid PrescriptionId { get; set; }
 
 
         /// <summary>
-        /// Navigation property of the Prescription Time
+        /// Navigation property of the Prescription 
         /// </summary>
-        public virtual PrescriptionTime PrescriptionTime { get; set; }
+        public virtual Prescription Prescription { get; set; }
 
 
         /// <summary>

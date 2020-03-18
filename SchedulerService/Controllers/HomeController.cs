@@ -61,24 +61,22 @@ namespace Web.SchedulerService.Controllers
                 if (currentJob != null)
                 {
                     var result = context.ODFs.Where(O => O.PrintJobId == currentJob.Id)
-                        .Include(O => O.PrescriptionTime)
-                        .ThenInclude(P => P.Prescription)
+                        .Include(O => O.Prescription)
                         .ThenInclude(P => P.Patient)
                         .ThenInclude(P => P.Bed)
                         .ThenInclude(B => B.Room)
                         .ThenInclude(R => R.Ward)
                         .Select(O => new 
                         { 
-                            patientName = O.PrescriptionTime.Prescription.Patient.FirstName + " " + O.PrescriptionTime.Prescription.Patient.LastName,
-                            drugName = O.PrescriptionTime.Prescription.DrugName,
+                            patientName = O.Prescription.Patient.FirstName + " " + O.Prescription.Patient.LastName,
+                            drugName = O.Prescription.DrugName,
                             odfId = O.Id,
-                            patientId = O.PrescriptionTime.Prescription.Patient.Id,
-                            prescriptionId = O.PrescriptionTime.PrescriptionId,
-                            bed = O.PrescriptionTime.Prescription.Patient.Bed.Label,
-                            room =  O.PrescriptionTime.Prescription.Patient.Bed.Room.Label,
-                            ward = O.PrescriptionTime.Prescription.Patient.Bed.Room.Ward.Name,
-                            dosage = O.PrescriptionTime.Prescription.Dosage,
-                            time = O.PrescriptionTime.Time
+                            patientId = O.Prescription.Patient.Id,
+                            prescriptionId = O.PrescriptionId,
+                            bed = O.Prescription.Patient.Bed.Label,
+                            room =  O.Prescription.Patient.Bed.Room.Label,
+                            ward = O.Prescription.Patient.Bed.Room.Ward.Name,
+                            dosage = O.Prescription.Dosage
                         });
 
                     var batchModels = result.Select(R => new BatchODF()
@@ -91,8 +89,7 @@ namespace Web.SchedulerService.Controllers
                         PatientBed = R.bed,
                         PatientRoom = R.room,
                         PatientWard = R.ward,
-                        Dosage = R.dosage,
-                        Time = R.time
+                        Dosage = R.dosage
                     });
 
                     model.PrintJobId = currentJob.Id;

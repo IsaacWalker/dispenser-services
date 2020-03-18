@@ -54,7 +54,8 @@ namespace Web.SchedulerService
                     StartDate = DateTime.Now.Date - TimeSpan.FromDays(2.0),
                     EndDate = DateTime.Now.Date + TimeSpan.FromDays(14.0),
                     Route = "PO",
-                    Patient = p1
+                    Patient = p1,
+                    Frequency = Frequency.BID
                 };
 
                 Prescription p2PrescriptionOne = new Prescription()
@@ -64,7 +65,8 @@ namespace Web.SchedulerService
                     StartDate = DateTime.Now.Date - TimeSpan.FromDays(2.0),
                     EndDate = DateTime.Now.Date + TimeSpan.FromDays(14.0),
                     Route = "PO",
-                    Patient = p2
+                    Patient = p2,
+                    Frequency = Frequency.BID
                 };
 
                 Prescription p3PrescriptionOne = new Prescription()
@@ -74,7 +76,8 @@ namespace Web.SchedulerService
                     StartDate = DateTime.Now.Date - TimeSpan.FromDays(2.0),
                     EndDate = DateTime.Now.Date + TimeSpan.FromDays(12.0),
                     Route = "PO",
-                    Patient = p3
+                    Patient = p3,
+                    Frequency = Frequency.BID
                 };
 
 
@@ -85,7 +88,8 @@ namespace Web.SchedulerService
                     StartDate = DateTime.Now.Date - TimeSpan.FromDays(2.0),
                     EndDate = DateTime.Now.Date + TimeSpan.FromDays(12.0),
                     Route = "PO",
-                    Patient = p4
+                    Patient = p4,
+                    Frequency = Frequency.BID
                 };
 
 
@@ -96,14 +100,15 @@ namespace Web.SchedulerService
                     StartDate = DateTime.Now.Date - TimeSpan.FromDays(2.0),
                     EndDate = DateTime.Now.Date + TimeSpan.FromDays(12.0),
                     Route = "PO",
-                    Patient = p5
+                    Patient = p5,
+                    Frequency = Frequency.BID
                 };
 
-                AddPrescription(context, p1PrescriptionOne, new List<DateTime> { DateTime.Parse("09:00"), DateTime.Parse("14:00") });
-                AddPrescription(context, p2PrescriptionOne, new List<DateTime> { DateTime.Parse("09:00"), DateTime.Parse("14:00") });
-                AddPrescription(context, p3PrescriptionOne, new List<DateTime> { DateTime.Parse("09:00"), DateTime.Parse("14:00") });
-                AddPrescription(context, p4PrescriptionOne, new List<DateTime> { DateTime.Parse("09:00"), DateTime.Parse("14:00") });
-                AddPrescription(context, p5PrescriptionOne, new List<DateTime> { DateTime.Parse("09:00"), DateTime.Parse("14:00") });
+                context.Add(p1PrescriptionOne);
+                context.Add(p2PrescriptionOne);
+                context.Add(p3PrescriptionOne);
+                context.Add(p4PrescriptionOne);
+                context.Add(p5PrescriptionOne);
                 context.SaveChanges();
 
                 
@@ -121,37 +126,37 @@ namespace Web.SchedulerService
 
                 ODF odf1 = new ODF()
                 {
-                    PrescriptionTime = p1PrescriptionOne.Times[0],
+                    Prescription = p1PrescriptionOne,
                     PrintJob = job2
                 };
 
                 ODF odf2 = new ODF()
                 {
-                    PrescriptionTime = p2PrescriptionOne.Times[0],
+                    Prescription = p2PrescriptionOne,
                     PrintJob = job2
                 };
 
                 ODF odf3 = new ODF()
                 {
-                    PrescriptionTime = p3PrescriptionOne.Times[0],
+                    Prescription = p3PrescriptionOne,
                     PrintJob = job
                 };
 
                 ODF odf4 = new ODF()
                 {
-                    PrescriptionTime = p4PrescriptionOne.Times[0],
+                    Prescription= p4PrescriptionOne,
                     PrintJob = job2
                 };
 
                 ODF odf5 = new ODF()
                 {
-                    PrescriptionTime = p5PrescriptionOne.Times[0],
+                    Prescription = p5PrescriptionOne,
                     PrintJob = job2
                 };
 
                 ODF odf6 = new ODF()
                 {
-                    PrescriptionTime = p3PrescriptionOne.Times[1],
+                    Prescription = p3PrescriptionOne,
                     PrintJob = job2
                 };
 
@@ -167,7 +172,7 @@ namespace Web.SchedulerService
 
                 // Add administrations
                 ODFAdministration adminOne = new ODFAdministration 
-                { DateTime = odf3.PrescriptionTime.Time + TimeSpan.FromMinutes(25.0), NurseId = nurse.Id, ODF = odf3};
+                { DateTime = odf3.DateTimeOfCreation + TimeSpan.FromMinutes(100.0), NurseId = nurse.Id, ODF = odf3};
                 context.ODFAdministrations.Add(adminOne);
 
                 // Add Wards
@@ -221,23 +226,5 @@ namespace Web.SchedulerService
             return p;
         }
 
-        private static void AddPrescription(ServiceDbContext context, Prescription prescription, IList<DateTime> times)
-        {
-            context.Prescriptions.Add(prescription);
-            context.SaveChanges();
-
-            foreach (var time in times)
-            {
-                PrescriptionTime prescriptionTime = new PrescriptionTime()
-                {
-                    Time = time
-                };
-
-                prescriptionTime.Prescription = prescription;
-                context.PrescriptionTimes.Add(prescriptionTime);
-            }
-
-            context.SaveChanges();
-        }
     }
 }

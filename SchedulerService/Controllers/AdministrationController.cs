@@ -40,17 +40,16 @@ namespace Web.SchedulerService.Controllers
 
                 var query = context.ODFs
                      .Where(O => O.Id == odfId)
-                     .Include(O => O.PrescriptionTime)
-                     .ThenInclude(PT => PT.Prescription)
+                     .Include(O => O.Prescription)
                      .ThenInclude(P => P.Patient)
                      .Select(O => new
                      {
-                         patientFirstName = O.PrescriptionTime.Prescription.Patient.FirstName,
-                         patientlastName = O.PrescriptionTime.Prescription.Patient.LastName,
-                         patientId = O.PrescriptionTime.Prescription.PatientId,
-                         medicationName = O.PrescriptionTime.Prescription.DrugName,
-                         dosage = O.PrescriptionTime.Prescription.Dosage,
-                         dateOfBirth = O.PrescriptionTime.Prescription.Patient.DateOfBirth
+                         patientFirstName = O.Prescription.Patient.FirstName,
+                         patientlastName = O.Prescription.Patient.LastName,
+                         patientId = O.Prescription.PatientId,
+                         medicationName = O.Prescription.DrugName,
+                         dosage = O.Prescription.Dosage,
+                         dateOfBirth = O.Prescription.Patient.DateOfBirth
                      })
                      .FirstOrDefault();
 

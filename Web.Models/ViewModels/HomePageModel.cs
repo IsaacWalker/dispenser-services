@@ -96,12 +96,6 @@ namespace Web.Models.ViewModels
         /// Dosage
         /// </summary>
         public double Dosage { get; set; }
-
-
-        /// <summary>
-        /// Time
-        /// </summary>
-        public DateTime Time { get; set; }
     }
 
 }

@@ -16,9 +16,27 @@ namespace Web.EntityData
 
 
         /// <summary>
+        /// Time it is expected to be in the READY state at
+        /// </summary>
+        public DateTime ExpectedTimeOfReadiness { get; set; }
+
+
+        /// <summary>
         /// The ODFs of this Print Job
         /// </summary>
         public virtual IList<ODF> ODFs { get; set; } = new List<ODF>();
+
+
+        /// <summary>
+        /// Daily Schedule Id
+        /// </summary>
+        public Guid DailyScheduleId { get; set; }
+
+
+        /// <summary>
+        /// The schedule this is associated with
+        /// </summary>
+        public virtual DailySchedule DailySchedule { get; set; }
     }
 
 
@@ -27,6 +45,7 @@ namespace Web.EntityData
     /// </summary>
     public enum PrintJobStatus
     { 
+        UNINITIALIZED,
         READY,
         PRINTING,
         PRINTED,

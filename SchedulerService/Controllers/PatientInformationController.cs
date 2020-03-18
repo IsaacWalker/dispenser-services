@@ -76,14 +76,13 @@ namespace Web.SchedulerService.Controllers
                 var administeredMedications = context.ODFAdministrations
                     .Where(A => A.DateTime.Date == DateTime.Now.Date)
                     .Include(A => A.ODF)
-                    .ThenInclude(O => O.PrescriptionTime)
                     .ThenInclude(P => P.Prescription)
-                    .Where(A => A.ODF.PrescriptionTime.Prescription.PatientId == patientId)
+                    .Where(A => A.ODF.Prescription.PatientId == patientId)
                     .Include(A => A.Nurse)
                     .Select(A => new AdministeredMedication()
                     {
-                        Dosage = A.ODF.PrescriptionTime.Prescription.Dosage,
-                        DrugName = A.ODF.PrescriptionTime.Prescription.DrugName,
+                        Dosage = A.ODF.Prescription.Dosage,
+                        DrugName = A.ODF.Prescription.DrugName,
                         NurseName = A.Nurse.FirstName,
                         Time = A.DateTime,
                         OdfId = A.ODFId
@@ -94,15 +93,13 @@ namespace Web.SchedulerService.Controllers
                 var pendingMedications = context.ODFs
                     .Include(O => O.ODFAdministration)
                     .Where(O => O.ODFAdministration == default)
-                    .Include(O => O.PrescriptionTime)
-                    .ThenInclude(PT => PT.Prescription)
-                    .Where(O => O.PrescriptionTime.Prescription.PatientId == patientId)
+                    .Include(PT => PT.Prescription)
+                    .Where(O => O.Prescription.PatientId == patientId)
                     .Include(O => O.PrintJob)
                     .Select(O => new PendingMedication()
                     {
-                        DrugName = O.PrescriptionTime.Prescription.DrugName,
-                        Dosage = O.PrescriptionTime.Prescription.Dosage,
-                        Time = O.PrescriptionTime.Time,
+                        DrugName = O.Prescription.DrugName,
+                        Dosage = O.Prescription.Dosage,
                         Status = O.PrintJob.Status.ToString(),
                         OdfId = O.Id
                     }).ToList();

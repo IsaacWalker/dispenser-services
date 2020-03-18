@@ -39,10 +39,10 @@ namespace Web.EntityData
         public string Notes { get; set; }
 
 
-        /// <summary>
-        /// Times in the day where the medication is to be taken
+        /// <summary> 
+        /// Frequency Abbreviation
         /// </summary>
-        public virtual IList<PrescriptionTime> Times { get; set; } = new List<PrescriptionTime>();
+        public Frequency Frequency { get; set; }
 
 
         /// <summary>
@@ -66,6 +66,13 @@ namespace Web.EntityData
         /// <summary>
         /// Patient of which the drug is administered
         /// </summary>
-        public Patient Patient { get; set; }
+        public virtual Patient Patient { get; set; }
+
+
+        /// <summary>
+        /// The ODFs which we're printed for this prescription
+        /// </summary>
+        public virtual IList<ODF> ODFs { get; set; }
     }
+
 }

@@ -17,6 +17,12 @@ namespace Web.EntityData
 
 
         /// <summary>
+        /// Schedules for individual Days
+        /// </summary>
+        public DbSet<DailySchedule> DailySchedules { get; set; }
+
+
+        /// <summary>
         /// Nurses
         /// </summary>
         public DbSet<Nurse> Nurses { get; set; }
@@ -46,11 +52,6 @@ namespace Web.EntityData
         public DbSet<Prescription> Prescriptions { get; set; }
 
 
-        /// <summary>
-        /// Prescription Times
-        /// </summary>
-        public DbSet<PrescriptionTime> PrescriptionTimes { get; set; }
-
 
         /// <summary>
         /// Print Jobs
@@ -71,6 +72,12 @@ namespace Web.EntityData
 
 
         /// <summary>
+        /// Weekly Prescription Schedules
+        /// </summary>
+        public DbSet<WeeklyPrescriptionSchedule> WeeklyPrescriptionSchedules { get; set; }
+
+
+        /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="options"></param>
@@ -88,17 +95,23 @@ namespace Web.EntityData
                 .WithMany(P => P.Prescriptions)
                 .HasForeignKey(P => P.PatientId);
 
-            // One Prescription can have many times
-            modelBuilder.Entity<PrescriptionTime>()
-                .HasOne(PT => PT.Prescription)
-                .WithMany(P => P.Times)
-                .HasForeignKey(PT => PT.PrescriptionId);
+            // One Week schedule consists of 7 daily schedules
+            modelBuilder.Entity<DailySchedule>()
+                .HasOne(D => D.WeeklyPrescriptionSchedule)
+                .WithMany(W => W.DaySchedules)
+                .HasForeignKey(D => D.WeeklyPrescriptionScheduleId);
 
-            // One PrescriptionTime can be printed many times as an ODF
+            // One Daily Schedule has many printjobs
+            modelBuilder.Entity<PrintJob>()
+                .HasOne(P => P.DailySchedule)
+                .WithMany(D => D.PrintJobs)
+                .HasForeignKey(P => P.DailyScheduleId);
+
+            // One Prescription can have many ODF
             modelBuilder.Entity<ODF>()
-                .HasOne(ODF => ODF.PrescriptionTime)
-                .WithMany(PT => PT.ODFs)
-                .HasForeignKey(ODF => ODF.PrescriptionTimeId);
+                .HasOne(ODF => ODF.Prescription)
+                .WithMany(P => P.ODFs)
+                .HasForeignKey(ODF => ODF.PrescriptionId);
 
             // One print job (batch) can have many ODF's
             modelBuilder.Entity<ODF>()
