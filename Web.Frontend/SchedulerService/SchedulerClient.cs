@@ -167,6 +167,26 @@ namespace Web.Frontend.SchedulerService
 
 
         /// <summary>
+        /// Gets the navbar model
+        /// </summary>
+        /// <param name="nurseId"></param>
+        /// <returns></returns>
+        public async Task<NavbarPartialModel> GetNavbarModel()
+        {
+            Uri pathUri = new Uri(m_baseUri.AbsoluteUri + m_configuration.GetValue<string>("Settings:SchedulerNavbarPath"));
+
+            using(var client = m_httpClientFactory.CreateClient())
+            {
+                var response = await client.GetAsync(pathUri);
+
+                return response.IsSuccessStatusCode ? JsonConvert.DeserializeObject<NavbarPartialModel>(
+                    await response.Content.ReadAsStringAsync())
+                     : default;
+            }
+        }
+
+
+        /// <summary>
         /// Gets the model for the patient info screen
         /// </summary>
         /// <param name="patientInfo"></param>

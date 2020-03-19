@@ -31,7 +31,7 @@ namespace Web.SchedulerService.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/view/[controller]")]
-        public IActionResult Get([FromQuery] Guid nurseId)
+        public async  Task<IActionResult> Get([FromQuery] Guid nurseId)
         {
             m_logger.LogDebug("Getting Home view for Nurse {0}", nurseId);
 
@@ -42,17 +42,6 @@ namespace Web.SchedulerService.Controllers
             {
                 var context = scope.ServiceProvider.GetService<ServiceDbContext>();
 
-                Nurse nurse = context.Nurses.Find(nurseId);
-
-                if(nurse == default)
-                {
-                    m_logger.LogWarning("No nurse found for id {0}", nurseId);
-
-                    return NotFound();
-                }
-
-                model.NurseFirstName = nurse.FirstName;
-                model.NurseLastName = nurse.LastName;
 
                 var currentJob = context.PrintJobs
                     .Where(Job => Job.Status == PrintJobStatus.PRINTING || Job.Status == PrintJobStatus.PRINTED)
@@ -103,6 +92,7 @@ namespace Web.SchedulerService.Controllers
                     model.ODFs = new List<BatchODF>();
                 }
 
+                await InitializeViewModel(nurseId, context, model);
             }
 
            

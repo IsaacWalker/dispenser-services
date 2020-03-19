@@ -22,5 +22,11 @@ namespace Web.Models.ViewModels
         /// Last Name of Nurse
         /// </summary>
         public string NurseLastName { get; set; }
+
+
+        /// <summary>
+        /// Navbar Model
+        /// </summary>
+        public NavbarPartialModel NavbarModel { get; set; }
     }
 }

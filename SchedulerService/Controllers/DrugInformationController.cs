@@ -32,7 +32,7 @@ namespace Web.SchedulerService.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/view/[controller]")]
-        public IActionResult Get([FromQuery] Guid nurseId,[FromQuery] Guid prescriptionId)
+        public async Task<IActionResult> Get([FromQuery] Guid nurseId,[FromQuery] Guid prescriptionId)
         {
             // TODO - finish query
             m_logger.LogInformation("Getting Drug Information screen for {0}", prescriptionId);
@@ -44,7 +44,6 @@ namespace Web.SchedulerService.Controllers
                 var context = scope.ServiceProvider.GetService<ServiceDbContext>();
 
                 Prescription prescription = context.Prescriptions.Find(prescriptionId);
-                Nurse nurse = context.Nurses.Find(nurseId);
 
                 if(prescription == default)
                 {
@@ -56,8 +55,6 @@ namespace Web.SchedulerService.Controllers
                 drugInformationPageModel.Dosage = prescription.Dosage;
                 drugInformationPageModel.Route = prescription.Route;
                 drugInformationPageModel.NurseId = nurseId;
-                drugInformationPageModel.NurseFirstName = nurse.FirstName;
-                drugInformationPageModel.NurseLastName = nurse.LastName;
 
                 var pastAdministrations = context.ODFAdministrations
                     .Include(A => A.ODF)
@@ -74,6 +71,7 @@ namespace Web.SchedulerService.Controllers
                     .ToList();
 
                 drugInformationPageModel.PastAdministrationModels = pastAdministrations;
+                await InitializeViewModel(nurseId, context, drugInformationPageModel);
 
             }
 
