@@ -6,8 +6,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@* // TODO - REMOVE NAVBAR*@
-<partial name="~/Views/Shared/_NavbarPartial.cshtml" for="NavbarModel" />
+    <partial name="~/Views/Shared/_Navigation.cshtml" for="NavbarModel" />
 
 <main>
 
@@ -26,7 +25,7 @@
 
         <div class="card mb-4">
             <div class="card-header bg-primary text-white">
-                <strong>@Model.PatientName Chad Chadwicks's Prescription</strong>
+                <strong>@Model.PatientName's Prescription</strong>
             </div>
 
             <div class="card-body">

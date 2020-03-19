@@ -6,9 +6,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<partial name="~/Views/Shared/_NavbarPartial.cshtml" for="NavbarModel" />
+<partial name="~/Views/Shared/_Navigation.cshtml" for="NavbarModel" />
 
 <main>
+
     <div class="container-fluid">
         <h1 class="mt-4">Patient Information </h1>
         <ol class="breadcrumb mb-4">
@@ -16,7 +17,6 @@
             <li class="breadcrumb-item active">Patient Information</li>
         </ol>
     </div>
-
 
     <div class="container-fluid">
         <h2 class="mt-4">@Model.FirstName @Model.LastName</h2>
