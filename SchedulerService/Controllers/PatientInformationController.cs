@@ -35,7 +35,6 @@ namespace Web.SchedulerService.Controllers
         public async Task<IActionResult> Get([FromQuery] Guid nurseId, [FromQuery] Guid patientId)
         {
             PatientInformationPageModel model = new PatientInformationPageModel();
-            model.NurseId = nurseId;
 
             using(var scope = m_serviceProvider.CreateScope())
             {

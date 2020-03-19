@@ -1,11 +1,12 @@
 ﻿@using Web.Models.ViewModels
 @model PatientInformationPageModel
+
 @{
     ViewData["Title"] = "PatientInfo";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<partial name="~/Views/Shared/_Navigation.cshtml" for="NavbarModel" />
+<partial name="~/Views/Shared/_NavbarPartial.cshtml" for="NavbarModel" />
 
 <main>
     <div class="container-fluid">
@@ -67,7 +68,7 @@
                                     </td>
                                     <td>
                                         <div class="input-group-append">
-                                            <a href="/administration?odfId=@Model.PendingMedications[i].OdfId&nurseId=@Model.NurseId&patientId=@Model.PatientId"
+                                            <a href="/administration?odfId=@Model.PendingMedications[i].OdfId&nurseId=@Model.NavbarModel.NurseId&patientId=@Model.PatientId"
                                                class="btn btn-primary"><strong>Verify Administration</strong></a>
                                         </div>
                                     </td>

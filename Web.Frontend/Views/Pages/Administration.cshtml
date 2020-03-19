@@ -4,7 +4,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<partial name="~/Views/Shared/_Navigation.cshtml" for="NavbarModel" />
+
+@* // TODO - REMOVE NAVBAR*@
+<partial name="~/Views/Shared/_NavbarPartial.cshtml" for="NavbarModel" />
 
 <main>
 
@@ -27,10 +29,10 @@
                 <h4>@Model.Dosage <small>mg of</small> @Model.MedicationName</h4>
                 was administered to <br>
                 <h4>@Model.PatientFirstName @Model.PatientLastName<small class="text-muted">, @Model.PatientDateOfBirth.ToShortDateString()</small></h4>
-                <h5><small>at </small>@Model.CurrentTime <small>by </small>@Model.NurseFirstName @Model.NurseLastName</h5>
+                <h5><small>at </small>@Model.CurrentTime <small>by </small>@Model.NavbarModel.NurseFirstName @Model.NavbarModel.NurseLastName</h5>
 
-                <a href="/patient?nurseId=@Model.NurseId&patientId=@Model.PatientId" class="btn btn-danger">Cancel</a>
-                <a href="/administration/confirm?nurseId=@Model.NurseId&patientId=@Model.PatientId&odfId=@Model.OdfId" class="btn btn-success">Verify</a>
+                <a href="/patient?nurseId=@Model.NavbarModel.NurseId&patientId=@Model.PatientId" class="btn btn-danger">Cancel</a>
+                <a href="/administration/confirm?nurseId=@Model.NavbarModel.NurseId&patientId=@Model.PatientId&odfId=@Model.OdfId" class="btn btn-success">Verify</a>
             </div>
         </div>
     </div>

@@ -58,7 +58,6 @@ namespace Web.SchedulerService.Controllers
                     MedicationName = query.medicationName,
                     PatientDateOfBirth = query.dateOfBirth,
                     CurrentTime = DateTime.Now,
-                    NurseId = nurseId,
                     PatientId = query.patientId,
                     OdfId = odfId
                 };

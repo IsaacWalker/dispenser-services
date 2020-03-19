@@ -7,6 +7,24 @@ namespace Web.Models.ViewModels
     public sealed class NavbarPartialModel
     {
         /// <summary>
+        /// The nurse Id
+        /// </summary>
+        public Guid NurseId { get; set; }
+
+
+        /// <summary>
+        /// First name of nurse
+        /// </summary>
+        public string NurseFirstName { get; set; }
+
+
+        /// <summary>
+        /// Last Name of Nurse
+        /// </summary>
+        public string NurseLastName { get; set; }
+
+
+        /// <summary>
         /// Patients
         /// </summary>
         public List<NavbarPatientModel> Patients { get; set; }

@@ -6,7 +6,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<partial name="~/Views/Shared/_Navigation.cshtml" for="NavbarModel" />
+@* // TODO - REMOVE NAVBAR*@
+<partial name="~/Views/Shared/_NavbarPartial.cshtml" for="NavbarModel" />
 
 <main>
 
@@ -14,7 +15,7 @@
         <h1 class="mt-4">Drug Information</h1>
         <ol class="breadcrumb mb-4">
             <li class="breadcrumb-item"><a href="index">Dashboard</a></li>
-            <li class="breadcrumb-item"><a href="patient?nurseId=@Model.NurseId&patientId=@Model.PatientId">Patient Name @Model.PatientName</a></li>
+            <li class="breadcrumb-item"><a href="patient?nurseId=@Model.NavbarModel.NurseId&patientId=@Model.PatientId">Patient Name @Model.PatientName</a></li>
             <li class="breadcrumb-item active">Drug Information</li>
         </ol>
     </div>
@@ -97,7 +98,6 @@
                 </table>
             </div>
         </div>
-    </div>
     </div>
 
 </main>
