@@ -1,7 +1,18 @@
-﻿<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+﻿
+<style>
+    .dropdown-toggle::after {
+        content: none;
+    }
+
+    .sb-topnav .navbar-brand {
+        width: 150px;
+    }
+</style>
+
+<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
 
     <a class="navbar-brand" href="index"><strong>PharmaPrint</strong></a>
-
+    <button class="btn btn-link" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item dropdown">
@@ -33,14 +44,9 @@
                 </div>
             </li>
         </ul>
-
     </div>
 
 
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
     <form class="d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
         <div class="input-group">
             <input class="form-control" type="text" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
@@ -60,3 +66,4 @@
     </ul>
 
 </nav>
+
