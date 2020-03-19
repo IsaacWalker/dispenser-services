@@ -14,6 +14,7 @@
 <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js" crossorigin="anonymous"></script>
 
+
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
     <a class="navbar-brand" href="index">PharmaPrint</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -40,39 +41,80 @@
         </ul>
     </div>
 </nav>
- 
+
 <main>
+
     <div class="container-fluid">
         <h1 class="mt-4">Dashboard</h1>
         <div class="card text-center">
             <div class="card-header">
                 <ul class="nav nav-tabs card-header-tabs">
                     <li class="nav-item">
-                        <a class="nav-link active" href="index">Today</a>
+                        <a class="nav-link active" href="index">24hr</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="index-24">Tomorrow</a>
+                        <a class="nav-link" href="#24">48hr</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="index-week">Week</a>
+                        <a class="nav-link" href="#week">Week</a>
                     </li>
                 </ul>
             </div>
 
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="card">
-                            <div class="card-body bg-light">
-                                <h5 class="card-title">@Model.BatchNumber</h5>
-                                <p class="card-text">ETA: @Model.ETA</p>
-                                <a href="#" class="btn btn-primary">See Detail</a>
+            <br />
+
+            <!-- Dispensed Batches Card -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Dispensed Batch</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">BATCH ID</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-play-circle fa-2x text-gray-300"></i>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
+            <!-- Printing Batches Card -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-warning shadow h-75 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Printing Batches</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">BATCH ID</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">ETA</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-clock fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Pending Batches Card -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-danger shadow h-50 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Pending Batches</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">BATCH ID</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-pause-circle fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="container-fluid">
             <div class="card mb-4">
                 <div class="card-header" style="background-color: dodgerblue; color: white;">
                     <strong>Current Batch Status: @Model.Status</strong>
@@ -97,14 +139,14 @@
                                     <tr>
                                         <td>
                                             <a href="/patient?nurseId=@Model.NurseId&patientId=@Model.ODFs[i].PatientId"
-                                                class="btn btn-light" role="button">@Model.ODFs[i].PatientName</a>
+                                               class="btn btn-light" role="button">@Model.ODFs[i].PatientName</a>
                                         </td>
                                         <td>@Model.ODFs[i].PatientWard</td>
                                         <td>@Model.ODFs[i].PatientRoom</td>
                                         <td>@Model.ODFs[i].PatientBed</td>
                                         <td>
                                             <a href="/drug?nurseId=@Model.NurseId&patientId=@Model.ODFs[i].PatientId&prescriptionId=@Model.ODFs[i].PrescriptionId"
-                                                class="btn btn-light" role="button">@Model.ODFs[i].MedicationName</a>
+                                               class="btn btn-light" role="button">@Model.ODFs[i].MedicationName</a>
                                         </td>
                                         <td>@Model.ODFs[i].Dosage mg</td>
 
@@ -115,41 +157,44 @@
                     </div>
                 </div>
             </div>
-
-        <div class="card mb-4">
-            <div class="card-header" style="background-color: dodgerblue; color: white;">
-                <strong>Pending Batches</strong>
-            </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" data-sort-name="Admin Time">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th>Batch ID</th>
-                                <th>Status</th>
-                                <th>ETA</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    @Model.BatchNumber
-                                </td>
-                                <td>
-                                    @Model.Status
-                                </td>
-                                <td>
-                                    @Model.ETA
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+        </div>
+        <br />
+        <div class="container-fluid">
+            <div class="card mb-4">
+                <div class="card-header" style="background-color: dodgerblue; color: white;">
+                    <strong>Pending Batches</strong>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" data-sort-name="Admin Time">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Batch ID</th>
+                                    <th>Status</th>
+                                    <th>ETA</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        @Model.BatchNumber
+                                    </td>
+                                    <td>
+                                        @Model.Status
+                                    </td>
+                                    <td>
+                                        @Model.ETA
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-        </div>
     </div>
- </main>
+
+</main>
 
 <footer class="py-4 bg-light mt-auto">
     <div class="container-fluid">
