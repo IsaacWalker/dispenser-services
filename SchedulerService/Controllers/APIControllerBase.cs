@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Web.EntityData;
+using Web.Models.ViewModels;
 
 namespace Web.SchedulerService.Controllers
 {
@@ -29,6 +32,28 @@ namespace Web.SchedulerService.Controllers
         {
             m_serviceProvider = serviceProvider;
             m_logger = logger;
+        }
+
+
+        protected async virtual Task InitializeViewModel<T>(Guid nurseId, ServiceDbContext context, T model)
+            where T : ViewModelBase
+        {
+            Nurse administiringNurse = await context.Nurses.FindAsync(nurseId);
+            model.NurseFirstName = administiringNurse.FirstName;
+            model.NurseLastName = administiringNurse.LastName;
+
+            var patients = await context.Patients.Select(P => new NavbarPatientModel()
+            {
+                FirstName = P.FirstName,
+                LastName = P.LastName,
+                PatientId = P.Id
+            })
+            .ToListAsync();
+
+            model.NavbarModel = new NavbarPartialModel()
+            {
+                Patients = patients
+            };
         }
     }
 }

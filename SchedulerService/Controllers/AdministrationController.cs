@@ -34,10 +34,7 @@ namespace Web.SchedulerService.Controllers
             using (var scope = m_serviceProvider.CreateScope())
             {
                 var context = scope.ServiceProvider.GetService<ServiceDbContext>();
-
-                // Get Nurse
-                Nurse administiringNurse = await context.Nurses.FindAsync(nurseId);
-
+                
                 var query = context.ODFs
                      .Where(O => O.Id == odfId)
                      .Include(O => O.Prescription)
@@ -55,8 +52,6 @@ namespace Web.SchedulerService.Controllers
 
                 AdministrationVerificationModel model = new AdministrationVerificationModel()
                 {
-                    NurseFirstName = administiringNurse.FirstName,
-                    NurseLastName = administiringNurse.LastName,
                     PatientFirstName = query.patientFirstName,
                     PatientLastName = query.patientlastName,
                     Dosage = query.dosage,
@@ -67,6 +62,8 @@ namespace Web.SchedulerService.Controllers
                     PatientId = query.patientId,
                     OdfId = odfId
                 };
+
+                await InitializeViewModel(nurseId, context, model);
 
                 return Ok(model);
             }

@@ -32,7 +32,7 @@ namespace Web.SchedulerService.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/view/[controller]")]
-        public IActionResult Get([FromQuery] Guid nurseId, [FromQuery] Guid patientId)
+        public async Task<IActionResult> Get([FromQuery] Guid nurseId, [FromQuery] Guid patientId)
         {
             PatientInformationPageModel model = new PatientInformationPageModel();
             model.NurseId = nurseId;
@@ -40,9 +40,6 @@ namespace Web.SchedulerService.Controllers
             using(var scope = m_serviceProvider.CreateScope())
             {
                 var context = scope.ServiceProvider.GetService<ServiceDbContext>();
-                var nurse = context.Nurses.Find(nurseId);
-                model.NurseFirstName = nurse.FirstName;
-                model.NurseLastName = nurse.LastName;
 
                 var patientInfo = context.Patients
                     .Where(P => P.Id == patientId)
@@ -106,6 +103,8 @@ namespace Web.SchedulerService.Controllers
 
                 model.AdministeredMedications = administeredMedications;
                 model.PendingMedications = pendingMedications;
+
+                await InitializeViewModel(nurseId, context, model);
             }
 
             return Ok(model);

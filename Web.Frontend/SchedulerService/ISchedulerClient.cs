@@ -51,5 +51,13 @@ namespace Web.Frontend.SchedulerService
         /// <param name="odfId"></param>
         /// <returns></returns>
         public Task<AdministrationVerificationModel> GetAdministrationModel(Guid nurseId, Guid odfId);
+
+
+        /// <summary>
+        /// Gets the model for the navbar partial view
+        /// </summary>
+        /// <param name="nurseId"></param>
+        /// <returns></returns>
+        public Task<NavbarPartialModel> GetNavbarModel();
     }
 }
