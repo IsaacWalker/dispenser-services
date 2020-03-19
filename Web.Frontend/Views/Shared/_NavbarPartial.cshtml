@@ -2,7 +2,6 @@
 @*
 *@
 
-@* // TODO - Add Nurse ID, Nurse Name to Partial Model for Links to Work*@
 
 <div id="layoutSidenav_nav">
     <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
@@ -28,7 +27,7 @@
             </div>
         </div>
         <div class="sb-sidenav-footer">
-            <div class="small">Logged in as:</div><strong>Nurse Name</strong>
+            <div class="small">Logged in as:</div><strong>@Model.NurseFirstName @Model.NurseLastName</strong>
         </div>
     </nav>
 </div>
