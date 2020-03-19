@@ -54,7 +54,6 @@ namespace Web.SchedulerService.Controllers
                 drugInformationPageModel.Notes = prescription.Notes;
                 drugInformationPageModel.Dosage = prescription.Dosage;
                 drugInformationPageModel.Route = prescription.Route;
-                drugInformationPageModel.NurseId = nurseId;
 
                 var pastAdministrations = context.ODFAdministrations
                     .Include(A => A.ODF)

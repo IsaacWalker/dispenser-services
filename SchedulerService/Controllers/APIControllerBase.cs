@@ -39,8 +39,6 @@ namespace Web.SchedulerService.Controllers
             where T : ViewModelBase
         {
             Nurse administiringNurse = await context.Nurses.FindAsync(nurseId);
-            model.NurseFirstName = administiringNurse.FirstName;
-            model.NurseLastName = administiringNurse.LastName;
 
             var patients = await context.Patients.Select(P => new NavbarPatientModel()
             {
@@ -52,6 +50,9 @@ namespace Web.SchedulerService.Controllers
 
             model.NavbarModel = new NavbarPartialModel()
             {
+                NurseFirstName = administiringNurse.FirstName,
+                NurseLastName = administiringNurse.LastName,
+                NurseId = nurseId,
                 Patients = patients
             };
         }

@@ -15,13 +15,13 @@
                     </a>
                     <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
-                            <a class="dropdown-item"><strong> Batch @Model.BatchNumber </strong></a>
+                            <a class="dropdown-item"><strong> Batch 4 </strong></a>
                             <div class="dropdown-divider"></div>
-                            @for (int i = 0; i < Model.ODFs.Count; i++)
+                            @for (int i = 0; i < Model.Patients.Count; i++)
                             {            
-                                <a class="nav-link" href="/patient?nurseId=@Model.NurseId&patientId=@Model.ODFs[i].PatientId">
-                                    @Model.ODFs[i].PatientName
-                                </a>
+                        <a class="nav-link" href="/patient?nurseId=@Model.&patientId=@Model.Patients[i].PatientId">
+                            @Model.Patients[i].FirstName @Model.Patients[i].LastName
+                        </a>
                             }
                         </nav>
                     </div>
