@@ -1,0 +1,100 @@
+﻿@model Web.Models.ViewModels.HomePageModel
+@using Web.Models.ViewModels
+@{
+    ViewData["Title"] = "PrintSchedule";
+}
+
+<partial name="~/Views/Shared/_Navigation.cshtml"/>
+
+<div id="layoutSidenav">
+
+    <partial name="~/Views/Shared/_NavbarPartial.cshtml" for="NavbarModel" />
+
+    <div id="layoutSidenav_content">
+        <main>
+            <br />
+            <div class="container-fluid">
+                <h1 class="mt-4">Dashboard</h1>
+                <div class="card text-center">
+                    <div class="card-header">
+                        <ul class="nav nav-tabs card-header-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="index">24hr</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#24">48hr</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#week">Week</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <br />
+                    <!-- Dispensed Batches Card -->
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-success shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Dispensed Batch</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">BATCH ID</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-play-circle fa-2x text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Printing Batches Card -->
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-warning shadow h-75 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Printing Batches</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">BATCH ID</div>
+                                        <div class="h6 mb-0 text-gray-800">ETA</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-clock fa-2x text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Pending Batches Card -->
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-danger shadow h-50 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Pending Batches</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">BATCH ID</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-pause-circle fa-2x text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+        <footer class="py-4 bg-light mt-auto">
+            <div class="container-fluid">
+                <div class="d-flex align-items-center justify-content-between small">
+                    <div class="text-muted">Copyright &copy; Sample Website 2020</div>
+                    <div>
+                        <a href="#">Privacy Policy</a>
+                        &middot;
+                        <a href="#">Terms &amp; Conditions</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+</div>
