@@ -31,8 +31,8 @@ namespace Web.SchedulerService.Controllers
         /// <param name="prescriptionId"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("api/view/[controller]")]
-        public async Task<IActionResult> Get([FromQuery] Guid nurseId,[FromQuery] Guid prescriptionId)
+        [Route("drug")]
+        public async Task<ViewResult> Get([FromQuery] Guid nurseId,[FromQuery] Guid prescriptionId)
         {
             // TODO - finish query
             m_logger.LogInformation("Getting Drug Information screen for {0}", prescriptionId);
@@ -47,7 +47,7 @@ namespace Web.SchedulerService.Controllers
 
                 if(prescription == default)
                 {
-                    return NotFound();
+                    return View();
                 }
 
                 drugInformationPageModel.DrugName = prescription.DrugName;
@@ -73,7 +73,7 @@ namespace Web.SchedulerService.Controllers
 
             }
 
-            return Ok(drugInformationPageModel);
+            return View("Views/Pages/DrugInfo.cshtml",drugInformationPageModel);
         }
     }
 }

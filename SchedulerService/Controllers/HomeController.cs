@@ -11,9 +11,11 @@ using Web.Models.ViewModels;
 
 namespace Web.SchedulerService.Controllers
 {
-    [ApiController]
     public class HomeController : APIControllerBase
     {
+        private static readonly Guid nurseId = Guid.Parse("a85b1827-33c5-4d45-8e11-7cb51ede0e59");
+
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -29,10 +31,10 @@ namespace Web.SchedulerService.Controllers
         /// </summary>
         /// <param name="nurseId"></param>
         /// <returns></returns>
-        [HttpGet]
-        [Route("api/view/[controller]")]
-        public async  Task<IActionResult> Get([FromQuery] Guid nurseId)
+        [Route("[controller]")]
+        public async Task<ViewResult> Home()
         {
+
             m_logger.LogDebug("Getting Home view for Nurse {0}", nurseId);
 
             HomePageModel model = new HomePageModel();
@@ -94,8 +96,8 @@ namespace Web.SchedulerService.Controllers
                 await InitializeViewModel(nurseId, context, model);
             }
 
-           
-            return Ok(model);
+
+            return View("Views/Home/Index.cshtml",model);
             
         }
     }

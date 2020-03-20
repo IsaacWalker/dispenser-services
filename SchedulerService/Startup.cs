@@ -83,6 +83,7 @@ namespace Web.SchedulerService
                 
             });
 
+            app.UseStaticFiles();
 
             app.UseMvc();
         }

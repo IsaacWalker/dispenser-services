@@ -11,6 +11,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\node_modules\bootstrap-icons\icons\arrow-left.svg" />
+    <None Include="wwwroot\node_modules\bootstrap-icons\icons\arrow-right.svg" />
+    <None Include="wwwroot\node_modules\bootstrap-icons\icons\house.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AspNetCore.HealthChecks.UI" Version="3.0.9" />
     <PackageReference Include="AspNetCore.HealthChecks.Uris" Version="3.0.0" />
     <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="3.1.1" />
@@ -23,10 +29,6 @@
     <ProjectReference Include="..\EntityData\Web.EntityData.csproj" />
     <ProjectReference Include="..\Web.DispenserClient\Web.DispenserClient.csproj" />
     <ProjectReference Include="..\Web.Models\Web.Models.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\" />
   </ItemGroup>
 
 </Project>

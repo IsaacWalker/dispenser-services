@@ -12,7 +12,6 @@ using Web.Models.ViewModels;
 
 namespace Web.SchedulerService.Controllers
 {
-    [ApiController]
     public class PatientInformationController : APIControllerBase
     {
         /// <summary>
@@ -30,9 +29,8 @@ namespace Web.SchedulerService.Controllers
         /// </summary>
         /// <param name="patientId"></param>
         /// <returns></returns>
-        [HttpGet]
-        [Route("api/view/[controller]")]
-        public async Task<IActionResult> Get([FromQuery] Guid nurseId, [FromQuery] Guid patientId)
+        [Route("patient")]
+        public async Task<ViewResult> Get([FromQuery] Guid nurseId, [FromQuery] Guid patientId)
         {
             PatientInformationPageModel model = new PatientInformationPageModel();
 
@@ -58,7 +56,7 @@ namespace Web.SchedulerService.Controllers
 
                 if(patientInfo == default)
                 {
-                    return NotFound(patientId);
+                    return View();
                 }
 
                 model.FirstName = patientInfo.firstName;
@@ -106,7 +104,7 @@ namespace Web.SchedulerService.Controllers
                 await InitializeViewModel(nurseId, context, model);
             }
 
-            return Ok(model);
+            return View("Views/Pages/PatientInfo.cshtml",model);
         }
     }
 }

@@ -10,7 +10,7 @@ using Web.Models.ViewModels;
 
 namespace Web.SchedulerService.Controllers
 {
-    public abstract class APIControllerBase : ControllerBase
+    public abstract class APIControllerBase : Controller
     {
         /// <summary>
         /// Service Provider

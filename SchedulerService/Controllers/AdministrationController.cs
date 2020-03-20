@@ -13,7 +13,6 @@ using Web.Models.ViewModels;
 
 namespace Web.SchedulerService.Controllers
 {
-    [ApiController]
     public class AdministrationController : APIControllerBase
     {
         public AdministrationController(IServiceProvider serviceProvider, ILogger<AdministrationController> logger) : base(serviceProvider, logger)
@@ -27,9 +26,8 @@ namespace Web.SchedulerService.Controllers
         /// <param name="nurseId"></param>
         /// <param name="odfId"></param>
         /// <returns></returns>
-        [HttpGet]
-        [Route("api/view/administration")]
-        public async Task<IActionResult> Get([FromQuery] Guid nurseId, [FromQuery] Guid odfId)
+        [Route("administration")]
+        public async Task<ViewResult> Get([FromQuery] Guid nurseId, [FromQuery] Guid odfId)
         {
             using (var scope = m_serviceProvider.CreateScope())
             {
@@ -64,7 +62,7 @@ namespace Web.SchedulerService.Controllers
 
                 await InitializeViewModel(nurseId, context, model);
 
-                return Ok(model);
+                return View("Views/Pages/Administration.cshtml", model);
             }
         }
 
@@ -75,8 +73,8 @@ namespace Web.SchedulerService.Controllers
         /// <param name="confirmModel"></param>
         /// <returns></returns>
         [HttpPost]
-        [Route("api/administration/confirm")]
-        public async Task<IActionResult> ConfirmAdministration([FromBody] ConfirmAdministrationModel confirmModel)
+        [Route("administration/confirm")]
+        public async Task<IActionResult> Confirm(ConfirmAdministrationModel confirmModel)
         {
             using(var scope = m_serviceProvider.CreateScope())
             {
@@ -100,7 +98,7 @@ namespace Web.SchedulerService.Controllers
                 // Add an ODF administration
                 context.ODFAdministrations.Add(administration);
                 await context.SaveChangesAsync();
-                return Ok();
+                return Redirect("~/home");
             }
         }
     }
