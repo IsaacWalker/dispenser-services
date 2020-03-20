@@ -4,11 +4,11 @@
     ViewData["Title"] = "Index";
 }
 
-<partial name="~/Views/Shared/_Navigation.cshtml" for="NavbarModel" />
+<partial name="~/Views/Shared/_NavbarPartial.cshtml" for="NavbarModel" />
 
 <div id="layoutSidenav">
 
-    <partial name="~/Views/Shared/_NavbarPartial.cshtml" for="NavbarModel" />
+    <partial name="~/Views/Shared/_SidebarPartial.cshtml" for="NavbarModel" />
 
     <div id="layoutSidenav_content">
         <main>
@@ -112,7 +112,7 @@
                                                 <td>@Model.ODFs[i].PatientRoom</td>
                                                 <td>@Model.ODFs[i].PatientBed</td>
                                                 <td>
-                                                    <a href="/drug?nurseId=@Model.NavbarModel.NurseId=@Model.ODFs[i].PatientId&prescriptionId=@Model.ODFs[i].PrescriptionId"
+                                                    <a href="/drug?nurseId=@Model.NavbarModel.NurseId&prescriptionId=@Model.ODFs[i].PrescriptionId"
                                                        class="btn btn-light" role="button">@Model.ODFs[i].MedicationName</a>
                                                 </td>
                                                 <td>@Model.ODFs[i].Dosage mg</td>

@@ -100,7 +100,6 @@ namespace Web.SchedulerService.Controllers
                 // Add an ODF administration
                 context.ODFAdministrations.Add(administration);
                 await context.SaveChangesAsync();
-
                 return Ok();
             }
         }
