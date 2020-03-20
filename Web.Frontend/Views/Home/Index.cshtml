@@ -14,7 +14,59 @@
         <main>
             <br />
             <div class="container-fluid">
-                <h1 class="mt-4">Dashboard</h1>
+                <div class="card mb-4">
+
+                    <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">
+                        <h6 class="m-0">
+                            <i class="fas fa-briefcase-medical"></i>
+                            Current Batch
+                        </h6>
+                    </a>
+                    <div class="collapse show" id="collapseCardExample">
+                        <div class="card-body">
+
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" data-sort-name="Admin Time">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>Patient Name</th>
+                                            <th>Ward</th>
+                                            <th>Room</th>
+                                            <th>Bed</th>
+                                            <th>Drug Name</th>
+                                            <th>Drug Dose</th>
+                                            <th>Admin Time</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @for (int i = 0; i < Model.ODFs.Count; i++)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <a href="/patient?nurseId=@Model.NavbarModel.NurseId&patientId=@Model.ODFs[i].PatientId"
+                                                       class="btn btn-light" role="button">@Model.ODFs[i].PatientName</a>
+                                                </td>
+                                                <td>@Model.ODFs[i].PatientWard</td>
+                                                <td>@Model.ODFs[i].PatientRoom</td>
+                                                <td>@Model.ODFs[i].PatientBed</td>
+                                                <td>
+                                                    <a href="/drug?nurseId=@Model.NavbarModel.NurseId=@Model.ODFs[i].PatientId&prescriptionId=@Model.ODFs[i].PrescriptionId"
+                                                       class="btn btn-light" role="button">@Model.ODFs[i].MedicationName</a>
+                                                </td>
+                                                <td>@Model.ODFs[i].Dosage mg</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-fluid">
+                <h1 class="mt-4">Printer Schedule</h1>
                 <div class="card text-center">
                     <div class="card-header">
                         <ul class="nav nav-tabs card-header-tabs">
@@ -81,51 +133,7 @@
                     </div>
                 </div>
                 <br />
-                <div class="container-fluid">
-                    <div class="card mb-4">
-                        <div class="card-header bg-primary text-white">
-                            <strong>Current Batch Status: @Model.Status</strong>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" data-sort-name="Admin Time">
-                                    <thead class="thead-dark">
-                                        <tr>
-                                            <th>Patient Name</th>
-                                            <th>Ward</th>
-                                            <th>Room</th>
-                                            <th>Bed</th>
-                                            <th>Drug Name</th>
-                                            <th>Drug Dose</th>
-                                            <th>Admin Time</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @for (int i = 0; i < Model.ODFs.Count; i++)
-                                        {
-                                            <tr>
-                                                <td>
-                                                    <a href="/patient?nurseId=@Model.NavbarModel.NurseId&patientId=@Model.ODFs[i].PatientId"
-                                                       class="btn btn-light" role="button">@Model.ODFs[i].PatientName</a>
-                                                </td>
-                                                <td>@Model.ODFs[i].PatientWard</td>
-                                                <td>@Model.ODFs[i].PatientRoom</td>
-                                                <td>@Model.ODFs[i].PatientBed</td>
-                                                <td>
-                                                    <a href="/drug?nurseId=@Model.NavbarModel.NurseId&prescriptionId=@Model.ODFs[i].PrescriptionId"
-                                                       class="btn btn-light" role="button">@Model.ODFs[i].MedicationName</a>
-                                                </td>
-                                                <td>@Model.ODFs[i].Dosage mg</td>
-                                            </tr>
-                                        }
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-                <br />
                 <div class="container-fluid">
                     <div class="card mb-4">
                         <div class="card-header bg-primary text-white">
@@ -157,8 +165,8 @@
                                 </table>
                             </div>
                         </div>
+                    </div>
                 </div>
-            </div>
             </div>
         </main>
 
@@ -176,4 +184,3 @@
         </footer>
     </div>
 </div>
-
