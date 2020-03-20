@@ -8,118 +8,125 @@
 
 <partial name="~/Views/Shared/_Navigation.cshtml" for="NavbarModel" />
 
-<main>
+<div id="layoutSidenav">
 
-    <div class="container-fluid">
-        <h1 class="mt-4">Patient Information </h1>
-        <ol class="breadcrumb mb-4">
-            <li class="breadcrumb-item"><a href="index">Dashboard</a></li>
-            <li class="breadcrumb-item active">Patient Information</li>
-        </ol>
-    </div>
+    <partial name="~/Views/Shared/_NavbarPartial.cshtml" for="NavbarModel" />
 
-    <div class="container-fluid">
-        <h2 class="mt-4">@Model.FirstName @Model.LastName</h2>
-        <div class="border-top my-3"></div>
-        <div class="ml-2">
-            <table class="table-condensed table-striped" id="dataTable" width="100%" cellspacing="0">
-                <tr>
-                    <th>Date of Birth</th>
-                    <td>5th April 2020</td>
-                </tr>
-                <tr>
-                    <th>Bed</th>
-                    <td>@Model.Bed</td>
-                </tr>
-                <tr>
-                    <th>Room</th>
-                    <td>@Model.Room</td>
-                </tr>
-                <tr>
-                    <th>Ward</th>
-                    <td>@Model.Ward</td>
-                </tr>
-            </table>
+    <div id="layoutSidenav_content">
+        <main>
 
-        </div>
-        <div class="card mb-4 mt-4">
-            <div class="card-header" style="background-color: dodgerblue; color: white;"><strong>Pending Medication</strong></div>
-            <div class="card-body">
-                <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
-                    <thead class="thead-dark">
+            <div class="container-fluid">
+                <h1 class="mt-4">Patient Information </h1>
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item"><a href="index">Dashboard</a></li>
+                    <li class="breadcrumb-item active">Patient Information</li>
+                </ol>
+            </div>
+
+            <div class="container-fluid">
+                <h2 class="mt-4">@Model.FirstName @Model.LastName</h2>
+                <div class="border-top my-3"></div>
+                <div class="ml-2">
+                    <table class="table-condensed table-striped" id="dataTable" width="100%" cellspacing="0">
                         <tr>
-                            <th>Drug</th>
-                            <th>Dose</th>
-                            <th>Time</th>
-                            <th>Status</th>
-                            <th></th>
+                            <th>Date of Birth</th>
+                            <td>5th April 2020</td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        @{
-                            for (int i = 0; i < Model.PendingMedications.Count; i++)
-                            {
-                                <tr>
-                                    <td>@Model.PendingMedications[i].DrugName</td>
-                                    <td>@Model.PendingMedications[i].Dosage</td>
-                                    <td>@Model.PendingMedications[i].Time</td>
-                                    <td style="color:darkred">
-                                        <strong>Ready</strong>
-                                    </td>
-                                    <td>
-                                        <div class="input-group-append">
-                                            <a href="/administration?odfId=@Model.PendingMedications[i].OdfId&nurseId=@Model.NavbarModel.NurseId&patientId=@Model.PatientId"
-                                               class="btn btn-primary"><strong>Verify Administration</strong></a>
-                                        </div>
-                                    </td>
-                                </tr>
-                            }
-                        }
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="card mb-4">
-            <div class="card-header" style="background-color: dodgerblue; color: white;"><strong>Administered Medication</strong></div>
-            <div class="card-body">
-                <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
-                    <thead class="thead-dark">
                         <tr>
-                            <th>Drug</th>
-                            <th>Dose</th>
-                            <th>Time</th>
-                            <th>Nurse</th>
+                            <th>Bed</th>
+                            <td>@Model.Bed</td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        @{
-                            for (int i = 0; i < Model.AdministeredMedications.Count; i++)
-                            {
+                        <tr>
+                            <th>Room</th>
+                            <td>@Model.Room</td>
+                        </tr>
+                        <tr>
+                            <th>Ward</th>
+                            <td>@Model.Ward</td>
+                        </tr>
+                    </table>
+
+                </div>
+                <div class="card mb-4 mt-4">
+                    <div class="card-header" style="background-color: dodgerblue; color: white;"><strong>Pending Medication</strong></div>
+                    <div class="card-body">
+                        <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
+                            <thead class="thead-dark">
                                 <tr>
-                                    <td>@Model.AdministeredMedications[i].DrugName</td>
-                                    <td>@Model.AdministeredMedications[i].Dosage</td>
-                                    <td>@Model.AdministeredMedications[i].Time</td>
-                                    <td>@Model.AdministeredMedications[i].NurseName</td>
+                                    <th>Drug</th>
+                                    <th>Dose</th>
+                                    <th>Time</th>
+                                    <th>Status</th>
+                                    <th></th>
                                 </tr>
-                            }
-                        }
-                    </tbody>
-                </table>
+                            </thead>
+                            <tbody>
+                                @{
+                                    for (int i = 0; i < Model.PendingMedications.Count; i++)
+                                    {
+                                        <tr>
+                                            <td>@Model.PendingMedications[i].DrugName</td>
+                                            <td>@Model.PendingMedications[i].Dosage</td>
+                                            <td>@Model.PendingMedications[i].Time</td>
+                                            <td style="color:darkred">
+                                                <strong>Ready</strong>
+                                            </td>
+                                            <td>
+                                                <div class="input-group-append">
+                                                    <a href="/administration?odfId=@Model.PendingMedications[i].OdfId&nurseId=@Model.NavbarModel.NurseId&patientId=@Model.PatientId"
+                                                       class="btn btn-primary"><strong>Verify Administration</strong></a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card mb-4">
+                    <div class="card-header" style="background-color: dodgerblue; color: white;"><strong>Administered Medication</strong></div>
+                    <div class="card-body">
+                        <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Drug</th>
+                                    <th>Dose</th>
+                                    <th>Time</th>
+                                    <th>Nurse</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    for (int i = 0; i < Model.AdministeredMedications.Count; i++)
+                                    {
+                                        <tr>
+                                            <td>@Model.AdministeredMedications[i].DrugName</td>
+                                            <td>@Model.AdministeredMedications[i].Dosage</td>
+                                            <td>@Model.AdministeredMedications[i].Time</td>
+                                            <td>@Model.AdministeredMedications[i].NurseName</td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-        </div>
+
+        </main>
+        <footer class="py-4 bg-light mt-auto">
+            <div class="container-fluid">
+                <div class="d-flex align-items-center justify-content-between small">
+                    <div class="text-muted">Copyright &copy; Sample Website 2020</div>
+                    <div>
+                        <a href="#">Privacy Policy</a>
+                        &middot;
+                        <a href="#">Terms &amp; Conditions</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
     </div>
 
-</main>
-<footer class="py-4 bg-light mt-auto">
-    <div class="container-fluid">
-        <div class="d-flex align-items-center justify-content-between small">
-            <div class="text-muted">Copyright &copy; Sample Website 2020</div>
-            <div>
-                <a href="#">Privacy Policy</a>
-                &middot;
-                <a href="#">Terms &amp; Conditions</a>
-            </div>
-        </div>
-    </div>
-</footer>
-<script src="js/scripts.js"></script>
+</div>

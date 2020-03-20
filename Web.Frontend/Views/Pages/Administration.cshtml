@@ -6,48 +6,53 @@
 
 <partial name="~/Views/Shared/_Navigation.cshtml" for="NavbarModel" />
 
-<main>
+<div id="layoutSidenav">
 
-    <div class="container-fluid">
-        <h1 class="mt-4">Administration Confirmation</h1>
-        <ol class="breadcrumb mb-4">
-            <li class="breadcrumb-item">Dashboard</li>
-            <li class="breadcrumb-item">@Model.PatientFirstName @Model.PatientLastName</li>
-            <li class="breadcrumb-item active">Administiring @Model.MedicationName</li>
-        </ol>
+    <partial name="~/Views/Shared/_NavbarPartial.cshtml" for="NavbarModel" />
+
+    <div id="layoutSidenav_content">
+        <main>
+
+            <div class="container-fluid">
+                <h1 class="mt-4">Administration Confirmation</h1>
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item">Dashboard</li>
+                    <li class="breadcrumb-item">@Model.PatientFirstName @Model.PatientLastName</li>
+                    <li class="breadcrumb-item active">Administiring @Model.MedicationName</li>
+                </ol>
+            </div>
+
+            <div class="container-fluid">
+                <div class="card sm-4">
+                    <div class="card-header bg-primary text-white">
+                        <strong>Confirmation</strong>
+                    </div>
+                    <div class="card-body text-center">
+                        This is confirmation that <br>
+                        <h4>@Model.Dosage <small>mg of</small> @Model.MedicationName</h4>
+                        was administered to <br>
+                        <h4>@Model.PatientFirstName @Model.PatientLastName<small class="text-muted">, @Model.PatientDateOfBirth.ToShortDateString()</small></h4>
+                        <h5><small>at </small>@Model.CurrentTime <small>by </small>@Model.NavbarModel.NurseFirstName @Model.NavbarModel.NurseLastName</h5>
+
+                        <a href="/patient?nurseId=@Model.NavbarModel.NurseId&patientId=@Model.PatientId" class="btn btn-danger">Cancel</a>
+                        <a href="/administration/confirm?nurseId=@Model.NavbarModel.NurseId&patientId=@Model.PatientId&odfId=@Model.OdfId" class="btn btn-success">Verify</a>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="py-4 bg-light mt-auto">
+            <div class="container-fluid">
+                <div class="d-flex align-items-center justify-content-between small">
+                    <div class="text-muted">Copyright &copy; Sample Website 2020</div>
+                    <div>
+                        <a href="#">Privacy Policy</a>
+                        &middot;
+                        <a href="#">Terms &amp; Conditions</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
     </div>
 
-    <div class="container-fluid">
-        <div class="card sm-4">
-            <div class="card-header bg-primary text-white">
-                <strong>Confirmation</strong>
-            </div>
-            <div class="card-body text-center">
-                This is confirmation that <br>
-                <h4>@Model.Dosage <small>mg of</small> @Model.MedicationName</h4>
-                was administered to <br>
-                <h4>@Model.PatientFirstName @Model.PatientLastName<small class="text-muted">, @Model.PatientDateOfBirth.ToShortDateString()</small></h4>
-                <h5><small>at </small>@Model.CurrentTime <small>by </small>@Model.NavbarModel.NurseFirstName @Model.NavbarModel.NurseLastName</h5>
-
-                <a href="/patient?nurseId=@Model.NavbarModel.NurseId&patientId=@Model.PatientId" class="btn btn-danger">Cancel</a>
-                <a href="/administration/confirm?nurseId=@Model.NavbarModel.NurseId&patientId=@Model.PatientId&odfId=@Model.OdfId" class="btn btn-success">Verify</a>
-            </div>
-        </div>
-    </div>
-</main>
-
-<footer class="py-4 bg-light mt-auto">
-    <div class="container-fluid">
-        <div class="d-flex align-items-center justify-content-between small">
-            <div class="text-muted">Copyright &copy; Sample Website 2020</div>
-            <div>
-                <a href="#">Privacy Policy</a>
-                &middot;
-                <a href="#">Terms &amp; Conditions</a>
-            </div>
-        </div>
-    </div>
-</footer>
-
-<script src="~/js/scripts.js"></script>
-
+</div>
