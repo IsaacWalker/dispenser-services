@@ -12,17 +12,20 @@
 
     <div id="layoutSidenav_content">
         <main>
-            <br />
+
             <div class="container-fluid">
+
+                <h1 class="mt-4">Batches</h1>
+
                 <div class="card mb-4">
 
-                    <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">
+                    <a href="#collapseCurrent" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCurrent">
                         <h6 class="m-0">
                             <i class="fas fa-briefcase-medical"></i>
                             Current Batch
                         </h6>
                     </a>
-                    <div class="collapse show" id="collapseCardExample">
+                    <div class="collapse show" id="collapseCurrent">
                         <div class="card-body">
 
                             <div class="table-responsive">
@@ -63,10 +66,51 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="card mb-4">
+
+                    <a href="#collapsePending" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapsePending">
+                        <h6 class="m-0">
+                            <i class="fas fa-briefcase"></i>
+                            Pending Batches
+                        </h6>
+                    </a>
+                    <div class="collapse show" id="collapsePending">
+                        <div class="card-body">
+
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" data-sort-name="Admin Time">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>Batch</th>
+                                            <th>Status</th>
+                                            <th>ETA</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                @Model.BatchNumber
+                                            </td>
+                                            <td>
+                                                @Model.Status
+                                            </td>
+                                            <td>
+                                                @Model.ETA
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
             <div class="container-fluid">
-                <h1 class="mt-4">Printer Schedule</h1>
+                <h1 class="mt-4">Schedule</h1>
                 <div class="card text-center">
                     <div class="card-header">
                         <ul class="nav nav-tabs card-header-tabs">
@@ -128,41 +172,6 @@
                                         <i class="fas fa-pause-circle fa-2x text-gray-300"></i>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <br />
-
-                <div class="container-fluid">
-                    <div class="card mb-4">
-                        <div class="card-header bg-primary text-white">
-                            <strong>Pending Batches</strong>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" data-sort-name="Admin Time">
-                                    <thead class="thead-dark">
-                                        <tr>
-                                            <th>Batch</th>
-                                            <th>Status</th>
-                                            <th>ETA</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                @Model.BatchNumber
-                                            </td>
-                                            <td>
-                                                @Model.Status
-                                            </td>
-                                            <td>
-                                                @Model.ETA
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
                             </div>
                         </div>
                     </div>
