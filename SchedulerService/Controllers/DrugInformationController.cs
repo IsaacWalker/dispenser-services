@@ -44,13 +44,24 @@ namespace Web.SchedulerService.Controllers
                 var context = scope.ServiceProvider.GetService<ServiceDbContext>();
                 DrugInformationPageModel drugInformationPageModel = await InitializeViewModel<DrugInformationPageModel>(context);
 
-                Prescription prescription = context.Prescriptions.Find(prescriptionId);
+                var prescription = context.Prescriptions.Where(P => P.Id == prescriptionId)
+                    .Include(P => P.Patient)
+                    .Select(P => new {
+                    PatientName = P.Patient.FirstName + " " + P.Patient.LastName,
+                        P.DrugName,
+                        P.Notes,
+                        P.Dosage,
+                        P.Route,
+                        P.EndDate
+                    } )
+                    .FirstOrDefault();
 
                 if(prescription == default)
                 {
                     return View();
                 }
 
+                drugInformationPageModel.PatientName = prescription.PatientName;
                 drugInformationPageModel.DrugName = prescription.DrugName;
                 drugInformationPageModel.Notes = prescription.Notes;
                 drugInformationPageModel.Dosage = prescription.Dosage;

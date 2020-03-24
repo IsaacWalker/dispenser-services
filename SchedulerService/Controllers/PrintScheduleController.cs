@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Web.EntityData;
 using Web.Models.ViewModels;
 
 namespace Web.SchedulerService.Controllers
@@ -19,22 +21,21 @@ namespace Web.SchedulerService.Controllers
 
 
         [Route("schedule")]
-        public ViewResult Index()
+        public async Task<ViewResult> Index()
         {
-            HomePageModel model = new HomePageModel()
+            using (var scope = m_serviceProvider.CreateScope())
             {
-                BatchNumber = 5,
-                Status = "PRINTING",
-                ETA = DateTime.Now,
-                ODFs = new List<BatchODF>(),
-                NavbarModel = new NavbarPartialModel()
-                {
-                    Patients = new List<NavbarPatientModel>()
-                },
-                PrintJobId = Guid.NewGuid()
-            };
+                var context = scope.ServiceProvider.GetService<ServiceDbContext>();
+                PrintScheduleModel model = await InitializeViewModel<PrintScheduleModel>(context);
 
-            return View("~/Views/Pages/PrintSchedule.cshtml", model);
+                // TODO - Finish Query
+
+
+                // model.Batches = ...
+                return View("~/Views/Pages/PrintSchedule.cshtml", model);
+            }
+
+
         }
     }
 }

@@ -14,7 +14,7 @@
                     <nav class="sb-sidenav-menu-nested nav">
                         @for (int i = 0; i < Model.Patients.Count; i++)
                         {
-                            <a class="nav-link" href="/">
+                            <a class="nav-link" href="/patient?patientId=@Model.Patients[i].PatientId">
                                 @Model.Patients[i].FirstName @Model.Patients[i].LastName
                             </a>
                         }
