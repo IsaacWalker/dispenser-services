@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,7 @@ using Web.Models.ViewModels;
 
 namespace Web.SchedulerService.Controllers
 {
+    [Authorize]
     public class PatientInformationController : APIControllerBase
     {
         /// <summary>
@@ -30,13 +32,12 @@ namespace Web.SchedulerService.Controllers
         /// <param name="patientId"></param>
         /// <returns></returns>
         [Route("patient")]
-        public async Task<ViewResult> Get([FromQuery] Guid nurseId, [FromQuery] Guid patientId)
+        public async Task<ViewResult> Get([FromQuery] Guid patientId)
         {
-            PatientInformationPageModel model = new PatientInformationPageModel();
-
             using(var scope = m_serviceProvider.CreateScope())
             {
                 var context = scope.ServiceProvider.GetService<ServiceDbContext>();
+                PatientInformationPageModel model = await InitializeViewModel<PatientInformationPageModel>(context);
 
                 var patientInfo = context.Patients
                     .Where(P => P.Id == patientId)
@@ -101,10 +102,9 @@ namespace Web.SchedulerService.Controllers
                 model.AdministeredMedications = administeredMedications;
                 model.PendingMedications = pendingMedications;
 
-                await InitializeViewModel(nurseId, context, model);
-            }
 
-            return View("Views/Pages/PatientInfo.cshtml",model);
+                return View("Views/Pages/PatientInfo.cshtml", model);
+            }
         }
     }
 }

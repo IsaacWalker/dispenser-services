@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Web.Models.ViewModels;
 
 namespace Web.SchedulerService.Controllers
 {
+    [Authorize]
     public class PrintScheduleController : APIControllerBase
     {
         public PrintScheduleController(IServiceProvider serviceProvider, ILogger<PrintScheduleController> logger) 
@@ -27,7 +29,6 @@ namespace Web.SchedulerService.Controllers
                 ODFs = new List<BatchODF>(),
                 NavbarModel = new NavbarPartialModel()
                 {
-                    NurseFirstName = "FIRST",
                     Patients = new List<NavbarPatientModel>()
                 },
                 PrintJobId = Guid.NewGuid()

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,7 +13,7 @@ using Web.Models.ViewModels;
 
 namespace Web.SchedulerService.Controllers
 {
-    [ApiController]
+    [Authorize]
     public class DrugInformationController : APIControllerBase
     {
         /// <summary>
@@ -32,16 +33,16 @@ namespace Web.SchedulerService.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("drug")]
-        public async Task<ViewResult> Get([FromQuery] Guid nurseId,[FromQuery] Guid prescriptionId)
+        public async Task<ViewResult> Get([FromQuery] Guid prescriptionId)
         {
             // TODO - finish query
             m_logger.LogInformation("Getting Drug Information screen for {0}", prescriptionId);
 
-            DrugInformationPageModel drugInformationPageModel = new DrugInformationPageModel();
-
+ 
             using (var scope = m_serviceProvider.CreateScope())
             {
                 var context = scope.ServiceProvider.GetService<ServiceDbContext>();
+                DrugInformationPageModel drugInformationPageModel = await InitializeViewModel<DrugInformationPageModel>(context);
 
                 Prescription prescription = context.Prescriptions.Find(prescriptionId);
 
@@ -69,11 +70,9 @@ namespace Web.SchedulerService.Controllers
                     .ToList();
 
                 drugInformationPageModel.PastAdministrationModels = pastAdministrations;
-                await InitializeViewModel(nurseId, context, drugInformationPageModel);
 
+                return View("Views/Pages/DrugInfo.cshtml", drugInformationPageModel);
             }
-
-            return View("Views/Pages/DrugInfo.cshtml",drugInformationPageModel);
         }
     }
 }

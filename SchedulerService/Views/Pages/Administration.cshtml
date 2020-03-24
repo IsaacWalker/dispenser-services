@@ -1,4 +1,5 @@
 ﻿@model Web.Models.ViewModels.AdministrationVerificationModel
+@using Web.EntityData
 @{
     ViewData["Title"] = "Administration";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -31,13 +32,12 @@
                         <h4>@Model.Dosage <small>mg of</small> @Model.MedicationName</h4>
                         was administered to <br>
                         <h4>@Model.PatientFirstName @Model.PatientLastName<small class="text-muted">, @Model.PatientDateOfBirth.ToShortDateString()</small></h4>
-                        <h5><small>at </small>@Model.CurrentTime <small>by </small>@Model.NavbarModel.NurseFirstName @Model.NavbarModel.NurseLastName</h5>
+                        <h5><small>at </small>@Model.CurrentTime <small>by </small>@Model.NavbarModel.NurseFirstName Model.NavbarModel.NurseLastName</h5>
                         <form asp-controller="Administration" asp-action="Confirm" method="post">
                             <input type="hidden" id="odfId" name="odfId" value=@Model.OdfId>
-                            <input type="hidden" id="nurseId" name="nurseId" value=@Model.NavbarModel.NurseId>
                             <input type="hidden" id="administrationTime" name="administrationTime" value=@Model.CurrentTime>
                             <button type="submit" class="btn btn-success">Verify</button>
-                            <a href="/patient?nurseId=@Model.NavbarModel.NurseId&patientId=@Model.PatientId" class="btn btn-danger">Cancel</a>
+                            <a href="/patient?patientId=@Model.PatientId" class="btn btn-danger">Cancel</a>
                         </form>
                     </div>
                 </div>

@@ -1,25 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Web.EntityData;
 
 namespace Web.Models.ViewModels
 {
     public sealed class NavbarPartialModel
     {
         /// <summary>
-        /// The nurse Id
-        /// </summary>
-        public Guid NurseId { get; set; }
-
-
-        /// <summary>
-        /// First name of nurse
+        /// Nurse First Name
         /// </summary>
         public string NurseFirstName { get; set; }
 
 
         /// <summary>
-        /// Last Name of Nurse
+        /// Nurse Last Name
         /// </summary>
         public string NurseLastName { get; set; }
 

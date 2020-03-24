@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,15 +30,17 @@ namespace Web.SchedulerService
             using (var scope = serviceProvider.CreateScope())
             {
                 var context = scope.ServiceProvider.GetService<ServiceDbContext>();
+                var manager = scope.ServiceProvider.GetService<UserManager<Nurse>>();
 
                 Nurse nurse = new Nurse()
                 {
                     Id = Guid.Parse("a85b1827-33c5-4d45-8e11-7cb51ede0e59"),
                     FirstName = "Nurse",
-                    LastName = "Ratchet"
+                    LastName = "Ratchet",
+                    UserName = "nurse@tcd.ie"
                 };
 
-                context.Add(nurse);
+                var result = manager.CreateAsync(nurse, "Password@1234").Result;
 
                 var p1 = AddPatient(context, "John", "Doe", 1.78f, DateTime.Parse("04-06-1992"), 67.0f);
                 var p2 = AddPatient(context, "Jane", "Doe", 1.65f, DateTime.Parse("06-02-1996"), 45.0f);

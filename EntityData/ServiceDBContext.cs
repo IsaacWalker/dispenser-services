@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,7 +10,7 @@ namespace Web.EntityData
     /// <summary>
     /// Db context
     /// </summary>
-    public sealed class ServiceDbContext : DbContext
+    public sealed class ServiceDbContext : IdentityDbContext<Nurse, IdentityRole<Guid>, Guid>
     {
         /// <summary>
         /// Beds 
@@ -154,6 +156,8 @@ namespace Web.EntityData
                 .HasOne(B => B.Patient)
                 .WithOne(P => P.Bed)
                 .HasForeignKey<Bed>(B => B.PatientId);
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

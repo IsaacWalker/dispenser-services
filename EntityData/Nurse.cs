@@ -1,11 +1,18 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Web.EntityData
 {
-    public class Nurse : AEntityBase
+    public class Nurse : IdentityUser<Guid>
     {
+        public Nurse()
+        {
+          
+        }
+
+
         /// <summary>
         /// Nurse First Name
         /// </summary>

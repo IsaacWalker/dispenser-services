@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -11,11 +12,9 @@ using Web.Models.ViewModels;
 
 namespace Web.SchedulerService.Controllers
 {
+    [Authorize]
     public class HomeController : APIControllerBase
     {
-        private static readonly Guid nurseId = Guid.Parse("a85b1827-33c5-4d45-8e11-7cb51ede0e59");
-
-
         /// <summary>
         /// Constructor
         /// </summary>
@@ -34,14 +33,10 @@ namespace Web.SchedulerService.Controllers
         [Route("[controller]")]
         public async Task<ViewResult> Home()
         {
-
-            m_logger.LogDebug("Getting Home view for Nurse {0}", nurseId);
-
-            HomePageModel model = new HomePageModel();
-
             using(var scope = m_serviceProvider.CreateScope())
             {
                 var context = scope.ServiceProvider.GetService<ServiceDbContext>();
+                HomePageModel model = await InitializeViewModel<HomePageModel>(context);
 
 
                 var currentJob = context.PrintJobs
@@ -85,20 +80,14 @@ namespace Web.SchedulerService.Controllers
                     model.PrintJobId = currentJob.Id;
                     model.ODFs = batchModels.ToList();
                     model.Status = currentJob.Status.ToString();
-
-                    m_logger.LogDebug("Returning Home Model for Nurse {0} with {1} ODF's", nurseId, model.ODFs.Count);
                 }
                 else
                 {
                     model.ODFs = new List<BatchODF>();
                 }
 
-                await InitializeViewModel(nurseId, context, model);
+                return View("Views/Home/Index.cshtml", model);
             }
-
-
-            return View("Views/Home/Index.cshtml",model);
-            
         }
     }
 }

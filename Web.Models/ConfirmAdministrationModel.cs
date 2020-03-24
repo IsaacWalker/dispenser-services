@@ -7,12 +7,6 @@ namespace Web.Models
     public class ConfirmAdministrationModel
     {
         /// <summary>
-        /// Nurse Id
-        /// </summary>
-        public Guid NurseId { get; set; }
-
-
-        /// <summary>
         /// ODF Id
         /// </summary>
         public Guid OdfId { get; set; }

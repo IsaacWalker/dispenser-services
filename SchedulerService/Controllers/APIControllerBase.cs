@@ -35,10 +35,12 @@ namespace Web.SchedulerService.Controllers
         }
 
 
-        protected async virtual Task InitializeViewModel<T>(Guid nurseId, ServiceDbContext context, T model)
-            where T : ViewModelBase
+        protected async virtual Task<T> InitializeViewModel<T>(ServiceDbContext context)
+            where T : ViewModelBase, new()
         {
-            Nurse administiringNurse = await context.Nurses.FindAsync(nurseId);
+            var nurse = context.Nurses.Find(Guid.Parse(User.Claims.FirstOrDefault().Value));
+
+            T model = new T();
 
             var patients = await context.Patients.Select(P => new NavbarPatientModel()
             {
@@ -50,11 +52,12 @@ namespace Web.SchedulerService.Controllers
 
             model.NavbarModel = new NavbarPartialModel()
             {
-                NurseFirstName = administiringNurse.FirstName,
-                NurseLastName = administiringNurse.LastName,
-                NurseId = nurseId,
+                NurseFirstName = nurse.FirstName,
+                NurseLastName = nurse.LastName,
                 Patients = patients
             };
+
+            return model;
         }
     }
 }

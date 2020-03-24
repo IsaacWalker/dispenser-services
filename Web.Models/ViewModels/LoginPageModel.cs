@@ -4,7 +4,8 @@ using System.Text;
 
 namespace Web.Models.ViewModels
 {
-    class LoginPageModel
+    public sealed class LoginPageModel
     {
+        public bool SigninSuccess { get; set; }
     }
 }

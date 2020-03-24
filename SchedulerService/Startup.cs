@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -62,6 +64,9 @@ namespace Web.SchedulerService
                 options.AutomaticAuthentication = false;
             });
 
+            services.AddIdentity<Nurse, IdentityRole<Guid>>()
+                .AddEntityFrameworkStores<ServiceDbContext>()
+                .AddDefaultTokenProviders();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -84,6 +89,8 @@ namespace Web.SchedulerService
             });
 
             app.UseStaticFiles();
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseMvc();
         }

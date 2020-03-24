@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +14,7 @@ using Web.Models.ViewModels;
 
 namespace Web.SchedulerService.Controllers
 {
+    [Authorize]
     public class AdministrationController : APIControllerBase
     {
         public AdministrationController(IServiceProvider serviceProvider, ILogger<AdministrationController> logger) : base(serviceProvider, logger)
@@ -27,7 +29,7 @@ namespace Web.SchedulerService.Controllers
         /// <param name="odfId"></param>
         /// <returns></returns>
         [Route("administration")]
-        public async Task<ViewResult> Get([FromQuery] Guid nurseId, [FromQuery] Guid odfId)
+        public async Task<ViewResult> Get([FromQuery] Guid odfId)
         {
             using (var scope = m_serviceProvider.CreateScope())
             {
@@ -48,20 +50,17 @@ namespace Web.SchedulerService.Controllers
                      })
                      .FirstOrDefault();
 
-                AdministrationVerificationModel model = new AdministrationVerificationModel()
-                {
-                    PatientFirstName = query.patientFirstName,
-                    PatientLastName = query.patientlastName,
-                    Dosage = query.dosage,
-                    MedicationName = query.medicationName,
-                    PatientDateOfBirth = query.dateOfBirth,
-                    CurrentTime = DateTime.Now,
-                    PatientId = query.patientId,
-                    OdfId = odfId
-                };
+                AdministrationVerificationModel model = await InitializeViewModel<AdministrationVerificationModel>(context);
 
-                await InitializeViewModel(nurseId, context, model);
-
+                model.PatientFirstName = query.patientFirstName;
+                model.PatientLastName = query.patientlastName;
+                model.Dosage = query.dosage;
+                model.MedicationName = query.medicationName;
+                model.PatientDateOfBirth = query.dateOfBirth;
+                model.CurrentTime = DateTime.Now;
+                model.PatientId = query.patientId;
+                model.OdfId = odfId; 
+            
                 return View("Views/Pages/Administration.cshtml", model);
             }
         }
@@ -90,7 +89,7 @@ namespace Web.SchedulerService.Controllers
                 ODFAdministration administration = new ODFAdministration
                 {
                     DateTime = confirmModel.AdministrationTime,
-                    NurseId = confirmModel.NurseId,
+                    NurseId = Guid.Parse(User.Claims.FirstOrDefault().Value),
                     ODFId = confirmModel.OdfId
                 };
 
