@@ -8,13 +8,11 @@
 
 <div id="layoutSidenav">
 
-    <partial name="~/Views/Shared/_SidebarPartial.cshtml" for="NavbarModel" />
-
     <div id="layoutSidenav_content">
         <main>
             <br />
             <div class="container-fluid">
-                <h1 class="mt-4">Dashboard</h1>
+                <h1 class="mt-4">Schedule</h1>
                 <div class="card text-center">
                     <div class="card-header">
                         <ul class="nav nav-tabs card-header-tabs">
@@ -22,30 +20,34 @@
                                 <a class="nav-link active" href="index">24hr</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#24">48hr</a>
+                                <a class="nav-link" href="#">48hr</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#week">Week</a>
+                                <a class="nav-link" href="#">Week</a>
                             </li>
                         </ul>
                     </div>
                     <br />
-                    <!-- Dispensed Batches Card -->
-                    <div class="col-xl-3 col-md-6 mb-4">
-                        <div class="card border-left-success shadow h-100 py-2">
-                            <div class="card-body">
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Dispensed Batch</div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">BATCH ID</div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <i class="fas fa-play-circle fa-2x text-gray-300"></i>
+                    
+                    <div class="row-md">
+                        <!-- Dispensed Batches Card -->
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-success shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Dispensed Batch</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"> BATCH ID</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-play-circle fa-2x text-gray-300"></i>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
                     <!-- Printing Batches Card -->
                     <div class="col-xl-3 col-md-6 mb-4">
                         <div class="card border-left-warning shadow h-75 py-2">
@@ -63,6 +65,7 @@
                             </div>
                         </div>
                     </div>
+
                     <!-- Pending Batches Card -->
                     <div class="col-xl-3 col-md-6 mb-4">
                         <div class="card border-left-danger shadow h-50 py-2">
