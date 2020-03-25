@@ -7,5 +7,13 @@
       "library": "bootstrap@4.4.1",
       "destination": "wwwroot/lib"
     }
+  ,
+{
+  "library": "mdbootstrap@4.14.1",
+  "destination": "wwwroot/mdbootstrap/",
+  "files": [
+    "js/mdb.min.js"
   ]
+}
+]
 }
