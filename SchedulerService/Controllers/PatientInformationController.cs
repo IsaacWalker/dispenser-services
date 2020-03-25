@@ -50,7 +50,8 @@ namespace Web.SchedulerService.Controllers
                         lastName = P.LastName,
                         bed = P.Bed.Label,
                         room = P.Bed.Room.Label,
-                        ward = P.Bed.Room.Ward.Name
+                        ward = P.Bed.Room.Ward.Name,
+                        dateOfBirth = P.DateOfBirth
                     })
                     .FirstOrDefault();
                 
@@ -66,6 +67,7 @@ namespace Web.SchedulerService.Controllers
                 model.Bed = patientInfo.bed;
                 model.Ward = patientInfo.ward;
                 model.PatientId = patientId;
+                model.DateOfBirth = patientInfo.dateOfBirth;
 
                 /// Get the ODFs from ODFAdministrations for today
                 var administeredMedications = context.ODFAdministrations

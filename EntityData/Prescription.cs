@@ -58,6 +58,12 @@ namespace Web.EntityData
 
 
         /// <summary>
+        /// The prescriber of this medication
+        /// </summary>
+        public string Prescriber { get; set; }
+
+
+        /// <summary>
         /// Id of the patient of which the drug is administered
         /// </summary>
         public Guid PatientId { get; set; }

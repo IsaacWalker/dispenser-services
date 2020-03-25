@@ -52,7 +52,9 @@ namespace Web.SchedulerService.Controllers
                         P.Notes,
                         P.Dosage,
                         P.Route,
-                        P.EndDate
+                        P.EndDate,
+                        P.Prescriber,
+                        P.Frequency
                     } )
                     .FirstOrDefault();
 
@@ -66,6 +68,8 @@ namespace Web.SchedulerService.Controllers
                 drugInformationPageModel.Notes = prescription.Notes;
                 drugInformationPageModel.Dosage = prescription.Dosage;
                 drugInformationPageModel.Route = prescription.Route;
+                drugInformationPageModel.Prescriber = prescription.Prescriber;
+                drugInformationPageModel.Frequency = prescription.Frequency.ToString();
 
                 var pastAdministrations = context.ODFAdministrations
                     .Include(A => A.ODF)
@@ -76,7 +80,8 @@ namespace Web.SchedulerService.Controllers
                         AdministeringNurse = A.Nurse.FirstName + " " + A.Nurse.LastName,
                         DateTime = A.DateTime,
                         Dosage = prescription.Dosage,
-                        ExpirationDate = prescription.EndDate
+                        ExpirationDate = prescription.EndDate,
+                        BatchNumber = A.ODF.PrintJob.BatchNumber
                     })
                     .ToList();
 

@@ -58,7 +58,9 @@ namespace Web.SchedulerService
                     EndDate = DateTime.Now.Date + TimeSpan.FromDays(14.0),
                     Route = "PO",
                     Patient = p1,
-                    Frequency = Frequency.BID
+                    Frequency = Frequency.BID,
+                    Prescriber = "Dr P. Walsh",
+                    Notes = "Take after eating"
                 };
 
                 Prescription p2PrescriptionOne = new Prescription()
@@ -69,7 +71,9 @@ namespace Web.SchedulerService
                     EndDate = DateTime.Now.Date + TimeSpan.FromDays(14.0),
                     Route = "PO",
                     Patient = p2,
-                    Frequency = Frequency.BID
+                    Frequency = Frequency.BID,
+                    Prescriber = "Dr P. Walsh",
+                    Notes = "Take after eating"
                 };
 
                 Prescription p3PrescriptionOne = new Prescription()
@@ -80,7 +84,9 @@ namespace Web.SchedulerService
                     EndDate = DateTime.Now.Date + TimeSpan.FromDays(12.0),
                     Route = "PO",
                     Patient = p3,
-                    Frequency = Frequency.BID
+                    Frequency = Frequency.BID,
+                    Prescriber = "Dr P. Walsh",
+                    Notes = "Take after eating"
                 };
 
 
@@ -92,7 +98,9 @@ namespace Web.SchedulerService
                     EndDate = DateTime.Now.Date + TimeSpan.FromDays(12.0),
                     Route = "PO",
                     Patient = p4,
-                    Frequency = Frequency.BID
+                    Frequency = Frequency.BID,
+                    Prescriber = "Dr P. Walsh",
+                    Notes = "Take after eating"
                 };
 
 
@@ -104,7 +112,9 @@ namespace Web.SchedulerService
                     EndDate = DateTime.Now.Date + TimeSpan.FromDays(12.0),
                     Route = "PO",
                     Patient = p5,
-                    Frequency = Frequency.BID
+                    Frequency = Frequency.BID,
+                    Prescriber = "Dr P. Walsh",
+                    Notes = "Take after eating"
                 };
 
                 context.Add(p1PrescriptionOne);

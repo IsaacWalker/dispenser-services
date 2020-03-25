@@ -29,6 +29,12 @@ namespace Web.Models.ViewModels
 
 
         /// <summary>
+        /// Patient Date of birth
+        /// </summary>
+        public DateTime DateOfBirth { get; set; }
+
+
+        /// <summary>
         /// Bed
         /// </summary>
         public string Bed { get; set; }

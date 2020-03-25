@@ -32,6 +32,7 @@ namespace Web.SchedulerService.Controllers
                 var batches = context.PrintJobs
                     .Include(PJ => PJ.DailySchedule)
                     .Where(PJ => PJ.DailySchedule.Date == DateTime.Today.Date)
+                    .Include(PJ => PJ.ODFs)
                     .Select(PJ => new Batch()
                     {
                         ETA = PJ.ExpectedTimeOfReadiness,

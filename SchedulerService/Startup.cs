@@ -67,6 +67,8 @@ namespace Web.SchedulerService
             services.AddIdentity<Nurse, IdentityRole<Guid>>()
                 .AddEntityFrameworkStores<ServiceDbContext>()
                 .AddDefaultTokenProviders();
+
+            services.ConfigureApplicationCookie(options => options.LoginPath = "/login");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

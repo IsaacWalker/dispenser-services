@@ -52,9 +52,15 @@ namespace Web.Models.ViewModels
 
 
         /// <summary>
+        /// The presscriber of the drug
+        /// </summary>
+        public string Prescriber { get; set; }
+
+
+        /// <summary>
         /// The Maximum Administration Frequency of that Drug
         /// </summary>
-        public int MaxFrequency { get; set; }
+        public string Frequency { get; set; }
 
 
         /// <summary>
@@ -93,7 +99,7 @@ namespace Web.Models.ViewModels
         /// <summary>
         /// Batch Number
         /// </summary>
-        public int BatchNumber { get; set; }
+        public uint BatchNumber { get; set; }
 
 
         /// <summary>

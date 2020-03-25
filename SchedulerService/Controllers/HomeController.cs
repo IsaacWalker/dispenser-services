@@ -31,6 +31,7 @@ namespace Web.SchedulerService.Controllers
         /// <param name="nurseId"></param>
         /// <returns></returns>
         [Route("[controller]")]
+        [Route("")]
         public async Task<ViewResult> Home()
         {
             using(var scope = m_serviceProvider.CreateScope())
