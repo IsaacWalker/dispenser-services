@@ -13,77 +13,80 @@
     <partial name="~/Views/Shared/_SidebarPartial.cshtml" for="NavbarModel" />
 
     <div id="layoutSidenav_content">
-       
+
         <main>
+            <br />
             <div class="container-fluid">
-                
-                <h1 class="mt-4">
-                <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 15rem;" src="img/undraw_medicine_b1ol.svg" alt="">
-                @Model.DrugName</h1>
 
-                <div class="card mb-4">
-                    <a href="#collapsePerscription" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapsePerscription">
-                        <h6 class="m-0">
-                            <i class="fas fa-notes-medical"></i>
-                            @Model.PatientName's Prescription
-                        </h6>
-                    </a>
+                <div class="row">
+                    <div class="col-4 text-center">
+                        <h1 class="mt-4">
+                            <strong>@Model.DrugName</strong> <small>(@Model.PatientName)</small>
+                            <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;" src="img/undraw_medicine_b1ol.svg" alt="">
+                        </h1>
+                    </div>
+                    <div class="col-8">
+                        <div class="card mb-4">
+                            <a href="#collapsePerscription" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapsePerscription">
+                                <h6 class="m-0">
+                                    <i class="fas fa-notes-medical"></i>
+                                    @Model.PatientName's @Model.DrugName Prescription
+                                </h6>
+                            </a>
 
-                    <div class="collapse show" id="collapsePerscription">
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
-                                <thead class="thead-dark">
-                                    <tr>
-                                        <th>Dosage</th>
-                                        <th>Route</th>
-                                        <th>Indication</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>@Model.Dosage</td>
-                                        <td>@Model.Route</td>
-                                        <td>@Model.Indication</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
-                                <thead class="thead-dark">
-                                    <tr>
-                                        <th>Prescribed By</th>
-                                        <th>Max Frequency</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>@Model.Prescriber</td>
-                                        <td>@Model.Frequency</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <div class="collapse show" id="collapsePerscription">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <th><i class="fas fa-mortar-pestle"></i> Dosage</th>
+                                                <th><i class="fas fa-tablets"></i> Route</th>
+                                                <th><i class="fas fa-stethoscope"></i> Indication</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>@Model.Dosage</td>
+                                                <td>@Model.Route</td>
+                                                <td>@Model.Indication</td>
+                                            </tr>
+                                        </tbody>
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <th colspan="2"><i class="fas fa-user-md"></i> Prescribed By</th>
+                                                <th><i class="fas fa-clock"></i> Frequency</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td colspan="2"> @Model.Prescriber</td>
+                                                <td>@Model.Frequency</td>
+                                            </tr>
+                                        </tbody>
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <th colspan="3"><i class="fas fa-comment-medical"></i> Notes</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td colspan="3"> @Model.Notes</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+   
+                                </div>
+                            </div>
 
-                            <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
-                                <thead class="thead-dark">
-                                    <tr>
-                                        <th>Notes</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td> @Model.Notes</td>
-                                    </tr>
-                                </tbody>
-                            </table>
                         </div>
                     </div>
-
                 </div>
 
                 <!--Perscription History Table-->
                 <div class="card mb-4">
                     <a href="#collapseHistory" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseHistory">
                         <h6 class="m-0">
-                            <i class="fas fa-pills"></i>
+                            <i class="fas fa-prescription-bottle-alt"></i>
                             @Model.DrugName Administration History
                         </h6>
 
