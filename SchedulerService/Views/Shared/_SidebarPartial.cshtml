@@ -1,6 +1,15 @@
 ﻿@model Web.Models.ViewModels.NavbarPartialModel
 @using Web.EntityData
 
+<script type="text/javascript">
+    function sortList(ul) {
+    var ul = document.getElementById(ul);
+
+     Array.from(ul.getElementsByTagName("a"))
+    .sort((a, b) => a.textContent.localeCompare(b.textContent))
+    .forEach(li => ul.appendChild(li));
+}
+</script>
 
 <div id="layoutSidenav_nav">
     <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
@@ -11,7 +20,7 @@
                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
                 <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
-                    <nav class="sb-sidenav-menu-nested nav">
+                    <nav class="sb-sidenav-menu-nested nav" id="patientDropdown">
                         @for (int i = 0; i < Model.Patients.Count; i++)
                         {
                             <a class="nav-link" href="/patient?patientId=@Model.Patients[i].PatientId">
@@ -19,6 +28,9 @@
                             </a>
                         }
                     </nav>
+                    <script type="text/javascript">
+                      sortList("patientDropdown");
+                    </script>
                 </div>
             </div>
         </div>

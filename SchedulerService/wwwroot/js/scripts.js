@@ -20,3 +20,10 @@
         $("body").toggleClass("sb-sidenav-toggled");
     });
 })(jQuery);
+
+// Call the dataTables jQuery plugin
+$(document).ready(function () {
+    $('#dataTable').DataTable();
+});
+
+
