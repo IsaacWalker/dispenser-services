@@ -6,6 +6,11 @@
       "provider": "unpkg",
       "library": "bootstrap@4.4.1",
       "destination": "wwwroot/lib"
+    },
+    {
+      "provider": "cdnjs",
+      "library": "mdb@4.14.1",
+      "destination": "wwwroot/lib"
     }
   ]
 }
