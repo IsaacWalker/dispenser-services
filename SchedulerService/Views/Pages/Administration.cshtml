@@ -5,44 +5,76 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<partial name="~/Views/Shared/_NavbarPartial.cshtml" for="NavbarModel" />
 
-<div id="layoutSidenav">
+    <main>
+        <div class="container-fluid">
+            <h1 class="mt-4">Administration Confirmation</h1>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item">Dashboard</li>
+                <li class="breadcrumb-item">@Model.PatientFirstName @Model.PatientLastName</li>
+                <li class="breadcrumb-item active">Administering @Model.MedicationName</li>
+            </ol>
+        </div>
 
-    <partial name="~/Views/Shared/_SidebarPartial.cshtml" for="NavbarModel" />
+        <div class="container-fluid">
+            <div class="card sm-4">
+                <div class="card-header bg-primary text-white">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    Confirmation
+                </div>
+                <div class="card-body text-center">
+                    <h3>
+                        This is confirmation that <strong>@Model.Dosage mg</strong> of <strong>@Model.MedicationName</strong>
+                        was administered to <strong>@Model.PatientFirstName @Model.PatientLastName</strong>, <small>@Model.PatientDateOfBirth.ToShortDateString()</small>,
+                        at <strong>@Model.CurrentTime</strong>.
+                    </h3>
+                    <hr />
+                    <h4 class="text-right">
+                       by <strong>@Model.NavbarModel.NurseFirstName @Model.NavbarModel.NurseLastName</strong>
+                    </h4>
+                    
 
-    <div id="layoutSidenav_content">
-        <main>
-            <div class="container-fluid">
-                <h1 class="mt-4">Administration Confirmation</h1>
-                <ol class="breadcrumb mb-4">
-                    <li class="breadcrumb-item">Dashboard</li>
-                    <li class="breadcrumb-item">@Model.PatientFirstName @Model.PatientLastName</li>
-                    <li class="breadcrumb-item active">Administiring @Model.MedicationName</li>
-                </ol>
-            </div>
+                </div>
 
-            <div class="container-fluid">
-                <div class="card sm-4">
-                    <div class="card-header bg-primary text-white">
-                        <strong>Confirmation</strong>
+                <div class="card-footer text-muted">
+                    <div class="row align-content-md-between">
+
+                        <div class="col-sm-6 flex-center">
+                            <a href="/patient?patientId=@Model.PatientId" class="btn btn-danger">
+                                <i class="fas fa-times-circle"></i>
+                                Cancel
+                            </a>
+                        </div>
+
+                        <div class="col-sm-6 flex-center">
+                            <form asp-controller="Administration" asp-action="Confirm" method="post">
+                                <input type="hidden" id="odfId" name="odfId" value=@Model.OdfId>
+                                <input type="hidden" id="administrationTime" name="administrationTime" value=@Model.CurrentTime>
+
+                                <button type="submit" class="btn btn-success">
+                                    <i class="fas fa-check-circle"></i>
+                                    Verify
+                                </button>
+
+                            </form>
+                        </div>
                     </div>
-                    <div class="card-body text-center">
-                        This is confirmation that <br>
-                        <h4>@Model.Dosage <small>mg of</small> @Model.MedicationName</h4>
-                        was administered to <br>
-                        <h4>@Model.PatientFirstName @Model.PatientLastName<small class="text-muted">, @Model.PatientDateOfBirth.ToShortDateString()</small></h4>
-                        <h5><small>at </small>@Model.CurrentTime <small>by </small>@Model.NavbarModel.NurseFirstName Model.NavbarModel.NurseLastName</h5>
-                        <form asp-controller="Administration" asp-action="Confirm" method="post">
-                            <input type="hidden" id="odfId" name="odfId" value=@Model.OdfId>
-                            <input type="hidden" id="administrationTime" name="administrationTime" value=@Model.CurrentTime>
-                            <button type="submit" class="btn btn-success">Verify</button>
-                            <a href="/patient?patientId=@Model.PatientId" class="btn btn-danger">Cancel</a>
-                        </form>
-                    </div>
+                      
                 </div>
             </div>
-        </main>
+        </div>
+
+        <div class="container-fluid">
+            <br />
+            By clicking submit you are confirming that the following prescription is being administered to the afformentioned patient.
+            Your name will be logged and associated with the administration history of this prescription and you may be held accountable for any mistakes made with this administration.
+            Please ensure that the prescription information is valid and patient details are correct as any error made will be associated with your name. 
+            If you are unsure select cancel to be redirected to the patient page.
+            <br /> 
+            <br />
+        </div>
+
+    </main>
 
         <footer class="py-4 bg-light mt-auto">
             <div class="container-fluid">
@@ -56,7 +88,3 @@
                 </div>
             </div>
         </footer>
-
-        <script src="~/js/scripts.js"></script>
-        </div>
-    </div>
