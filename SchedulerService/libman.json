@@ -10,10 +10,7 @@
   ,
 {
   "library": "mdbootstrap@4.14.1",
-  "destination": "wwwroot/mdbootstrap/",
-  "files": [
-    "js/mdb.min.js"
-  ]
+  "destination": "wwwroot/mdbootstrap"
 }
 ]
 }
