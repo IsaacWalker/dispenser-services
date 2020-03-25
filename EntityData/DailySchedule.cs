@@ -6,7 +6,7 @@ namespace Web.EntityData
 {
     public class DailySchedule : AEntityBase
     {
-        public DayOfWeek Day { get; set; }
+        public DateTime Date { get; set; }
 
 
         /// <summary>

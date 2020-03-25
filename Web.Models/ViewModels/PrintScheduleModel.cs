@@ -18,7 +18,7 @@ namespace Web.Models.ViewModels
             /// <summary>
             /// Batch Number
             /// </summary>
-            public int BatchNumber { get; set; }
+            public uint BatchNumber { get; set; }
 
 
             /// <summary>

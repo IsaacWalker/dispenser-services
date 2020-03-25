@@ -10,6 +10,12 @@ namespace Web.EntityData
     public class PrintJob : AEntityBase
     {
         /// <summary>
+        /// The batch Number of that Day
+        /// </summary>
+        public uint BatchNumber { get; set; }
+
+
+        /// <summary>
         /// Status of the Print Job
         /// </summary>
         public PrintJobStatus Status { get; set; }
