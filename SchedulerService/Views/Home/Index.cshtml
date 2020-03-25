@@ -12,22 +12,47 @@
 
     <div id="layoutSidenav_content">
         <main>
+            <div class="container-fluid">
+                <h1 class="mt-4 text-center">
+                    <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 35rem;" src="img/undraw_doctors_hwty.svg" alt="">
+                    <br />
+                    <strong>Batches</strong>
+                </h1>
+            </div>
 
             <div class="container-fluid">
-
-                <h1 class="mt-4">Batches</h1>
 
                 <div class="card mb-4">
 
                     <a href="#collapseCurrent" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCurrent">
-                        <h6 class="m-0">
-                            <i class="fas fa-briefcase-medical"></i>
-                            Current Batch
-                        </h6>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h6 class="m-0">
+                                    <i class="fas fa-briefcase-medical"></i>
+                                    Current Batch
+                                </h6>
+                            </div>
+                            <div class="col-sm-6 text-right">
+                                <h6 class="m-0">
+                                    <i class="fas fa-hashtag"></i>
+                                    @Model.BatchNumber
+                                </h6>
+                            </div>
+                        </div>
                     </a>
                     <div class="collapse show" id="collapseCurrent">
-                        <div class="card-body">
 
+                        @if (Model.ODFs.Count == 0)
+                        {
+                            <div class="card-body text-center">
+                                <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;" src="img/undraw_no_data_qbuo.svg" alt="">
+                                <h3>
+                                    No batch currently dispensed to <strong>@Model.NavbarModel.NurseFirstName @Model.NavbarModel.NurseLastName</strong>
+                                </h3>
+                            </div>
+                        }
+                        else
+                        {
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" data-sort-name="Admin Time">
                                     <thead class="thead-dark">
@@ -57,13 +82,14 @@
                                                        class="btn btn-light" role="button">@Model.ODFs[i].MedicationName</a>
                                                 </td>
                                                 <td>@Model.ODFs[i].Dosage mg</td>
+                                                <td> </td>
                                             </tr>
                                         }
                                     </tbody>
                                 </table>
                             </div>
+                        }
 
-                        </div>
                     </div>
                 </div>
 
@@ -76,107 +102,35 @@
                         </h6>
                     </a>
                     <div class="collapse show" id="collapsePending">
-                        <div class="card-body">
-
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" data-sort-name="Admin Time">
-                                    <thead class="thead-dark">
-                                        <tr>
-                                            <th>Batch</th>
-                                            <th>Status</th>
-                                            <th>ETA</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                @Model.BatchNumber
-                                            </td>
-                                            <td>
-                                                @Model.Status
-                                            </td>
-                                            <td>
-                                                @Model.ETA
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" data-sort-name="Admin Time">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>Batch</th>
+                                        <th>Status</th>
+                                        <th>ETA</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            @Model.BatchNumber
+                                        </td>
+                                        <td>
+                                            @Model.Status
+                                        </td>
+                                        <td>
+                                            @Model.ETA
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
 
             </div>
 
-            <div class="container-fluid">
-                <h1 class="mt-4">Schedule</h1>
-                <div class="card text-center">
-                    <div class="card-header">
-                        <ul class="nav nav-tabs card-header-tabs">
-                            <li class="nav-item">
-                                <a class="nav-link active" href="index">24hr</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#24">48hr</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#week">Week</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <br />
-                    <!-- Dispensed Batches Card -->
-                    <div class="col-xl-3 col-md-6 mb-4">
-                        <div class="card border-left-success shadow h-100 py-2">
-                            <div class="card-body">
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Dispensed Batch</div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">BATCH ID</div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <i class="fas fa-play-circle fa-2x text-gray-300"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Printing Batches Card -->
-                    <div class="col-xl-3 col-md-6 mb-4">
-                        <div class="card border-left-warning shadow h-75 py-2">
-                            <div class="card-body">
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Printing Batches</div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">BATCH ID</div>
-                                        <div class="h6 mb-0 text-gray-800">ETA</div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <i class="fas fa-clock fa-2x text-gray-300"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Pending Batches Card -->
-                    <div class="col-xl-3 col-md-6 mb-4">
-                        <div class="card border-left-danger shadow h-50 py-2">
-                            <div class="card-body">
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Pending Batches</div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">BATCH ID</div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <i class="fas fa-pause-circle fa-2x text-gray-300"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </main>
 
         <footer class="py-4 bg-light mt-auto">
