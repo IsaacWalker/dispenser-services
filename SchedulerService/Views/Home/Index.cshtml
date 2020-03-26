@@ -55,7 +55,7 @@
                             else
                             {
                                 <div class="table-responsive">
-                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" data-sort-name="Admin Time">
+                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" data-sort-name="Time of Administration">
                                         <thead class="thead-dark">
                                             <tr>
                                                 <th>Patient Name</th>
@@ -64,7 +64,7 @@
                                                 <th>Bed</th>
                                                 <th>Drug Name</th>
                                                 <th>Drug Dose</th>
-                                                <th>Admin Time</th>
+                                                <th>Time of Administration</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -83,7 +83,7 @@
                                                            class="btn btn-light" role="button">@Model.ODFs[i].MedicationName</a>
                                                     </td>
                                                     <td>@Model.ODFs[i].Dosage mg</td>
-                                                    <td> </td>
+                                                    <td>**Needs Timestamp** </td>
                                                 </tr>
                                             }
                                         </tbody>
@@ -104,7 +104,7 @@
                     </a>
                     <div class="collapse show" id="collapsePending">
                         <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" data-sort-name="Admin Time">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" data-sort-name="Time of Administration">
                                 <thead class="thead-dark">
                                     <tr>
                                         <th>Batch</th>

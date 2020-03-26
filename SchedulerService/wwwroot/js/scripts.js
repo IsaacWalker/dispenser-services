@@ -26,4 +26,14 @@ $(document).ready(function () {
     $('#dataTable').DataTable();
 });
 
+// Call the dataTables jQuery plugin
+$(document).ready(function () {
+    $('#pendingMedicationTable').DataTable({
+        bLengthChange: false,
+        bFilter: false
+    });
+});
+
+
+
 
