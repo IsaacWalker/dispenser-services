@@ -223,6 +223,7 @@ namespace Web.SchedulerService
             }
         }
 
+
         private static Patient AddPatient(ServiceDbContext context, string firstName, string lastName, float height, DateTime dob, float weight)
         {
             Patient p = new Patient()
@@ -239,5 +240,51 @@ namespace Web.SchedulerService
             return p;
         }
 
+
+        private static void AddWeeklySchedule(ServiceDbContext context, IList<Prescription> prescriptions)
+        {
+            WeeklyPrescriptionSchedule week = new WeeklyPrescriptionSchedule();
+
+            week.StartDate = DateTime.Now.Date;
+            IList<DailySchedule> days = new List<DailySchedule>();
+
+            for(var date = week.StartDate; 
+                date < week.StartDate + TimeSpan.FromDays(7); 
+                date+=TimeSpan.FromDays(1))
+            {
+                days.Add(new DailySchedule() { Date = date, WeeklyPrescriptionSchedule = week, PrintJobs = new List<PrintJob>() });
+            }
+
+            foreach(var pres in prescriptions)
+            {
+                switch(pres.Frequency)
+                {
+                    case (Frequency.DAILY):
+                        AddOdfs(1, 1);
+                        break;
+                    case (Frequency.BID):
+                        AddOdfs(2, 1);
+                        break;
+                    case (Frequency.OTHER_DAY):
+                        AddOdfs(1, 2);
+                        break;
+
+                }
+            }
+
+            
+        }
+
+
+        private static void AddOdfs(int occurence, int step)
+        {
+            for(int i=0; i<7; i+=step)
+            {
+                for(int j=0;j<occurence;j++)
+                {
+
+                }
+            }
+        }
     }
 }
