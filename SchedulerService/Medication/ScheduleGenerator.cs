@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,114 +13,148 @@ namespace Web.SchedulerService.Medication
         private readonly IConfiguration m_configuration;
 
 
+        /// <summary>
+        /// The Maximum size of a batch
+        /// </summary>
         private int BatchSize => m_configuration.GetValue<int>("OdfSettings:BatchSize");
 
 
-        public ScheduleGenerator(IConfiguration configuration)
+        /// <summary>
+        /// Service Provider
+        /// </summary>
+        private readonly IServiceProvider m_serviceProvider;
+
+
+        public ScheduleGenerator(IConfiguration configuration, IServiceProvider serviceProvider)
         {
             m_configuration = configuration;
+            m_serviceProvider = serviceProvider;
         }
 
 
-        public Task<WeeklyPrescriptionSchedule> Run(DateTime startDate, IList<Prescription> prescriptions)
+        public async Task<WeeklyPrescriptionSchedule> Run(DateTime startDate, IList<Prescription> prescriptions)
         {
             WeeklyPrescriptionSchedule weekSchedule = new WeeklyPrescriptionSchedule
             {
-                StartDate = DateTime.Now.Date,        
+                StartDate = DateTime.Now.Date,
             };
 
             IList<DailySchedule> days = new List<DailySchedule>();
 
-            for (var dayDate = weekSchedule.StartDate;
-                dayDate < weekSchedule.StartDate + TimeSpan.FromDays(7);
-                dayDate += TimeSpan.FromDays(1))
+            using (var scope = m_serviceProvider.CreateScope())
             {
-                days.Add(new DailySchedule() 
-                { 
-                    Date = dayDate, 
-                    WeeklyPrescriptionSchedule = weekSchedule, 
-                    PrintJobs = new List<PrintJob>() 
-                });
-            }
+                var context = scope.ServiceProvider.GetService<ServiceDbContext>();
 
-            /// Inspect the frequency of each prescription
-            foreach (var prescription in prescriptions)
-            {
-                int dailyOccurences, step;
-
-                switch (prescription.Frequency)
+                for (var dayDate = weekSchedule.StartDate;
+                    dayDate < weekSchedule.StartDate + TimeSpan.FromDays(7);
+                    dayDate += TimeSpan.FromDays(1)
+                    )
                 {
-
-                    case (Frequency.DAILY):
-                        dailyOccurences = 1;
-                        step = 1;
-                        break;
-                    case (Frequency.BID):
-                        dailyOccurences = 2;
-                        step = 1;
-                        break;
-                    case (Frequency.OTHER_DAY):
-                        dailyOccurences = 1;
-                        step = 2;
-                        break;
-                    case (Frequency.Q3H):
-                        dailyOccurences = 4;
-                        step = 1;
-                        break;
-                    case (Frequency.Q4H):
-                        dailyOccurences = 3;
-                        step = 1;
-                        break;
-                    case (Frequency.Q5H):
-                        dailyOccurences = 2;
-                        step = 1;
-                        break;
-                    case (Frequency.QHS):
-                        dailyOccurences = 8;
-                        step = 1;
-                        break;
-                    case (Frequency.QID):
-                        dailyOccurences = 4;
-                        step = 1;
-                        break;
-                    case (Frequency.QWK):
-                        dailyOccurences = 1;
-                        step = 7;
-                        break;
-                    case (Frequency.TID):
-                        dailyOccurences = 3;
-                        step = 1;
-                        break;
-                    default:
-                        throw new Exception();
+                    days.Add(new DailySchedule()
+                    {
+                        Date = dayDate,
+                        WeeklyPrescriptionSchedule = weekSchedule,
+                        PrintJobs = new List<PrintJob>()
+                    });
                 }
 
-                for (int dayInd = 0; dayInd < days.Count; dayInd += step)
+                /// Inspect the frequency of each prescription
+                foreach (var prescription in prescriptions)
                 {
-                    for (int odfInd = 0; odfInd < dailyOccurences; odfInd++)
-                    {
-                        PrintJob printJob = days[dayInd].PrintJobs[odfInd] ?? new PrintJob()
-                        {
-                            BatchNumber = (uint)dayInd,
-                            Status = PrintJobStatus.UNINITIALIZED,
-                            ODFs = new List<ODF>(),
-                            DailySchedule = days[dayInd]
-                        };
+                    int dailyOccurences, step;
 
-                        ODF odf = new ODF()
+                    switch (prescription.Frequency)
+                    {
+
+                        case (Frequency.DAILY):
+                            dailyOccurences = 1;
+                            step = 1;
+                            break;
+                        case (Frequency.BID):
+                            dailyOccurences = 2;
+                            step = 1;
+                            break;
+                        case (Frequency.OTHER_DAY):
+                            dailyOccurences = 1;
+                            step = 2;
+                            break;
+                        case (Frequency.Q3H):
+                            dailyOccurences = 4;
+                            step = 1;
+                            break;
+                        case (Frequency.Q4H):
+                            dailyOccurences = 3;
+                            step = 1;
+                            break;
+                        case (Frequency.Q5H):
+                            dailyOccurences = 2;
+                            step = 1;
+                            break;
+                        case (Frequency.QHS):
+                            dailyOccurences = 8;
+                            step = 1;
+                            break;
+                        case (Frequency.QID):
+                            dailyOccurences = 4;
+                            step = 1;
+                            break;
+                        case (Frequency.QWK):
+                            dailyOccurences = 1;
+                            step = 7;
+                            break;
+                        case (Frequency.TID):
+                            dailyOccurences = 3;
+                            step = 1;
+                            break;
+                        default:
+                            throw new Exception();
+                    }
+
+                    /// Go through each day of the week
+                    for (int dayInd = 0; dayInd < days.Count; dayInd += step)
+                    {
+                        int printJobNum = 0;
+
+                        /// Go through each time-independent occurence slot
+                        for (int odfInd = 0; odfInd < dailyOccurences; odfInd++)
                         {
-                            DateTimeOfCreation = DateTime.Now,
-                            Prescription = prescription
-                        };
+
+                            // Move the JobNumber to where there is a Job with less than BatchSize odfs
+                            while(days[dayInd].PrintJobs.Count() != printJobNum && days[dayInd].PrintJobs[printJobNum].ODFs.Count == BatchSize)
+                            {
+                                printJobNum++;
+                            }
+
+
+                            PrintJob printJob = (days[dayInd].PrintJobs.Count() == printJobNum) ? new PrintJob()
+                            {
+                                BatchNumber = (uint)printJobNum,
+                                Status = PrintJobStatus.UNINITIALIZED,
+                                ODFs = new List<ODF>(),
+                                DailySchedule = days[dayInd]
+                            } : days[dayInd].PrintJobs[printJobNum];
+
+                            context.PrintJobs.Add(printJob);
+
+                            ODF odf = new ODF()
+                            {
+                                DateTimeOfCreation = DateTime.Now,
+                                Prescription = prescription
+                            };
+
+                            printJob.ODFs.Add(odf);
+                            printJobNum++;
+                        }
                     }
                 }
+
+                context.WeeklyPrescriptionSchedules.Add(weekSchedule);
+                await context.SaveChangesAsync();
+
+                return weekSchedule;
             }
 
-            /// Create the ODF's for each occurence
-            /// Split them into DailySchedules for each day of week
-            /// Compose the daily schedules of printjobs containing ODF's
             
-            throw new NotImplementedException();
         }
     }
 }
