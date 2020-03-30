@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -22,27 +23,56 @@ namespace Web.SchedulerService.Controllers
 
 
         [Route("schedule")]
-        public async Task<ViewResult> Index()
+        public async Task<ViewResult> Index([FromQuery] string day)
         {
+            if(!Enum.TryParse<DayOfWeek>(day, out DayOfWeek dayOfWeek))
+            {
+                dayOfWeek = DateTime.Now.DayOfWeek;
+            }
+
             using (var scope = m_serviceProvider.CreateScope())
             {
                 var context = scope.ServiceProvider.GetService<ServiceDbContext>();
                 PrintScheduleModel model = await InitializeViewModel<PrintScheduleModel>(context);
+                model.Day = dayOfWeek.ToString();
 
-                var batches = context.PrintJobs
+                var week = context.WeeklyPrescriptionSchedules
+                    .OrderByDescending(W => W.StartDate)
+                    .FirstOrDefault();
+
+                // Get the print jobs for today
+                var printJobs = context.PrintJobs
                     .Include(PJ => PJ.DailySchedule)
-                    .Where(PJ => PJ.DailySchedule.Date == DateTime.Today.Date)
+                    .Where(PJ => PJ.DailySchedule.WeeklyPrescriptionScheduleId == week.Id
+                        && PJ.DailySchedule.Date.DayOfWeek == dayOfWeek)
                     .Include(PJ => PJ.ODFs)
-                    .Select(PJ => new Batch()
+                    .ThenInclude(O => O.Prescription)
+                    .ThenInclude(P => P.Patient)
+                    .ToList();
+
+                // Divide Them into "Active" or "Queued" based on status
+                    var batches = printJobs.GroupBy(PJ => PJ.Status,PJ => new Batch()
                     {
+                        BatchNumber = PJ.BatchNumber,
                         ETA = PJ.ExpectedTimeOfReadiness,
                         Status = PJ.Status.ToString(),
                         PrintJobId = PJ.Id,
-                        BatchNumber = PJ.BatchNumber
+                        ODFs = PJ.ODFs.Select(O => new ODFModel()
+                        {
+                            DrugName = O.Prescription.DrugName,
+                            Dosage = O.Prescription.Dosage,
+                            PatentLabel = O.Prescription.Patient.FirstName + " " + O.Prescription.Patient.FirstName
+                        }).ToList()
                     })
-                    .ToList();
+                    .ToList(); // Now in "Active" and "NonActive" groups
 
-                model.Batches = batches;
+                model.ActiveBatch = batches.Where(G => G.Key == PrintJobStatus.PRINTED || G.Key == PrintJobStatus.PRINTING)
+                    .SelectMany(G => G.ToList())
+                    .FirstOrDefault();
+
+                model.QueuedBatches = batches.Where(G => G.Key != PrintJobStatus.PRINTED && G.Key != PrintJobStatus.PRINTING)
+                    .SelectMany(G => G.ToList())
+                    .ToList();
 
                 return View("~/Views/Pages/PrintSchedule.cshtml", model);
             }

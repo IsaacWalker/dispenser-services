@@ -10,13 +10,10 @@ namespace Web.SchedulerService.Medication
 {
     public sealed class ScheduleGenerator : IScheduleGenerator
     {
-        private readonly IConfiguration m_configuration;
-
-
         /// <summary>
-        /// The Maximum size of a batch
+        /// Configuration
         /// </summary>
-        private int BatchSize => m_configuration.GetValue<int>("OdfSettings:BatchSize");
+        private readonly IConfiguration m_configuration;
 
 
         /// <summary>
@@ -25,13 +22,28 @@ namespace Web.SchedulerService.Medication
         private readonly IServiceProvider m_serviceProvider;
 
 
+        /// <summary>
+        /// Cosntructor
+        /// </summary>
+        /// <param name="configuration"></param>
+        /// <param name="serviceProvider"></param>
         public ScheduleGenerator(IConfiguration configuration, IServiceProvider serviceProvider)
         {
             m_configuration = configuration;
             m_serviceProvider = serviceProvider;
+            BatchSize = m_configuration.GetValue<int>("OdfSettings:BatchSize");
+            AdministrationStartTime = m_configuration.GetValue<DateTime>("ScheduleSettings:AdminStartTime");
+            AdministrationTimeStep = TimeSpan.FromMinutes(m_configuration.GetValue<double>("ScheduleSettings:AdminTimeStep"));
+            AdministrationPreparationTime = TimeSpan.FromMinutes(m_configuration.GetValue<double>("ScheduleSettings:AdminPrepTime"));
         }
 
 
+        /// <summary>
+        /// Runs the schedule generator
+        /// </summary>
+        /// <param name="startDate"></param>
+        /// <param name="prescriptions"></param>
+        /// <returns></returns>
         public async Task<WeeklyPrescriptionSchedule> Run(DateTime startDate, IList<Prescription> prescriptions)
         {
             WeeklyPrescriptionSchedule weekSchedule = new WeeklyPrescriptionSchedule
@@ -120,7 +132,7 @@ namespace Web.SchedulerService.Medication
                         {
 
                             // Move the JobNumber to where there is a Job with less than BatchSize odfs
-                            while(days[dayInd].PrintJobs.Count() != printJobNum && days[dayInd].PrintJobs[printJobNum].ODFs.Count == BatchSize)
+                            while (days[dayInd].PrintJobs.Count() != printJobNum && days[dayInd].PrintJobs[printJobNum].ODFs.Count == BatchSize)
                             {
                                 printJobNum++;
                             }
@@ -148,13 +160,48 @@ namespace Web.SchedulerService.Medication
                     }
                 }
 
+
+                /// Sort each print job into times for each day
+                foreach (DailySchedule dailySchedule in days)
+                {
+                    DateTime time = AdministrationStartTime;
+                    foreach (PrintJob job in dailySchedule.PrintJobs)
+                    {
+                        job.ExpectedTimeOfReadiness = time - AdministrationPreparationTime;
+                        time += AdministrationTimeStep;
+                    }
+                }
+
                 context.WeeklyPrescriptionSchedules.Add(weekSchedule);
                 await context.SaveChangesAsync();
 
                 return weekSchedule;
             }
-
-            
         }
+
+
+        /// <summary>
+        /// The Maximum size of a batch
+        /// </summary>
+        private readonly int BatchSize;
+
+
+        /// <summary>
+        /// The start time of the administration
+        /// </summary>
+        private readonly DateTime AdministrationStartTime;
+
+
+        /// <summary>
+        /// The step at which administrations should occur
+        /// </summary>
+        private readonly TimeSpan AdministrationTimeStep;
+
+
+        /// <summary>
+        /// Leeway given to fetch the medication before administering
+        /// </summary>
+        private readonly TimeSpan AdministrationPreparationTime; 
     }
+
 }
