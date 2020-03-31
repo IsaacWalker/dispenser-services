@@ -172,6 +172,15 @@ namespace Web.SchedulerService.Medication
                     }
                 }
 
+                var pjs = weekSchedule.DaySchedules.Where(D => D.Date.Date == DateTime.Now.Date)
+                .FirstOrDefault()
+                .PrintJobs;
+
+                var pj = pjs //.Where(PJ => PJ.ExpectedTimeOfReadiness.Hour - DateTime.Now.Hour >= 0)
+                 .OrderBy(PJ => PJ.ExpectedTimeOfReadiness.Hour - DateTime.Now.Hour)
+                .FirstOrDefault()
+                .Status = PrintJobStatus.PRINTING;
+
                 context.WeeklyPrescriptionSchedules.Add(weekSchedule);
                 await context.SaveChangesAsync();
 

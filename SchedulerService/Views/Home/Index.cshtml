@@ -83,7 +83,7 @@
                                                            class="btn btn-light" role="button">@Model.ODFs[i].MedicationName</a>
                                                     </td>
                                                     <td>@Model.ODFs[i].Dosage mg</td>
-                                                    <td>**Needs Timestamp** </td>
+                                                    <td>@Model.ETA.ToShortTimeString()</td>
                                                 </tr>
                                             }
                                         </tbody>

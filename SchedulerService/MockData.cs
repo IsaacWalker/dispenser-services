@@ -126,7 +126,8 @@ namespace Web.SchedulerService
                 context.SaveChanges();
 
                 WeeklyPrescriptionSchedule week = generator.Run(DateTime.Now.Date, context.Prescriptions.ToList()).Result;
-                
+
+
   /*              PrintJob job = new PrintJob()
                 {
                     Status = PrintJobStatus.REMOVED
