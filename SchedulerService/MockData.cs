@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Web.EntityData;
+using Web.SchedulerService.Medication;
 
 namespace Web.SchedulerService
 {
@@ -16,16 +17,16 @@ namespace Web.SchedulerService
         private static volatile bool _isInitialized = false;
 
 
-        public static void AddMockData(IServiceProvider serviceProvider)
+        public static void AddMockData(IServiceProvider serviceProvider, IScheduleGenerator generator)
         {
             if(!_isInitialized)
             {
-                Initialize(serviceProvider);
+                Initialize(serviceProvider, generator);
             }
         }
 
 
-        private static void Initialize(IServiceProvider serviceProvider)
+        private static void Initialize(IServiceProvider serviceProvider, IScheduleGenerator generator)
         {
             using (var scope = serviceProvider.CreateScope())
             {
@@ -84,7 +85,7 @@ namespace Web.SchedulerService
                     EndDate = DateTime.Now.Date + TimeSpan.FromDays(12.0),
                     Route = "PO",
                     Patient = p3,
-                    Frequency = Frequency.BID,
+                    Frequency = Frequency.Q5H,
                     Prescriber = "Dr P. Walsh",
                     Notes = "Take after eating"
                 };
@@ -98,7 +99,7 @@ namespace Web.SchedulerService
                     EndDate = DateTime.Now.Date + TimeSpan.FromDays(12.0),
                     Route = "PO",
                     Patient = p4,
-                    Frequency = Frequency.BID,
+                    Frequency = Frequency.TID,
                     Prescriber = "Dr P. Walsh",
                     Notes = "Take after eating"
                 };
@@ -112,7 +113,7 @@ namespace Web.SchedulerService
                     EndDate = DateTime.Now.Date + TimeSpan.FromDays(12.0),
                     Route = "PO",
                     Patient = p5,
-                    Frequency = Frequency.BID,
+                    Frequency = Frequency.Q4H,
                     Prescriber = "Dr P. Walsh",
                     Notes = "Take after eating"
                 };
@@ -124,8 +125,10 @@ namespace Web.SchedulerService
                 context.Add(p5PrescriptionOne);
                 context.SaveChanges();
 
-                
-                PrintJob job = new PrintJob()
+                WeeklyPrescriptionSchedule week = generator.Run(DateTime.Now.Date, context.Prescriptions.ToList()).Result;
+
+
+  /*              PrintJob job = new PrintJob()
                 {
                     Status = PrintJobStatus.REMOVED
                 };
@@ -179,14 +182,14 @@ namespace Web.SchedulerService
                 context.Add(odf3);
                 context.Add(odf4);
                 context.Add(odf5);
-                context.Add(odf6);
+                context.Add(odf6);*/
 
                 context.SaveChanges();
 
                 // Add administrations
-                ODFAdministration adminOne = new ODFAdministration 
-                { DateTime = odf3.DateTimeOfCreation + TimeSpan.FromMinutes(100.0), NurseId = nurse.Id, ODF = odf3};
-                context.ODFAdministrations.Add(adminOne);
+              //  ODFAdministration adminOne = new ODFAdministration 
+             //   { DateTime = odf3.DateTimeOfCreation + TimeSpan.FromMinutes(100.0), NurseId = nurse.Id, ODF = odf3};
+               // context.ODFAdministrations.Add(adminOne);
 
                 // Add Wards
                 Bed b1 = new Bed { Label = "A1" };
@@ -223,6 +226,7 @@ namespace Web.SchedulerService
             }
         }
 
+
         private static Patient AddPatient(ServiceDbContext context, string firstName, string lastName, float height, DateTime dob, float weight)
         {
             Patient p = new Patient()
@@ -238,6 +242,5 @@ namespace Web.SchedulerService
 
             return p;
         }
-
     }
 }

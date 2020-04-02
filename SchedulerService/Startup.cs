@@ -43,6 +43,7 @@ namespace Web.SchedulerService
             services.AddHttpClient();
             services.AddSingleton<IDispenserClient, DispenserClient.DispenserClient>();
             services.AddSingleton<IODFGenerator, ODFGenerator>();
+            services.AddSingleton<IScheduleGenerator, ScheduleGenerator>();
 
             services.AddSingleton<SchedulerWorker>();
             services.AddHostedService((sp) => sp.GetService<SchedulerWorker>());
@@ -76,7 +77,7 @@ namespace Web.SchedulerService
         {
             if (env.IsDevelopment())
             {
-                MockData.AddMockData(app.ApplicationServices);
+                MockData.AddMockData(app.ApplicationServices, app.ApplicationServices.GetService<IScheduleGenerator>());
                 app.UseDeveloperExceptionPage();
             }
 

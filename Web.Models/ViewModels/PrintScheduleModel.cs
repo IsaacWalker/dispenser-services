@@ -14,9 +14,15 @@ namespace Web.Models.ViewModels
 
 
         /// <summary>
+        /// The printing or printed batch
+        /// </summary>
+        public Batch ActiveBatch { get; set; }
+
+
+        /// <summary>
         /// ODFs of that batch
         /// </summary>
-        public IList<Batch> Batches { get; set; }
+        public IList<Batch> QueuedBatches { get; set; }
     }
 
     public class Batch

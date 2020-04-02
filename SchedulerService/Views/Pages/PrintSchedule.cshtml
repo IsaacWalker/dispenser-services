@@ -8,6 +8,8 @@
 
 <div id="layoutSidenav">
 
+    <partial name="~/Views/Shared/_SidebarPartial.cshtml" for="NavbarModel" />
+
     <div id="layoutSidenav_content">
         <main>
             <br />
@@ -17,10 +19,7 @@
                     <div class="card-header">
                         <ul class="nav nav-tabs card-header-tabs">
                             <li class="nav-item">
-                                <a class="nav-link active" href="index">24hr</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">48hr</a>
+                                <a class="nav-link active" href="">Today</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Week</a>
@@ -28,60 +27,519 @@
                         </ul>
                     </div>
                     <br />
-                    
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" data-sort-name=" ">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Monday</th>
+                                    <th>Tuesday</th>
+                                    <th>Wednesday</th>
+                                    <th>Thursday</th>
+                                    <th>Friday</th>
+                                    <th>Saturday</th>
+                                    <th>Sunday</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <td>
+                                @if (Model.Day.Equals("Monday"))
+                                {
+                                    {
+                                        @for (int i = 0; i < Model.QueuedBatches.Count; i++)
+                                        {
+                                            if (Model.QueuedBatches[i].Status.Equals("2"))
+                                            {
+                                                <!-- Dispensed Batches Card -->
+                                                <div class="col">
+                                                    <div class="card border-left-success shadow">
+                                                        <div class="card-body">
+                                                            <div class="row no-gutters align-items-center">
+                                                                <div class="col-auto">
+                                                                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Dispensed</div>
+                                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.QueuedBatches[i].BatchNumber</div>
+                                                                </div>
+                                                                <div class="col-auto">
+                                                                    <i class="fas fa-play-circle fa-2x text-gray-300"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                            else if (Model.QueuedBatches[i].Status.Equals("3"))
+                                            {
+                                                <!-- Printing Batches Card -->
+                                                <div class="col">
+                                                    <div class="card border-left-warning shadow">
+                                                        <div class="card-body">
+                                                            <div class="row no-gutters align-items-center">
+                                                                <div class="col mr-2">
+                                                                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Printing</div>
+                                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.QueuedBatches[i].BatchNumber</div>
+                                                                    <div class="h6 mb-0 text-gray-800">@Model.QueuedBatches[i].ETA</div>
+                                                                </div>
+                                                                <div class="col-auto">
+                                                                    <i class="fas fa-clock fa-2x text-gray-300"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <!-- Pending Batches Card -->
+                                                <div class="col">
+                                                    <div class="card border-left-danger shadow">
+                                                        <div class="card-body">
+                                                            <div class="row no-gutters align-items-center">
+                                                                <div class="col mr-2">
+                                                                    <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Pending</div>
+                                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.QueuedBatches[i].BatchNumber</div>
+                                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.QueuedBatches[i].Status</div>
+                                                                </div>
+                                                                <div class="col-auto">
+                                                                    <i class="fas fa-pause-circle fa-2x text-gray-300"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        }
+                                    }
+                                }
+                            </td>
+
+                            <td>
+                                @if (Model.Day.Equals("Tuesday"))
+                                {
+                                    @for (int i = 0; i < Model.QueuedBatches.Count; i++)
+                                    {
+                                        if (Model.QueuedBatches[i].Status.Equals("2"))
+                                        {
+                                            <!-- Dispensed Batches Card -->
+                                            <div class="col">
+                                                <div class="card border-left-success shadow">
+                                                    <div class="card-body">
+                                                        <div class="row no-gutters align-items-center">
+                                                            <div class="col-auto">
+                                                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Dispensed</div>
+                                                                <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.QueuedBatches[i].BatchNumber</div>
+                                                            </div>
+                                                            <div class="col-auto">
+                                                                <i class="fas fa-play-circle fa-2x text-gray-300"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                        else if (Model.QueuedBatches[i].Status.Equals("3"))
+                                        {
+                                            <!-- Printing Batches Card -->
+                                            <div class="col">
+                                                <div class="card border-left-warning shadow">
+                                                    <div class="card-body">
+                                                        <div class="row no-gutters align-items-center">
+                                                            <div class="col mr-2">
+                                                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Printing</div>
+                                                                <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.QueuedBatches[i].BatchNumber</div>
+                                                                <div class="h6 mb-0 text-gray-800">@Model.QueuedBatches[i].ETA</div>
+                                                            </div>
+                                                            <div class="col-auto">
+                                                                <i class="fas fa-clock fa-2x text-gray-300"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <!-- Pending Batches Card -->
+                                            <div class="col">
+                                                <div class="card border-left-danger shadow">
+                                                    <div class="card-body">
+                                                        <div class="row no-gutters align-items-center">
+                                                            <div class="col mr-2">
+                                                                <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Pending</div>
+                                                                <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.QueuedBatches[i].BatchNumber</div>
+                                                                <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.QueuedBatches[i].Status</div>
+                                                            </div>
+                                                            <div class="col-auto">
+                                                                <i class="fas fa-pause-circle fa-2x text-gray-300"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                }
+                            </td>
+
+                            <td>
+                                @if (Model.Day.Equals("Wednesday"))
+                                {
+                                    {
+                                        @for (int i = 0; i < Model.QueuedBatches.Count; i++)
+                                        {
+                                            if (Model.QueuedBatches[i].Status.Equals("2"))
+                                            {
+                                                <!-- Dispensed Batches Card -->
+                                                <div class="col">
+                                                    <div class="card border-left-success shadow">
+                                                        <div class="card-body">
+                                                            <div class="row no-gutters align-items-center">
+                                                                <div class="col-auto">
+                                                                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Dispensed</div>
+                                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.QueuedBatches[i].BatchNumber</div>
+                                                                </div>
+                                                                <div class="col-auto">
+                                                                    <i class="fas fa-play-circle fa-2x text-gray-300"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                            else if (Model.QueuedBatches[i].Status.Equals("3"))
+                                            {
+                                                <!-- Printing Batches Card -->
+                                                <div class="col">
+                                                    <div class="card border-left-warning shadow">
+                                                        <div class="card-body">
+                                                            <div class="row no-gutters align-items-center">
+                                                                <div class="col mr-2">
+                                                                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Printing</div>
+                                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.QueuedBatches[i].BatchNumber</div>
+                                                                    <div class="h6 mb-0 text-gray-800">@Model.QueuedBatches[i].ETA</div>
+                                                                </div>
+                                                                <div class="col-auto">
+                                                                    <i class="fas fa-clock fa-2x text-gray-300"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <!-- Pending Batches Card -->
+                                                <div class="col">
+                                                    <div class="card border-left-danger shadow">
+                                                        <div class="card-body">
+                                                            <div class="row no-gutters align-items-center">
+                                                                <div class="col mr-2">
+                                                                    <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Pending</div>
+                                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.QueuedBatches[i].BatchNumber</div>
+                                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.QueuedBatches[i].Status</div>
+                                                                </div>
+                                                                <div class="col-auto">
+                                                                    <i class="fas fa-pause-circle fa-2x text-gray-300"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        }
+                                    }
+                                }
+                                </td>
+
+                            <td>
+                                @if (Model.Day.Equals("Thursday"))
+                                {
+                                    {
+                                        @for (int i = 0; i < Model.QueuedBatches.Count; i++)
+                                        {
+                                            if (Model.QueuedBatches[i].Status.Equals("2"))
+                                            {
+                                                <!-- Dispensed Batches Card -->
+                                                <div class="col">
+                                                    <div class="card border-left-success shadow">
+                                                        <div class="card-body">
+                                                            <div class="row no-gutters align-items-center">
+                                                                <div class="col-auto">
+                                                                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Dispensed</div>
+                                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.QueuedBatches[i].BatchNumber</div>
+                                                                </div>
+                                                                <div class="col-auto">
+                                                                    <i class="fas fa-play-circle fa-2x text-gray-300"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                            else if (Model.QueuedBatches[i].Status.Equals("3"))
+                                            {
+                                                <!-- Printing Batches Card -->
+                                                <div class="col">
+                                                    <div class="card border-left-warning shadow">
+                                                        <div class="card-body">
+                                                            <div class="row no-gutters align-items-center">
+                                                                <div class="col mr-2">
+                                                                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Printing</div>
+                                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.QueuedBatches[i].BatchNumber</div>
+                                                                    <div class="h6 mb-0 text-gray-800">@Model.QueuedBatches[i].ETA</div>
+                                                                </div>
+                                                                <div class="col-auto">
+                                                                    <i class="fas fa-clock fa-2x text-gray-300"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <!-- Pending Batches Card -->
+                                                <div class="col">
+                                                    <div class="card border-left-danger shadow">
+                                                        <div class="card-body">
+                                                            <div class="row no-gutters align-items-center">
+                                                                <div class="col mr-2">
+                                                                    <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Pending</div>
+                                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.QueuedBatches[i].BatchNumber</div>
+                                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.QueuedBatches[i].Status</div>
+                                                                </div>
+                                                                <div class="col-auto">
+                                                                    <i class="fas fa-pause-circle fa-2x text-gray-300"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        }
+                                    }
+                                }
+                            </td>
+
+                            <td>
+                                @if (Model.Day.Equals("Friday"))
+                                {
+                                    {
+                                        @for (int i = 0; i < Model.QueuedBatches.Count; i++)
+                                        {
+                                            if (Model.QueuedBatches[i].Status.Equals("2"))
+                                            {
+                                                <!-- Dispensed Batches Card -->
+                                                <div class="col">
+                                                    <div class="card border-left-success shadow">
+                                                        <div class="card-body">
+                                                            <div class="row no-gutters align-items-center">
+                                                                <div class="col-auto">
+                                                                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Dispensed</div>
+                                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.QueuedBatches[i].BatchNumber</div>
+                                                                </div>
+                                                                <div class="col-auto">
+                                                                    <i class="fas fa-play-circle fa-2x text-gray-300"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                            else if (Model.QueuedBatches[i].Status.Equals("3"))
+                                            {
+                                                <!-- Printing Batches Card -->
+                                                <div class="col">
+                                                    <div class="card border-left-warning shadow">
+                                                        <div class="card-body">
+                                                            <div class="row no-gutters align-items-center">
+                                                                <div class="col mr-2">
+                                                                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Printing</div>
+                                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.QueuedBatches[i].BatchNumber</div>
+                                                                    <div class="h6 mb-0 text-gray-800">@Model.QueuedBatches[i].ETA</div>
+                                                                </div>
+                                                                <div class="col-auto">
+                                                                    <i class="fas fa-clock fa-2x text-gray-300"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <!-- Pending Batches Card -->
+                                                <div class="col">
+                                                    <div class="card border-left-danger shadow">
+                                                        <div class="card-body">
+                                                            <div class="row no-gutters align-items-center">
+                                                                <div class="col mr-2">
+                                                                    <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Pending</div>
+                                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.QueuedBatches[i].BatchNumber</div>
+                                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.QueuedBatches[i].Status</div>
+                                                                </div>
+                                                                <div class="col-auto">
+                                                                    <i class="fas fa-pause-circle fa-2x text-gray-300"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        }
+                                    }
+                                }
+                            </td>
+
+                            <td>
+                                @if (Model.Day.Equals("Saturday"))
+                                {
+                                    {
+                                        @for (int i = 0; i < Model.QueuedBatches.Count; i++)
+                                        {
+                                            if (Model.QueuedBatches[i].Status.Equals("2"))
+                                            {
+                                                <!-- Dispensed Batches Card -->
+                                                <div class="col">
+                                                    <div class="card border-left-success shadow">
+                                                        <div class="card-body">
+                                                            <div class="row no-gutters align-items-center">
+                                                                <div class="col-auto">
+                                                                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Dispensed</div>
+                                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.QueuedBatches[i].BatchNumber</div>
+                                                                </div>
+                                                                <div class="col-auto">
+                                                                    <i class="fas fa-play-circle fa-2x text-gray-300"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                            else if (Model.QueuedBatches[i].Status.Equals("3"))
+                                            {
+                                                <!-- Printing Batches Card -->
+                                                <div class="col">
+                                                    <div class="card border-left-warning shadow">
+                                                        <div class="card-body">
+                                                            <div class="row no-gutters align-items-center">
+                                                                <div class="col mr-2">
+                                                                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Printing</div>
+                                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.QueuedBatches[i].BatchNumber</div>
+                                                                    <div class="h6 mb-0 text-gray-800">@Model.QueuedBatches[i].ETA</div>
+                                                                </div>
+                                                                <div class="col-auto">
+                                                                    <i class="fas fa-clock fa-2x text-gray-300"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <!-- Pending Batches Card -->
+                                                <div class="col">
+                                                    <div class="card border-left-danger shadow">
+                                                        <div class="card-body">
+                                                            <div class="row no-gutters align-items-center">
+                                                                <div class="col mr-2">
+                                                                    <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Pending</div>
+                                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.QueuedBatches[i].BatchNumber</div>
+                                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.QueuedBatches[i].Status</div>
+                                                                </div>
+                                                                <div class="col-auto">
+                                                                    <i class="fas fa-pause-circle fa-2x text-gray-300"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        }
+                                    }
+                                }
+                            </td>
+
+                            <td>
+                                @if (Model.Day.Equals("Sunday"))
+                                {
+                                    {
+                                        @for (int i = 0; i < Model.QueuedBatches.Count; i++)
+                                        {
+                                            if (Model.QueuedBatches[i].Status.Equals("2"))
+                                            {
+                                                <!-- Dispensed Batches Card -->
+                                                <div class="col">
+                                                    <div class="card border-left-success shadow">
+                                                        <div class="card-body">
+                                                            <div class="row no-gutters align-items-center">
+                                                                <div class="col-auto">
+                                                                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Dispensed</div>
+                                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.QueuedBatches[i].BatchNumber</div>
+                                                                </div>
+                                                                <div class="col-auto">
+                                                                    <i class="fas fa-play-circle fa-2x text-gray-300"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                            else if (Model.QueuedBatches[i].Status.Equals("3"))
+                                            {
+                                                <!-- Printing Batches Card -->
+                                                <div class="col">
+                                                    <div class="card border-left-warning shadow">
+                                                        <div class="card-body">
+                                                            <div class="row no-gutters align-items-center">
+                                                                <div class="col mr-2">
+                                                                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Printing</div>
+                                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.QueuedBatches[i].BatchNumber</div>
+                                                                    <div class="h6 mb-0 text-gray-800">@Model.QueuedBatches[i].ETA</div>
+                                                                </div>
+                                                                <div class="col-auto">
+                                                                    <i class="fas fa-clock fa-2x text-gray-300"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <!-- Pending Batches Card -->
+                                                <div class="col">
+                                                    <div class="card border-left-danger shadow">
+                                                        <div class="card-body">
+                                                            <div class="row no-gutters align-items-center">
+                                                                <div class="col mr-2">
+                                                                    <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Pending</div>
+                                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.QueuedBatches[i].BatchNumber</div>
+                                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.QueuedBatches[i].Status</div>
+                                                                </div>
+                                                                <div class="col-auto">
+                                                                    <i class="fas fa-pause-circle fa-2x text-gray-300"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        }
+                                    }
+                                }
+                            </td>
+                            </tbody>
+                        </table>
+                    </div>
+
                     <div class="row-md">
-                        <!-- Dispensed Batches Card -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-success shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Dispensed Batch</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"> BATCH ID</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-play-circle fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+
                     </div>
 
-                    <!-- Printing Batches Card -->
-                    <div class="col-xl-3 col-md-6 mb-4">
-                        <div class="card border-left-warning shadow h-75 py-2">
-                            <div class="card-body">
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Printing Batches</div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">BATCH ID</div>
-                                        <div class="h6 mb-0 text-gray-800">ETA</div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <i class="fas fa-clock fa-2x text-gray-300"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
-                    <!-- Pending Batches Card -->
-                    <div class="col-xl-3 col-md-6 mb-4">
-                        <div class="card border-left-danger shadow h-50 py-2">
-                            <div class="card-body">
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Pending Batches</div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">BATCH ID</div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <i class="fas fa-pause-circle fa-2x text-gray-300"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
+
                 </div>
 
             </div>

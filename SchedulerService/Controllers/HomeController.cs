@@ -81,6 +81,7 @@ namespace Web.SchedulerService.Controllers
                     model.PrintJobId = currentJob.Id;
                     model.ODFs = batchModels.ToList();
                     model.Status = currentJob.Status.ToString();
+                    model.ETA = currentJob.ExpectedTimeOfReadiness;
                 }
                 else
                 {
