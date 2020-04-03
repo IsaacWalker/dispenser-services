@@ -7,29 +7,31 @@ namespace Web.Models.ViewModels
 {
     public class PrintScheduleModel : ViewModelBase
     {
-        /// <summary>
-        /// Day of Week
-        /// </summary>
+        public IDictionary<DayOfWeek, ScheduleDay> ScheduleDays { get; set; }
+
+
+        public DayOfWeek Today { get; set; }
+    }
+
+
+    public class ScheduleDay
+    {
         public string Day { get; set; }
-        /// <summary>
-        /// Date in DD/MM format
-        /// </summary>
-        public string Date { get; set; }
-        
-        /// <summary>
-        /// The weekdays following today's date
-        /// </summary>
-        public IList<Tuple<string,string>> WeekDays { get; set; }
+
+
         /// <summary>
         /// The printing or printed batch
         /// </summary>
         public Batch ActiveBatch { get; set; }
+
 
         /// <summary>
         /// ODFs of that batch
         /// </summary>
         public IList<Batch> QueuedBatches { get; set; }
     }
+
+
 
     public class Batch
     {

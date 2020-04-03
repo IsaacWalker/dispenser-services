@@ -98,7 +98,8 @@ namespace Web.SchedulerService.Controllers
                         DrugName = O.Prescription.DrugName,
                         Dosage = O.Prescription.Dosage,
                         Status = O.PrintJob.Status.ToString(),
-                        OdfId = O.Id
+                        OdfId = O.Id,
+                        Time = O.PrintJob.ExpectedTimeOfReadiness
                     }).ToList();
 
                 model.AdministeredMedications = administeredMedications;
