@@ -4206,6 +4206,7 @@ input[type=button].btn-block {
         border: 1px solid transparent;
         border-top-left-radius: 0.25rem;
         border-top-right-radius: 0.25rem;
+        color:#fff;
     }
 
         .nav-tabs .nav-link:hover, .nav-tabs .nav-link:focus {
@@ -4220,7 +4221,7 @@ input[type=button].btn-block {
 
         .nav-tabs .nav-link.active,
         .nav-tabs .nav-item.show .nav-link {
-            color: #495057;
+            color: #007bff;
             background-color: #fff;
             border-color: #dee2e6 #dee2e6 #fff;
         }
@@ -14508,3 +14509,4 @@ a.waves-light {
 .slideOutUp {
     -webkit-animation-name: slideOutUp;
     animation-name: slideOutUp
+}

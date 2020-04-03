@@ -7,66 +7,89 @@
 
 
     <main>
-        <div class="container-fluid">
-            <h1 class="mt-4">Administration Confirmation</h1>
-        </div>
+        <div class="container-fluid bg-primary pt-4 pb-5">
+            <div class="row mt-5 mb-5 justify-content-center">
+                <div class="col-lg-8">
+                    <div class="card shadow-lg border-0 rounded-lg mt-5">
+                        <div class="container-fluid mt-4 mb-4">
+                            <div class="container-fluid mb-2">
+                                <h1>Administration Confirmation</h1>
+                            </div>
 
-        <div class="container-fluid">
-            <div class="card sm-4">
-                <div class="card-header bg-primary text-white">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    Confirmation
-                </div>
-                <div class="card-body text-center">
-                    <h3>
-                        This is confirmation that <strong>@Model.Dosage mg</strong> of <strong>@Model.MedicationName</strong>
-                        was administered to <strong>@Model.PatientFirstName @Model.PatientLastName</strong>, <small>@Model.PatientDateOfBirth.ToShortDateString()</small>,
-                        at <strong>@Model.CurrentTime</strong>.
-                    </h3>
-                    <hr />
-                    <h4 class="text-right">
-                       by <strong>@Model.NavbarModel.NurseFirstName @Model.NavbarModel.NurseLastName</strong>
-                    </h4>
-                    
+                            <div class="container-fluid">
+                                <div class="card sm-4">
+                                    <div class="card-header bg-primary text-white">
+                                        <h6 class="m-0">
+                                            <i class="fas fa-exclamation-triangle"></i>
+                                            Confirmation
+                                        </h6>
 
-                </div>
+                                    </div>
+                                    <div class="card-body text-center">
+                                        <h4>
+                                            This is confirmation that 
+                                        </h4>
+                                        <h4>
+                                            <strong>@Model.Dosage mg</strong> of <strong>@Model.MedicationName</strong>
+                                        </h4>
+                                        <h4>
+                                            was administered to 
+                                        </h4>
+                                        <h4>
+                                            <strong>@Model.PatientFirstName @Model.PatientLastName</strong> (Birth Date: @Model.PatientDateOfBirth.ToShortDateString())
+                                        </h4>
+                                        <h4>
+                                            at <strong>@Model.CurrentTime</strong>
+                                        </h4>
+                                        <hr />
+                                        <h4 class="text-right">
+                                            by <strong>@Model.NavbarModel.NurseFirstName @Model.NavbarModel.NurseLastName</strong>
+                                        </h4>
+                                    </div>
 
-                <div class="card-footer text-muted">
-                    <div class="row align-content-md-between">
+                                    <div class="card-footer text-muted">
+                                        <div class="row align-content-md-between">
 
-                        <div class="col-sm-6 flex-center">
-                            <a href="/patient?patientId=@Model.PatientId" class="btn btn-danger">
-                                <i class="fas fa-times-circle"></i>
-                                Cancel
-                            </a>
-                        </div>
+                                            <div class="col-sm-6 flex-center">
+                                                <a href="/patient?patientId=@Model.PatientId" class="btn shadow-lg btn-danger">
+                                                    <i class="fas fa-times-circle"></i>
+                                                    Cancel
+                                                </a>
+                                            </div>
 
-                        <div class="col-sm-6 flex-center">
-                            <form asp-controller="Administration" asp-action="Confirm" method="post">
-                                <input type="hidden" id="odfId" name="odfId" value=@Model.OdfId>
-                                <input type="hidden" id="administrationTime" name="administrationTime" value=@Model.CurrentTime>
+                                            <div class="col-sm-6 flex-center">
+                                                <form asp-controller="Administration" asp-action="Confirm" method="post">
+                                                    <input type="hidden" id="odfId" name="odfId" value=@Model.OdfId>
+                                                    <input type="hidden" id="administrationTime" name="administrationTime" value=@Model.CurrentTime>
 
-                                <button type="submit" class="btn btn-success">
-                                    <i class="fas fa-check-circle"></i>
-                                    Verify
-                                </button>
+                                                    <button type="submit" class="btn shadow-lg btn-success">
+                                                        <i class="fas fa-check-circle"></i>
+                                                        Verify
+                                                    </button>
 
-                            </form>
+                                                </form>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="container-fluid">
+                                <br />
+                                <strong>Attention: </strong>
+                                By clicking submit you are confirming that the following prescription is being administered to the afformentioned patient.
+                                Your name will be logged and associated with the administration history of this prescription and you may be held accountable for any mistakes made with this administration.
+                                Please ensure that the prescription information is valid and patient details are correct as any error made will be associated with your name.
+                                If you are unsure select cancel to be redirected to the patient page.
+                                <br />
+                                <br />
+                            </div>
                         </div>
                     </div>
-                      
                 </div>
             </div>
-        </div>
-
-        <div class="container-fluid">
-            <br />
-            By clicking submit you are confirming that the following prescription is being administered to the afformentioned patient.
-            Your name will be logged and associated with the administration history of this prescription and you may be held accountable for any mistakes made with this administration.
-            Please ensure that the prescription information is valid and patient details are correct as any error made will be associated with your name. 
-            If you are unsure select cancel to be redirected to the patient page.
-            <br /> 
-            <br />
         </div>
 
     </main>

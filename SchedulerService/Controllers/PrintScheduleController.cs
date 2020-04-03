@@ -35,6 +35,18 @@ namespace Web.SchedulerService.Controllers
                 var context = scope.ServiceProvider.GetService<ServiceDbContext>();
                 PrintScheduleModel model = await InitializeViewModel<PrintScheduleModel>(context);
                 model.Day = dayOfWeek.ToString();
+                model.Date = DateTime.Now.Date.ToString("dd/MM");
+                Tuple<string, string> dayDate = new Tuple<string, string>(model.Day, model.Date);
+                model.WeekDays = new List<Tuple<string, string>>
+                {
+                    dayDate
+                };
+                for (double i = 1.0 ; i < 7.0; i++)
+                {
+                    var d = DateTime.Now.AddDays(i);
+                    dayDate = new Tuple<string, string>(d.DayOfWeek.ToString(), d.Date.ToString("dd/MM"));
+                    model.WeekDays.Add(dayDate);
+                }
 
                 var week = context.WeeklyPrescriptionSchedules
                     .OrderByDescending(W => W.StartDate)

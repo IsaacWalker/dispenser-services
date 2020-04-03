@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace Web.EntityData
-{
+{ 
     public class DailySchedule : AEntityBase
     {
         public DateTime Date { get; set; }

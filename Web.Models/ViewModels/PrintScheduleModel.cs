@@ -11,13 +11,19 @@ namespace Web.Models.ViewModels
         /// Day of Week
         /// </summary>
         public string Day { get; set; }
-
-
+        /// <summary>
+        /// Date in DD/MM format
+        /// </summary>
+        public string Date { get; set; }
+        
+        /// <summary>
+        /// The weekdays following today's date
+        /// </summary>
+        public IList<Tuple<string,string>> WeekDays { get; set; }
         /// <summary>
         /// The printing or printed batch
         /// </summary>
         public Batch ActiveBatch { get; set; }
-
 
         /// <summary>
         /// ODFs of that batch
