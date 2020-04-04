@@ -17,6 +17,7 @@
                 <h1 class="mt-4 mb-3">Schedule</h1>
                 <hr />
                 <div class="card text-center">
+                    <!---Tab headers -->
                     <div class="card-header bg-dark">
                         <ul class="nav nav-tabs  card-header-tabs" id="printScheduleTabs" role="tabList">
                             <li class="nav-item">
@@ -29,7 +30,7 @@
                                 @if ((DayOfWeek)i != Model.Today)
                                 {
                                     <li class="nav-item">
-                                        <a class="nav-link" id="day\@i-tab" data-toggle="tab" href="#day\@i" role="tab" aria-controls="day\@i" aria-selected="false">
+                                        <a class="nav-link" id="day-@i-tab" data-toggle="tab" href="#day-@i" role="tab" aria-controls="day-@i" aria-selected="false">
                                             <h6>@Model.ScheduleDays[(DayOfWeek)i].Day</h6>
                                         </a>
                                     </li>
@@ -37,58 +38,42 @@
                             }
                         </ul>
                     </div>
-
+                    <!---Content for each tab-->
                     <div class="row-md m-5">
                         <div class="tab-content" id="printScheduleTabsContent">
                             <div class="tab-pane fade show active" id="today" role="tabpanel" aria-labelledby="today-tab">
                                 @for (int i = 0; i < Model.ScheduleDays[Model.Today].QueuedBatches.Count; i++)
                                 {
-                                    if (Model.ScheduleDays[Model.Today].QueuedBatches[i].Status.Equals("2"))
-                                    {
-                                        <!-- Dispensed Batches Card -->
-                                        <div class="col">
-                                            <div class="card border-left-success shadow">
-                                                <div class="card-body">
-                                                    <div class="row no-gutters align-items-center">
-                                                        <div class="col-auto">
+                                    <!-- Batch Card -->
+                                    <div class="col">
+                                        <div class="card shadow">
+                                            <div class="card-body">
+                                                <div class="row no-gutters align-items-center">
+
+                                                    @if (Model.ScheduleDays[Model.Today].QueuedBatches[i].Status.Equals("2"))
+                                                    {
+                                                        <div class="col mr-2">
                                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Dispensed</div>
                                                             <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.ScheduleDays[Model.Today].QueuedBatches[i].BatchNumber</div>
                                                         </div>
                                                         <div class="col-auto">
                                                             <i class="fas fa-play-circle fa-2x text-gray-300"></i>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    }
-                                    else if (Model.ScheduleDays[Model.Today].QueuedBatches[i].Status.Equals("3"))
-                                    {
-                                        <!-- Printing Batches Card -->
-                                        <div class="col">
-                                            <div class="card border-left-warning shadow">
-                                                <div class="card-body">
-                                                    <div class="row no-gutters align-items-center">
+
+                                                    }
+                                                    else if (Model.ScheduleDays[Model.Today].QueuedBatches[i].Status.Equals("3"))
+                                                    {
                                                         <div class="col mr-2">
                                                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Printing</div>
                                                             <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.ScheduleDays[Model.Today].QueuedBatches[i].BatchNumber</div>
                                                             <div class="h6 mb-0 text-gray-800">@Model.ScheduleDays[Model.Today].QueuedBatches[i].ETA</div>
                                                         </div>
                                                         <div class="col-auto">
-                                                            <i class="fas fa-clock fa-2x text-gray-300"></i>
+                                                            <i class="fas fa-play-circle fa-2x text-gray-300"></i>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    }
-                                    else
-                                    {
-                                        <!-- Pending Batches Card -->
-                                        <div class="col">
-                                            <div class="card border-left-danger shadow">
-                                                <div class="card-body">
-                                                    <div class="row no-gutters align-items-center">
+                                                    }
+                                                    else
+                                                    {
                                                         <div class="col mr-2">
                                                             <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Pending</div>
                                                             <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.ScheduleDays[Model.Today].QueuedBatches[i].BatchNumber</div>
@@ -97,143 +82,70 @@
                                                         <div class="col-auto">
                                                             <i class="fas fa-pause-circle fa-2x text-gray-300"></i>
                                                         </div>
-                                                    </div>
+                                                    }
                                                 </div>
                                             </div>
                                         </div>
-                                    }
+                                    </div>
                                 }
 
                             </div>
-                            <div class="tab-pane fade" id="day1" role="tabpanel" aria-labelledby="day1-tab">
-                                @for (int i = 0; i < Model.ScheduleDays[Model.Today].QueuedBatches.Count; i++)
-                                {
-                                    if (Model.ScheduleDays[(DayOfWeek)1].QueuedBatches[i].Status.Equals("2"))
-                                    {
-                                        <!-- Dispensed Batches Card -->
-                                        <div class="col">
-                                            <div class="card border-left-success shadow">
-                                                <div class="card-body">
-                                                    <div class="row no-gutters align-items-center">
-                                                        <div class="col-auto">
-                                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Dispensed</div>
-                                                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.ScheduleDays[(DayOfWeek)1].QueuedBatches[i].BatchNumber</div>
-                                                        </div>
-                                                        <div class="col-auto">
-                                                            <i class="fas fa-play-circle fa-2x text-gray-300"></i>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    }
-                                    else if (Model.ScheduleDays[(DayOfWeek)1].QueuedBatches[i].Status.Equals("3"))
-                                    {
-                                        <!-- Printing Batches Card -->
-                                        <div class="col">
-                                            <div class="card border-left-warning shadow">
-                                                <div class="card-body">
-                                                    <div class="row no-gutters align-items-center">
-                                                        <div class="col mr-2">
-                                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Printing</div>
-                                                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.ScheduleDays[(DayOfWeek)1].QueuedBatches[i].BatchNumber</div>
-                                                            <div class="h6 mb-0 text-gray-800">@Model.ScheduleDays[(DayOfWeek)1].QueuedBatches[i].ETA</div>
-                                                        </div>
-                                                        <div class="col-auto">
-                                                            <i class="fas fa-clock fa-2x text-gray-300"></i>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    }
-                                    else
-                                    {
-                                        <!-- Pending Batches Card -->
-                                        <div class="col">
-                                            <div class="card border-left-danger shadow">
-                                                <div class="card-body">
-                                                    <div class="row no-gutters align-items-center">
-                                                        <div class="col mr-2">
-                                                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Pending</div>
-                                                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.ScheduleDays[(DayOfWeek)1].QueuedBatches[i].BatchNumber</div>
-                                                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.ScheduleDays[(DayOfWeek)1].QueuedBatches[i].Status</div>
-                                                        </div>
-                                                        <div class="col-auto">
-                                                            <i class="fas fa-pause-circle fa-2x text-gray-300"></i>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    }
-                                }
 
-                            </div>
-                            <div class="tab-pane fade" id="day2" role="tabpanel" aria-labelledby="day2-tab">
-                                @for (int i = 0; i < Model.ScheduleDays[(DayOfWeek)2].QueuedBatches.Count; i++)
+                            @for (int j = 0; j < Enum.GetValues(typeof(DayOfWeek)).Length; j++)
+                            {
+                                @if ((DayOfWeek)j != Model.Today)
                                 {
-                                    if (Model.ScheduleDays[(DayOfWeek)2].QueuedBatches[i].Status.Equals("2"))
-                                    {
-                                        <!-- Dispensed Batches Card -->
-                                        <div class="col">
-                                            <div class="card border-left-success shadow">
-                                                <div class="card-body">
-                                                    <div class="row no-gutters align-items-center">
-                                                        <div class="col-auto">
-                                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Dispensed</div>
-                                                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.ScheduleDays[(DayOfWeek)2].QueuedBatches[i].BatchNumber</div>
-                                                        </div>
-                                                        <div class="col-auto">
-                                                            <i class="fas fa-play-circle fa-2x text-gray-300"></i>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    }
-                                    else if (Model.ScheduleDays[(DayOfWeek)2].QueuedBatches[i].Status.Equals("3"))
-                                    {
-                                        <!-- Printing Batches Card -->
-                                        <div class="col">
-                                            <div class="card border-left-warning shadow">
-                                                <div class="card-body">
-                                                    <div class="row no-gutters align-items-center">
-                                                        <div class="col mr-2">
-                                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Printing</div>
-                                                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.ScheduleDays[(DayOfWeek)2].QueuedBatches[i].BatchNumber</div>
-                                                            <div class="h6 mb-0 text-gray-800">@Model.ScheduleDays[(DayOfWeek)2].QueuedBatches[i].ETA</div>
-                                                        </div>
-                                                        <div class="col-auto">
-                                                            <i class="fas fa-clock fa-2x text-gray-300"></i>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    }
-                                    else
-                                    {
-                                        <!-- Pending Batches Card -->
-                                        <div class="col">
-                                            <div class="card border-left-danger shadow">
-                                                <div class="card-body">
-                                                    <div class="row no-gutters align-items-center">
-                                                        <div class="col mr-2">
-                                                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Pending</div>
-                                                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.ScheduleDays[(DayOfWeek)2].QueuedBatches[i].BatchNumber</div>
-                                                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.ScheduleDays[(DayOfWeek)2].QueuedBatches[i].Status</div>
-                                                        </div>
-                                                        <div class="col-auto">
-                                                            <i class="fas fa-pause-circle fa-2x text-gray-300"></i>
+                                    <div class="tab-pane fade" id="day-@j" role="tabpanel" aria-labelledby="day-@j-tab">
+                                        @for (int i = 0; i < Model.ScheduleDays[(DayOfWeek)j].QueuedBatches.Count; i++)
+                                        {
+                                                <!-- Batch Card -->
+                                                <div class="col">
+                                                    <div class="card shadow">
+                                                        <div class="card-body">
+                                                            <div class="row no-gutters align-items-center">
+
+                                                                @if (Model.ScheduleDays[(DayOfWeek)j].QueuedBatches[i].Status.Equals("2"))
+                                                                {
+                                                                    <div class="col mr-2">
+                                                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Dispensed</div>
+                                                                        <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.ScheduleDays[(DayOfWeek)j].QueuedBatches[i].BatchNumber</div>
+                                                                    </div>
+                                                                    <div class="col-auto">
+                                                                        <i class="fas fa-play-circle fa-2x text-gray-300"></i>
+                                                                    </div>
+
+                                                                }
+                                                                else if (Model.ScheduleDays[(DayOfWeek)j].QueuedBatches[i].Status.Equals("3"))
+                                                                {
+                                                                    <div class="col mr-2">
+                                                                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Printing</div>
+                                                                        <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.ScheduleDays[(DayOfWeek)j].QueuedBatches[i].BatchNumber</div>
+                                                                        <div class="h6 mb-0 text-gray-800">@Model.ScheduleDays[(DayOfWeek)j].QueuedBatches[i].ETA</div>
+                                                                    </div>
+                                                                    <div class="col-auto">
+                                                                        <i class="fas fa-play-circle fa-2x text-gray-300"></i>
+                                                                    </div>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <div class="col mr-2">
+                                                                        <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Pending</div>
+                                                                        <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.ScheduleDays[(DayOfWeek)j].QueuedBatches[i].BatchNumber</div>
+                                                                        <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.ScheduleDays[(DayOfWeek)j].QueuedBatches[i].Status</div>
+                                                                    </div>
+                                                                    <div class="col-auto">
+                                                                        <i class="fas fa-pause-circle fa-2x text-gray-300"></i>
+                                                                    </div>
+                                                                }
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    }
-                                }
-                            </div>
+                                                </div>              
+                                        }
+                                  
+                                    </div>
+                                  }
+                              }
                         </div>
                     </div>
                     <br />
@@ -244,7 +156,7 @@
         <footer class="py-4 bg-light mt-auto">
             <div class="container-fluid">
                 <div class="d-flex align-items-center justify-content-between small">
-                    <div class="text-muted">Copyright &copy; Sample Website 2020</div>
+                    <div class="text-muted">Copyright &copy; PharmaPrint 2020</div>
                     <div>
                         <a href="#">Privacy Policy</a>
                         &middot;
